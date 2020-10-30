@@ -1,31 +1,28 @@
 # project-video-and-messaging-web-app-guozhe-weichu-yuguang
 project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Classroom
 
-## Instructions:
- 
-Hw3  is your first group homework. 
-The Agile methodology promotes self-organized and motivated teams.
-One key element in maintaining the efficiency of a team is the **team agreement**.
+##Forming
+Express opinions without reservation in terms of timeline, sketchy work division, and our expectation for the project.
+Develop a sense of shared responsibility as for how to divide our work, how we should keep track of progress along the way, and how we should evaluate the success of our project.
+Discuss major tools and techniques used in the project and make sure we are able to reach a consensus.
 
-Go over the resources listed below and create your team agreement.
+##Storming
+Work on solving all potential conflicts based on mutual understanding and mutual respect.
+Come up with a viable work plan by proposing some milestones, which will be created based on the implementation of major functionalities.
+Respect every idea: we will make sure that everybody feels comfortable sharing ideas and we will ensure that all inputs are valued equally.
 
-There is no required document length, but your agreement should address  the 
-main points highlighted in the articles.
+##Norming
+We will start to get used to each other’s working styles, and make changes to our plans, if necessary. A bidirectional communication will be conducted should there is any technical problem or schedule conflict.
+outline time for pairing or code review and time for concentration work: actively making sure everyone’s code works properly.
+Weekly Progress Monitoring: communicate with each other and set up a weekly meeting in order to make sure that everybody is on the same page.
+Establish and adhere to testing, code review and code documentation rules.
+Establish and adhere to the ‘DONE’ criteria for stories: project quality control needs approvals from every team member.
+Discuss and adhere to version control rules: we may use git/Github to do our version control.
 
-## Submission:
-- Your team agreement should be included in the wiki of your GitHub repo.
-- Only one submission per team.
-- Individual submissions will not be accepted.
-
-## Evaluation:
-- This assignment does not have a grading rubric.
-- You will be assigned a TA, and you should meet (or communicate via email) with your TA before the due date.
-- Give enough time to the TA to review your submission before the meeting.
-- The TA will give you feedback during the meeting, and you should address any concerns raised by them before the final submission.
-- We recommend that you send any updates to your TA before the final submission to ensure that you pass the assignment. 
-- The TA should tell you if your submission is passable (pass) or not before the final submission, assuming you gave them enough time to review your work.
-
-## Resources:
-- http://www.payton-consulting.com/agile-team-working-agreements-guide/
-- https://tech.gsa.gov/guides/agile_team_working_agreement/
-- https://agilefaq.wordpress.com/2007/11/21/what-is-a-team-ground-rule-or-team-working-agreement/
+##Performing
+Synchronization based on efficient communication.
+Clear goal setting in every single meeting.
+Regularly check for the completion of each milestone by having regular team meetings, and daily or weekly checking in with each other.
+Learn from each other, including but not limited to, coding skills, workflow design, and all other skills that can be complementary to each other.
+Firm commitment: be there on time, give feedback on time, take meetings on time, and finish assigned work on time.
+Working efficiency: keep focused and energetic while working on assigned parts.
