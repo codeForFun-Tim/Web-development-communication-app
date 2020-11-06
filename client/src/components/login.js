@@ -1,10 +1,8 @@
 import React from 'react'
-import Earth from '../images/NavBar.png'
+import '../stylesheets/LoginRegister.css'
 const Login = () => {
     return  (
-        <div
-            style={{ backgroundImage: `url(${Earth})` }}>
-                <p>Login</p>
+        <div>
         </div>
     )
 }
