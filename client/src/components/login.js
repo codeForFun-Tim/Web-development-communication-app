@@ -25,11 +25,11 @@ const Login = () => {
         <div className="main">
             <p className="sign" align="center">Login</p>
             <form className="formLogin">
-                <input className="userName" type="text" align="center" placeholder="Username" />
-                <input className="pass" type="password" align="center" placeholder="Password" />
+                <input id="userName" className="userName" type="text" align="center" placeholder="Username" />
+                <input id="password" className="pass" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password? {error ? <><br /><small>{'Failed to login'}</small></> : <><br /><small style={{ color: "white"}}>{'.'}</small></>}</p>
-                <a className="loginBtn" align="center" onClick={handleLogin}><b>{loading ? 'Loading' : 'Sign in  '}</b></a>
-                <a className="registerBtn" align="center"><b>Register</b></a>
+                <a id="loginBtn" className="loginBtn" align="center" onClick={handleLogin}><b>{loading ? 'Loading' : 'Sign in  '}</b></a>
+                <a id="Register" className="registerBtn" align="center" href="/register"><b>Register</b></a>
             </form>  
         </div>
     </div>
