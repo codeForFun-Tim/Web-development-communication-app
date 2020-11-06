@@ -10,6 +10,11 @@ h1 {
     color: #fff;
 }
 
+small {
+    color: red;
+    margin: auto;
+}
+
 .main {
     background-color: #FFFFFF;
     width: 400px;
@@ -75,6 +80,8 @@ form.formLogin {
 }
 
 .loginBtn {
+    min-width: 130px;
+    max-width: 130px;
     cursor: pointer;
     border-radius: 5em;
     color: #fff;
@@ -91,6 +98,7 @@ form.formLogin {
 }
 
 .registerBtn {
+    width: 130px;
     cursor: pointer;
     border-radius: 5em;
     color: #fff;
