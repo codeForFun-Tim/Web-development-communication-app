@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import '../stylesheets/LoginRegister.css'
 
 const Login = () => {
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -18,22 +20,26 @@ const Login = () => {
       setError("Something went wrong. Please try again later.");
     });
   }
-
+  
   return  (
     <div>
         <h1 align="center">Welcome to Our App</h1>
         <div className="main">
             <p className="sign" align="center">Login</p>
-            <form className="formLogin">
-                <input id="userName" className="userName" type="text" align="center" placeholder="Username" />
-                <input id="password" className="pass" type="password" align="center" placeholder="Password" />
-                <p className="forgotPwd" align="center"><a href="#" />Forgot Password? {error ? <><br /><small>{'Failed to login'}</small></> : <><br /><small style={{ color: "white"}}>{'.'}</small></>}</p>
-                <a id="loginBtn" className="loginBtn" align="center" onClick={handleLogin}><b>{loading ? 'Loading' : 'Sign in  '}</b></a>
-                <a id="Register" className="registerBtn" align="center" href="/register"><b>Register</b></a>
+            <form class="formLogin">
+                <input className="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
+                <input className="pass" type="password" align="center" placeholder="Password" />
+                <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
+                <button className="loginBtn" align="center"><b>Login</b></button>
+                <Link to='/Register'>
+                    <button className="registerBtn" align="center">
+                        <b>Register</b>
+                    </button>
+                </Link>
             </form>  
         </div>
     </div>
-    )
+    );
 }
 
 export default Login;
