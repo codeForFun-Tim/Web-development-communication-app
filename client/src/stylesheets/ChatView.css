@@ -4,6 +4,7 @@
 body {
   background-color: #abd9e9;
   font-family: Arial;
+  height: 100%;
 }
 #container {
   width: 100%;
@@ -211,7 +212,7 @@ main header h3 {
 .func_btu {
   height: 35px;
   float: left;
-  width: 25%;
+  width: 20%;
   text-align: center;
   font-size: 17px;
   cursor: pointer;
@@ -260,4 +261,14 @@ main footer a {
   margin-left: 95%;
   margin-top: 5px;
   display: inline-block;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 0px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }

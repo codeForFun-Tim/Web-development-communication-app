@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/ChatView.css';
 
+
 function ChatView() {
   // -----------------update search result------------------------
   const [name, setName] = useState('');
@@ -73,6 +74,34 @@ function ChatView() {
     setMessage(msg);
     document.getElementById('textarea').value = '';
   }
+
+
+  // On file upload (click the upload button) 
+  const onFileUpload = (selectedFile) => { 
+    // Create an object of formData 
+    const formData = new FormData(); 
+    // Update the formData object 
+    formData.append( 
+      "myFile", 
+      selectedFile, 
+      selectedFile.name 
+    ); 
+    // Details of the uploaded file 
+    console.log(selectedFile); 
+    // Request made to the backend api 
+    // Send formData object
+    //axios.post("api/uploadfile", formData); 
+  }; 
+   
+  // On file select (from the pop up) 
+  const onFileChange = event => { 
+    // Update the state 
+    const selectedFile = event.target.files[0];
+    if (event.target.files[0]) {
+      onFileUpload(event.target.files[0]);
+      setMessage(selectedFile.name);
+    }
+  }; 
 
   return (
     <div id="container">
@@ -225,9 +254,25 @@ function ChatView() {
         </ul>
         <div id="btu_div">
           <button className="func_btu">Video Call</button>
-          <button className="func_btu">Send Video</button>
-          <button className="func_btu">Send Audio</button>
-          <button className="func_btu">Send Image</button>
+          <button className="func_btu">
+            <label for="file-upload" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> Send Image
+            </label>
+            <input id="file-upload" type="file" onChange={onFileChange} accept=".png,.jpg"/>
+          </button>
+          <button className="func_btu">
+            <label for="file-upload" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> Send Audio
+            </label>
+            <input id="file-upload" type="file" onChange={onFileChange} accept=".mp3,.wma"/>
+          </button>
+          <button className="func_btu">Record Audio</button>
+          <button className="func_btu">
+            <label for="file-upload" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> Send Video
+            </label>
+            <input id="file-upload" type="file" onChange={onFileChange} accept=".mp4,.mov"/>
+          </button>          
         </div>
         <footer>
           <textarea

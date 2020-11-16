@@ -16,14 +16,14 @@ class App extends Component {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/Register">
+          <Route exact path="/register">
             <Register />
+          </Route>
+          <Route exact path="/profile">
+            <Profile />
           </Route>
           <Route exact path="/main">
             <MainPage />
-          </Route>
-          <Route exact path="/Profile">
-            <Profile />
           </Route>
         </div>
       </Router>
