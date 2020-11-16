@@ -75,7 +75,7 @@ function ChatView() {
     document.getElementById('textarea').value = '';
   }
 
-
+  // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button) 
   const onFileUpload = (selectedFile) => { 
     // Create an object of formData 
@@ -97,9 +97,36 @@ function ChatView() {
   const onFileChange = event => { 
     // Update the state 
     const selectedFile = event.target.files[0];
-    if (event.target.files[0]) {
-      onFileUpload(event.target.files[0]);
-      setMessage(selectedFile.name);
+    if (selectedFile) {
+      onFileUpload(selectedFile);
+      // finally we should use the data retrieved from mongoDB in setMessage 
+      const src = URL.createObjectURL(selectedFile);
+      // image
+      if (selectedFile.name.endsWith('.png') || selectedFile.name.endsWith('.jpg'))
+      {
+        const imgDiv = `<img src=${src} alt="The picture is gone.">`;
+        setMessage(imgDiv);
+      }
+      // audio
+      else if (selectedFile.name.endsWith('.mp3'))
+      {
+        const audioDiv = 
+          '<audio controls>' +
+            `<source src=${src} type="audio/mpeg">`+
+            'Your browser does not support the audio element.'+
+          '</audio>';
+        setMessage(audioDiv);
+      }
+      // video
+      else if (selectedFile.name.endsWith('.mp4'))
+      {
+        const videoDiv = 
+          '<video width="320" height="240" controls>' +
+            `<source src=${src} type="video/mp4">`+
+            'Your browser does not support the video tag.'+
+          '</video>'
+        setMessage(videoDiv);
+      }
     }
   }; 
 
@@ -255,23 +282,23 @@ function ChatView() {
         <div id="btu_div">
           <button className="func_btu">Video Call</button>
           <button className="func_btu">
-            <label for="file-upload" class="custom-file-upload">
+            <label for="image-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Image
             </label>
-            <input id="file-upload" type="file" onChange={onFileChange} accept=".png,.jpg"/>
+            <input id="image-upload" type="file" onChange={onFileChange} accept="image/png, image/jpg" />
           </button>
           <button className="func_btu">
-            <label for="file-upload" class="custom-file-upload">
+            <label for="audio-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Audio
             </label>
-            <input id="file-upload" type="file" onChange={onFileChange} accept=".mp3,.wma"/>
+            <input id="audio-upload" type="file" onChange={onFileChange} accept="audio/mp3" />
           </button>
           <button className="func_btu">Record Audio</button>
           <button className="func_btu">
-            <label for="file-upload" class="custom-file-upload">
+            <label for="video-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Video
             </label>
-            <input id="file-upload" type="file" onChange={onFileChange} accept=".mp4,.mov"/>
+            <input id="video-upload" type="file" onChange={onFileChange} accept="video/mp4" />
           </button>          
         </div>
         <footer>
