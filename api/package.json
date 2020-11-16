@@ -1,0 +1,41 @@
+{
+  "name": "hw5_backend",
+  "version": "1.0.0",
+  "description": "Guess the celebrity app backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "yarn test"
+  },
+  "keywords": [
+    "rest",
+    "sqlite",
+    "students"
+  ],
+  "author": "Eric Fouh",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "md5": "^2.2.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.10.14",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
