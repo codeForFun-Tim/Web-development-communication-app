@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/ChatView.css';
 
-
 function ChatView() {
   // -----------------update search result------------------------
   const [name, setName] = useState('');
@@ -76,59 +75,138 @@ function ChatView() {
   }
 
   // -----------------upload image/audio/video------------------------
-  // On file upload (click the upload button) 
-  const onFileUpload = (selectedFile) => { 
-    // Create an object of formData 
-    const formData = new FormData(); 
-    // Update the formData object 
-    formData.append( 
-      "myFile", 
-      selectedFile, 
-      selectedFile.name 
-    ); 
-    // Details of the uploaded file 
-    console.log(selectedFile); 
-    // Request made to the backend api 
+  // On file upload (click the upload button)
+  const onFileUpload = (selectedFile) => {
+    // Create an object of formData
+    const formData = new FormData();
+    // Update the formData object
+    formData.append('myFile', selectedFile, selectedFile.name);
+    // Details of the uploaded file
+    console.log(selectedFile);
+    // Request made to the backend api
     // Send formData object
-    //axios.post("api/uploadfile", formData); 
-  }; 
-   
-  // On file select (from the pop up) 
-  const onFileChange = event => { 
-    // Update the state 
+    //axios.post("api/uploadfile", formData);
+  };
+
+  // On file select (from the pop up)
+  const onFileChange = (event) => {
+    // Update the state
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       onFileUpload(selectedFile);
-      // finally we should use the data retrieved from mongoDB in setMessage 
+      // finally we should use the data retrieved from mongoDB in setMessage
       const src = URL.createObjectURL(selectedFile);
       // image
-      if (selectedFile.name.endsWith('.png') || selectedFile.name.endsWith('.jpg'))
-      {
-        const imgDiv = `<img src=${src} alt="The picture is gone.">`;
+      if (
+        selectedFile.name.endsWith('.png') ||
+        selectedFile.name.endsWith('.jpg')
+      ) {
+        const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
         setMessage(imgDiv);
       }
       // audio
-      else if (selectedFile.name.endsWith('.mp3'))
-      {
-        const audioDiv = 
+      else if (selectedFile.name.endsWith('.mp3')) {
+        const audioDiv =
           '<audio controls>' +
-            `<source src=${src} type="audio/mpeg">`+
-            'Your browser does not support the audio element.'+
+          `<source src=${src} type="audio/mpeg">` +
+          'Your browser does not support the audio element.' +
           '</audio>';
         setMessage(audioDiv);
       }
       // video
-      else if (selectedFile.name.endsWith('.mp4'))
-      {
-        const videoDiv = 
+      else if (selectedFile.name.endsWith('.mp4')) {
+        const videoDiv =
           '<video width="320" height="240" controls>' +
-            `<source src=${src} type="video/mp4">`+
-            'Your browser does not support the video tag.'+
-          '</video>'
+          `<source src=${src} type="video/mp4">` +
+          'Your browser does not support the video tag.' +
+          '</video>';
         setMessage(videoDiv);
       }
     }
-  }; 
+  };
+
+  // -----------------Send Recorded Audio------------------------
+  function popupWindow() {
+    const popup = document.getElementById('popup1');
+    popup.style.visibility = 'visible';
+    const startRecord = document.getElementById('startRecord');
+    const stopRecord = document.getElementById('stopRecord');
+    startRecord.style.visibility = 'visible';
+    stopRecord.style.visibility = 'hidden';
+  }
+
+  function closepopWindow() {
+    const popup = document.getElementById('popup1');
+    popup.style.visibility = 'hidden';
+    const startRecord = document.getElementById('startRecord');
+    const stopRecord = document.getElementById('stopRecord');
+    const sendRecord = document.getElementById('sendRecord');
+    startRecord.style.visibility = 'hidden';
+    stopRecord.style.visibility = 'hidden';
+    sendRecord.style.visibility = 'hidden';
+    const recordedAudio = document.getElementById('recordedAudio');
+    recordedAudio.src = '';
+    recordedAudio.controls = false;
+  }
+
+  let mediaRecorder;
+
+  function Recording() {
+    const recordedAudio = document.getElementById('recordedAudio');
+    const startRecord = document.getElementById('startRecord');
+    const stopRecord = document.getElementById('stopRecord');
+    startRecord.style.visibility = 'hidden';
+    stopRecord.style.visibility = 'visible';
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (stream) {
+        let chunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function (e) {
+          // Store data stream chunks for future playback
+          chunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = function (e) {
+          // Playback recording
+          const blob = new Blob(chunks, {
+            type: 'audio/ogg; codecs=opus',
+          });
+          recordedAudio.src = window.URL.createObjectURL(blob);
+          recordedAudio.controls = true;
+          recordedAudio.autoplay = true;
+
+          // Clear recording
+          chunks = [];
+        };
+
+        // Start recording!
+        mediaRecorder.start();
+      });
+  }
+
+  function stopRecording() {
+    const startRecord = document.getElementById('startRecord');
+    const stopRecord = document.getElementById('stopRecord');
+    const sendRecord = document.getElementById('sendRecord');
+    startRecord.style.visibility = 'visible';
+    stopRecord.style.visibility = 'hidden';
+    sendRecord.style.visibility = 'visible';
+    mediaRecorder.stop();
+  }
+
+  function sendRecording() {
+    const recordedAudio = document.getElementById('recordedAudio');
+    const src = recordedAudio.src;
+    const audioDiv =
+      '<audio controls>' +
+      `<source src=${src} type="audio/mpeg">` +
+      'Your browser does not support the audio element.' +
+      '</audio>';
+    setMessage(audioDiv);
+    closepopWindow();
+  }
 
   return (
     <div id="container">
@@ -285,21 +363,38 @@ function ChatView() {
             <label for="image-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Image
             </label>
-            <input id="image-upload" type="file" onChange={onFileChange} accept="image/png, image/jpg" />
+            <input
+              id="image-upload"
+              type="file"
+              onChange={onFileChange}
+              accept="image/png, image/jpg"
+            />
           </button>
           <button className="func_btu">
             <label for="audio-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Audio
             </label>
-            <input id="audio-upload" type="file" onChange={onFileChange} accept="audio/mp3" />
+            <input
+              id="audio-upload"
+              type="file"
+              onChange={onFileChange}
+              accept="audio/mp3"
+            />
           </button>
-          <button className="func_btu">Record Audio</button>
+          <button className="func_btu" onClick={() => popupWindow()}>
+            Record Audio
+          </button>
           <button className="func_btu">
             <label for="video-upload" class="custom-file-upload">
               <i class="fa fa-cloud-upload"></i> Send Video
             </label>
-            <input id="video-upload" type="file" onChange={onFileChange} accept="video/mp4" />
-          </button>          
+            <input
+              id="video-upload"
+              type="file"
+              onChange={onFileChange}
+              accept="video/mp4"
+            />
+          </button>
         </div>
         <footer>
           <textarea
@@ -310,6 +405,28 @@ function ChatView() {
             Send
           </a>
         </footer>
+        <div id="popup1" class="overlay">
+          <div class="popup">
+            <h2>Record</h2>
+            <a class="close" onClick={() => closepopWindow()}>
+              &times;
+            </a>
+            <p>
+              <button id="startRecord" onClick={() => Recording()}>
+                start
+              </button>
+              <button id="stopRecord" onClick={() => stopRecording()}>
+                stop
+              </button>
+              <button id="sendRecord" onClick={() => sendRecording()}>
+                SEND
+              </button>
+            </p>
+            <p>
+              <audio id="recordedAudio"></audio>
+            </p>
+          </div>
+        </div>
       </main>
     </div>
   );

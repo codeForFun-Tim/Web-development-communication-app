@@ -263,7 +263,7 @@ main footer a {
   display: inline-block;
 }
 
-input[type="file"] {
+input[type='file'] {
   display: none;
 }
 .custom-file-upload {
@@ -271,4 +271,127 @@ input[type="file"] {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  opacity: 1;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 250px auto;
+  padding: 20px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  width: 30%;
+  height: 250px;
+  position: relative;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+.popup .close:hover {
+  color: #fa6f6f;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+#startRecord {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-color: #fa6f6f;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #fa6f6f;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  visibility: hidden;
+  position: absolute;
+  top: 32%;
+  left: 7%;
+}
+
+#startRecord:hover {
+  background-color: #ff3f3f;
+  color: white;
+}
+
+#stopRecord {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-color: #58b666;
+  display: inline-block;
+  margin-left: -5px;
+  background-color: #58b666;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  visibility: hidden;
+  position: absolute;
+  top: 32%;
+  left: 7%;
+}
+
+#stopRecord:hover {
+  background-color: #109924;
+  color: white;
+}
+
+#recordedAudio {
+  position: absolute;
+  top: 70%;
+  left: 7%;
+  width: 85%;
+}
+
+#sendRecord {
+  width: 90px;
+  height: 60px;
+  border-radius: 10px;
+  border-color: #ffffff00;
+  display: inline-block;
+  margin-left: -5px;
+  background-color: #d6d6d69f;
+  font-size: 16px;
+  color: #6fbced;
+  text-transform: uppercase;
+  font-weight: bold;
+  visibility: hidden;
+  position: absolute;
+  top: 32%;
+  left: 70%;
+}
+
+#sendRecord:hover {
+  background-color: #a1a1a1ad;
+  color: #59b8f3;
+  font-size: 20px;
 }

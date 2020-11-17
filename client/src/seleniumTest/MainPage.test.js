@@ -7,7 +7,6 @@ const chrome = require('selenium-webdriver/chrome');
 const chromedriver = require('chromedriver');
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
-
 chrome.setDefaultService(
   new chrome.ServiceBuilder(chromedriver.path).build(),
 );
@@ -23,7 +22,6 @@ afterAll(async () => {
   // close the driver after running the tests
   await driver.quit();
 });
-
 
 // use the driver to mock user's actions
 async function mockUserAction() {
@@ -92,11 +90,11 @@ async function mockUserAction2() {
     10000,
   );
   // enter text in the textbox
-  const audioDiv =           
-  '<audio controls>' +
-    `<source src=${audioDemo} type="audio/mpeg">`+
-    'Your browser does not support the audio element.'+
-  '</audio>';
+  const audioDiv =
+    '<audio controls>' +
+    `<source src=${audioDemo} type="audio/mpeg">` +
+    'Your browser does not support the audio element.' +
+    '</audio>';
   await textbox.sendKeys(audioDiv, Key.RETURN);
   // click on 'submit' button
   await driver.findElement(By.id('submitbtu')).click();
@@ -124,11 +122,11 @@ async function mockUserAction3() {
     10000,
   );
   // enter text in the textbox
-  const videoDiv =           
-  '<video width="320" height="240" controls>' +
-    `<source src=${videoDemo} type="video/mp4">`+
-    'Your browser does not support the video tag.'+
-  '</video>';
+  const videoDiv =
+    '<video width="320" height="240" controls>' +
+    `<source src=${videoDemo} type="video/mp4">` +
+    'Your browser does not support the video tag.' +
+    '</video>';
   await textbox.sendKeys(videoDiv, Key.RETURN);
   // click on 'submit' button
   await driver.findElement(By.id('submitbtu')).click();
