@@ -15,8 +15,19 @@ function Register(user) {
         const nickName = document.getElementById('nickName').value;
         const pwd = document.getElementById('password').value;
         setIsSubmitting(true);
-        fetch('http://localhost:8080/users/register', { email: userName, username: nickName, password: pwd }).catch(error => {
-            console.log(userName);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({ email: userName, username: nickName, password: pwd }),
+          };
+        fetch('http://localhost:8080/register', requestOptions)
+        .then((back) => console.log(back))
+        .catch(error => {
+            console.log(error);
             setIsSubmitting(false);
           // wait for backend
           // if (error.response.status === 401) setError(error.response.data.message);

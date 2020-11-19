@@ -20,9 +20,10 @@ router.post('/Register', checkNotAuthenticated,
   checkAndSanitizeInput(),
   handleInputCheck,
   async (req, res) => {
-    const { email } = req.body;
-    const { password } = req.body;
-    const { username } = req.body;
+    console.log(1);
+    const { email } = req.body.email;
+    const { password } = req.body.password;
+    const { username } = req.body.username;
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);

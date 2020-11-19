@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const User = require('./model/user');
 require('dotenv').config();
+const cors = require('cors');
 
 /**
  * MongoDB initialization.
@@ -141,6 +142,13 @@ function sendDatabaseErrorResponse(res, err) {
  * Express initialization.
  */
 const expressApp = express();
+expressApp.use(cors()); // replace webapp with your express app
+
+const port = 8080;
+// Start server
+expressApp.listen(port, () => {
+  console.log(`Server running on port:${port}`);
+});
 
 expressApp.enable('trust proxy');
 expressApp.use(bodyParser.json());
