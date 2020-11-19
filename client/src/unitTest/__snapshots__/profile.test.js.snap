@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test snapshot Test Login 1`] = `
+<div>
+  <h1
+    align="center"
+  >
+    Welcome to Our App
+  </h1>
+  <div
+    className="main"
+  >
+    <p
+      align="center"
+      className="sign"
+    >
+      Login
+    </p>
+    <form
+      className="formLogin"
+    >
+      <input
+        align="center"
+        className="userName"
+        id="userName"
+        placeholder="Username: cat@gmail.com"
+        type="text"
+      />
+      <input
+        align="center"
+        className="pass"
+        id="password"
+        placeholder="Password"
+        type="password"
+      />
+      <p
+        align="center"
+        className="forgotPwd"
+      >
+        <a
+          href="#"
+        />
+        Forgot Password?
+      </p>
+      <input
+        className="loginBtn"
+        disabled={false}
+        id="loginBtn"
+        onClick={[Function]}
+        type="button"
+        value="Sign In"
+      />
+      <a
+        href="/Register"
+        onClick={[Function]}
+      >
+        <button
+          align="center"
+          className="registerBtn"
+          id="registerBtn"
+        >
+          <b>
+            Register
+          </b>
+        </button>
+      </a>
+      <br />
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Test snapshot Test Profile 1`] = `
+<div>
+  <div>
+    <ul
+      id="nav_ul"
+    >
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/profile"
+        >
+          Profile
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/main"
+        >
+          Messaging
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/status"
+        >
+          Status
+        </a>
+      </li>
+    </ul>
+  </div>
+  <h1
+    align="center"
+  >
+    Profile
+  </h1>
+  <div
+    className="mainProfile"
+  >
+    <img
+      alt="Girl in a jacket"
+      className="avatar"
+      src="AvatarCat.png"
+    />
+    <p
+      align="center"
+      className="data"
+      id="userName"
+    >
+       
+      data.name
+       
+    </p>
+    <p
+      align="center"
+      className="data"
+      id="registrationDate"
+    >
+       
+      data.registrationDate
+       
+    </p>
+    <form
+      className="formLogin"
+    >
+      <input
+        align="center"
+        className="newPassword"
+        id="newPassword"
+        placeholder="new password"
+        type="password"
+      />
+      <button
+        align="center"
+        className="resetBtn"
+        id="resetBtn"
+      >
+        <b>
+          Change Password
+        </b>
+      </button>
+      <button
+        align="center"
+        className="deactivateBtn"
+      >
+        <b>
+          Deactivate
+        </b>
+      </button>
+    </form>
+    ​
+  </div>
+</div>
+`;
