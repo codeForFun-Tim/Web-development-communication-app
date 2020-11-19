@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/LoginRegister.css'
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  //const [username, setUsername] = useState("");
+  //const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   
   const handleLogin = () => {
+    const name = document.getElementById('userName').value;
+    const pwd = document.getElementById('password').value;
+    //setUsername(name);
+    //setPassword(pwd);
     setError(false);
     setLoading(true);
-    fetch('http://localhost:8080/users/login', { username: username.value, password: password.value }).catch(error => {
+    fetch('http://localhost:8080/users/login', { username: name, password: pwd }).catch(error => {
       // wait for backend
       // if (error.response.status === 401) setError(error.response.data.message);
       // else 
@@ -26,8 +30,8 @@ const Login = () => {
         <div className="main">
             <p className="sign" align="center">Login</p>
             <form className="formLogin">
-                <input className="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
-                <input className="pass" type="password" align="center" placeholder="Password" />
+                <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
+                <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
                 <input type="button" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
                 <Link to='/Register'>

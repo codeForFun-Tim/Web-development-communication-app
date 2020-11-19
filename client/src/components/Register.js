@@ -11,16 +11,17 @@ function Register(user) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = () => {
-        axios.post('/signup',
-            {username,
-            nickname,
-            password}
-        )
-
-        .then(data =>
-            {console.log(data)
-            history.push('/login')}
-        )
+        const userName = document.getElementById('userName').value;
+        const nickName = document.getElementById('nickName').value;
+        const pwd = document.getElementById('password').value;
+        setIsSubmitting(true);
+        fetch('http://localhost:8080/users/register', { email: userName, username: nickName, password: pwd }).catch(error => {
+            console.log(userName);
+            setIsSubmitting(false);
+          // wait for backend
+          // if (error.response.status === 401) setError(error.response.data.message);
+          // else 
+        });
     };
     
     return  (
@@ -28,11 +29,11 @@ function Register(user) {
             <h1 align="center">Welcome to Our App</h1>
             <div className="main">
                 <p className="sign" align="center">Register</p>
-                <form class="formLogin">
-                    <input className="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
-                    <input className="nickName" type="text" align="center" placeholder="Nickname" />
-                    <input className="pass" type="password" align="center" placeholder="Password" />
-                    <button className="registerBtn2" align="center"><b>Register</b></button>
+                <form className="formLogin">
+                    <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
+                    <input className="nickName" id="nickName" type="text" align="center" placeholder="Nickname" />
+                    <input className="pass" id="password" type="password" align="center" placeholder="Password" />
+                    <input type="button" value={isSubmitting ? 'Submitting' : 'Register'} onClick={handleSubmit} className="registerBtn2" />
                 </form>  
             </div>
         </div>

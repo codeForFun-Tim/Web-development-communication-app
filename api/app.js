@@ -12,7 +12,7 @@ const session = require('express-session');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const MongoStore = require('c')(session);
+const MongoStore = require('connect-mongo')(session);
 const User = require('./model/user');
 require('dotenv').config();
 
