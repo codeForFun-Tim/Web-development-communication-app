@@ -1,6 +1,10 @@
 # project-video-and-messaging-web-app-guozhe-weichu-yuguang
 project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Classroom
 
+## Deployment:
+Heroku: https://vast-woodland-63715.herokuapp.com/register 
+
+
 ## Team Aggrements:
 
 ### Forming
