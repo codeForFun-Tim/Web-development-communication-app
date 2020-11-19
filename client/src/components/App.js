@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './login';
+import Login from './Login';
 import Register from './Register';
 import MainPage from './MainPage';
 import Profile from './Profile';

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import '../stylesheets/LoginRegister.css'
 
-const Login = () => {
+export const Login = () => {
   //const [username, setUsername] = useState("");
   //const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -34,13 +36,14 @@ const Login = () => {
                 <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
                 <input type="button" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
-                <Link to='/Register'>
-                  <button className="registerBtn" align="center">
-                    <b>Register</b>
-                  </button>
-                </Link>
+                <Router>
+                  <Link to='/Register'>
+                    <button className="registerBtn" align="center">
+                      <b>Register</b>
+                   </button>
+                  </Link>
+                </Router>
                 {error && <><div style={{ color: 'red', fontSize: 12, textAlign: "center" }}>{error}</div><br /></>}<br />
-
             </form>  
         </div>
         <>         
@@ -48,5 +51,3 @@ const Login = () => {
     </div>
     );
 }
-
-export default Login;
