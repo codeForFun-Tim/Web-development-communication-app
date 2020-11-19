@@ -36,13 +36,11 @@ const Login = () => {
                 <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
                 <input type="button" id="loginBtn" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
-                <Router>
-                  <Link to='/Register'>
-                    <button id="registerBtn" className="registerBtn" align="center">
-                      <b>Register</b>
-                   </button>
-                  </Link>
-                </Router>
+                <Link to='/Register'>
+                  <button id="registerBtn" className="registerBtn" align="center">
+                    <b>Register</b>
+                  </button>
+                </Link>
                 {error && <><div id="error" style={{ color: 'red', fontSize: 12, textAlign: "center" }}>{error}</div><br /></>}<br />
             </form>  
         </div>
