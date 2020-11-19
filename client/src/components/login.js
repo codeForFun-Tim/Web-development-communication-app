@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import '../stylesheets/LoginRegister.css'
 
-export const Login = () => {
+const Login = () => {
   //const [username, setUsername] = useState("");
   //const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -51,3 +51,5 @@ export const Login = () => {
     </div>
     );
 }
+
+export default Login;
