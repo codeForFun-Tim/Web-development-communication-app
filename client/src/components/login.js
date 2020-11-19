@@ -35,15 +35,15 @@ const Login = () => {
                 <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
                 <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
-                <input type="button" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
+                <input type="button" id="loginBtn" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
                 <Router>
                   <Link to='/Register'>
-                    <button className="registerBtn" align="center">
+                    <button id="registerBtn" className="registerBtn" align="center">
                       <b>Register</b>
                    </button>
                   </Link>
                 </Router>
-                {error && <><div style={{ color: 'red', fontSize: 12, textAlign: "center" }}>{error}</div><br /></>}<br />
+                {error && <><div id="error" style={{ color: 'red', fontSize: 12, textAlign: "center" }}>{error}</div><br /></>}<br />
             </form>  
         </div>
         <>         

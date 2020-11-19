@@ -45,6 +45,7 @@ exports[`Test snapshot Test Login 1`] = `
       <input
         className="loginBtn"
         disabled={false}
+        id="loginBtn"
         onClick={[Function]}
         type="button"
         value="Sign In"
@@ -56,6 +57,7 @@ exports[`Test snapshot Test Login 1`] = `
         <button
           align="center"
           className="registerBtn"
+          id="registerBtn"
         >
           <b>
             Register
