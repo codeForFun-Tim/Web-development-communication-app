@@ -81,8 +81,6 @@ function ChatView() {
     const formData = new FormData();
     // Update the formData object
     formData.append('myFile', selectedFile, selectedFile.name);
-    // Details of the uploaded file
-    console.log(selectedFile);
     // Request made to the backend api
     // Send formData object
     //axios.post("api/uploadfile", formData);
