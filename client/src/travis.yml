@@ -1,0 +1,12 @@
+language: node_js
+install:
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+  - npm install --save-dev jest
+  - npm i jest-fetch-mock
+  - yarn add isomorphic-fetch
+script:
+  - cd client && cd src && cd unitTest && yarn test --coverage
+  # - yarn test app.test.js ChatView.test.js login.test.js mainPage.test.js naviBar.test.js profile.test.js register.test.js--coverage
