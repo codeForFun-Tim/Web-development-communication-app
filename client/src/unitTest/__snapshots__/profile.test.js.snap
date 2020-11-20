@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test snapshot Test Profile 1`] = `
+<div>
+  <div>
+    <ul
+      id="nav_ul"
+    >
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/profile"
+        >
+          Profile
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/main"
+        >
+          Messaging
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/status"
+        >
+          Status
+        </a>
+      </li>
+    </ul>
+  </div>
+  <h1
+    align="center"
+  >
+    Profile
+  </h1>
+  <div
+    className="mainProfile"
+  >
+    <img
+      alt="Girl in a jacket"
+      className="avatar"
+      src="AvatarCat.png"
+    />
+    <p
+      align="center"
+      className="data"
+      id="userName"
+    >
+       
+      data.name
+       
+    </p>
+    <p
+      align="center"
+      className="data"
+      id="registrationDate"
+    >
+       
+      data.registrationDate
+       
+    </p>
+    <form
+      className="formLogin"
+    >
+      <input
+        align="center"
+        className="newPassword"
+        id="newPassword"
+        placeholder="new password"
+        type="password"
+      />
+      <button
+        align="center"
+        className="resetBtn"
+        id="resetBtn"
+      >
+        <b>
+          Change Password
+        </b>
+      </button>
+      <button
+        align="center"
+        className="deactivateBtn"
+      >
+        <b>
+          Deactivate
+        </b>
+      </button>
+    </form>
+    ​
+  </div>
+</div>
+`;
