@@ -1,5 +1,5 @@
 import React from 'react';
-import MainPage from '../components/mainPage.js';
+import MainPage from '../components/MainPage.js';
 
 const renderer = require('react-test-renderer');
 
