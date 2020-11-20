@@ -15,23 +15,12 @@ function Register(user) {
         const nickName = document.getElementById('nickName').value;
         const pwd = document.getElementById('password').value;
         setIsSubmitting(true);
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({ email: userName, username: nickName, password: pwd }),
-          };
-        fetch('http://localhost:8080/register', requestOptions)
-        .then((back) => console.log(back))
-        .catch(error => {
-            console.log(error);
-            setIsSubmitting(false);
+        // leave axios code here
+        fetch('http://localhost:8080/users/register', { email: userName, username: nickName, password: pwd }).catch(error => {
           // wait for backend
           // if (error.response.status === 401) setError(error.response.data.message);
           // else 
+          setIsSubmitting(false);
         });
     };
     
@@ -44,7 +33,7 @@ function Register(user) {
                     <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
                     <input className="nickName" id="nickName" type="text" align="center" placeholder="Nickname" />
                     <input className="pass" id="password" type="password" align="center" placeholder="Password" />
-                    <input type="button" value={isSubmitting ? 'Submitting' : 'Register'} onClick={handleSubmit} className="registerBtn2" />
+                    <input type="button" id="submitBtn" value={isSubmitting ? 'Submitting' : 'Register'} onClick={handleSubmit} className="registerBtn2" />
                 </form>  
             </div>
         </div>

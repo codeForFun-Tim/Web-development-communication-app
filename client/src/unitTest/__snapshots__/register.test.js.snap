@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test snapshot Test Login 1`] = `
+<div>
+  <h1
+    align="center"
+  >
+    Welcome to Our App
+  </h1>
+  <div
+    className="main"
+  >
+    <p
+      align="center"
+      className="sign"
+    >
+      Register
+    </p>
+    <form
+      className="formLogin"
+    >
+      <input
+        align="center"
+        className="userName"
+        id="userName"
+        placeholder="Username: cat@gmail.com"
+        type="text"
+      />
+      <input
+        align="center"
+        className="nickName"
+        id="nickName"
+        placeholder="Nickname"
+        type="text"
+      />
+      <input
+        align="center"
+        className="pass"
+        id="password"
+        placeholder="Password"
+        type="password"
+      />
+      <input
+        className="registerBtn2"
+        id="submitBtn"
+        onClick={[Function]}
+        type="button"
+        value="Register"
+      />
+    </form>
+  </div>
+</div>
+`;
