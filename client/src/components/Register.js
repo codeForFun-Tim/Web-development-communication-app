@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import {Link,useHistory}from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import axios from "axios"; 
+import { register } from '../javascripts/authRequests'
 import '../stylesheets/LoginRegister.css'
 
 function Register(user) {
@@ -16,12 +17,7 @@ function Register(user) {
         const pwd = document.getElementById('password').value;
         setIsSubmitting(true);
         // leave axios code here
-        fetch('http://localhost:8080/users/register', { email: userName, username: nickName, password: pwd }).catch(error => {
-          // wait for backend
-          // if (error.response.status === 401) setError(error.response.data.message);
-          // else 
-          setIsSubmitting(false);
-        });
+        register(userName, nickName, pwd);
     };
     
     return  (
