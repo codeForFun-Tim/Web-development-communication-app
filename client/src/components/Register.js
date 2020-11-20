@@ -18,8 +18,9 @@ function Register(user) {
         setIsSubmitting(true);
         // leave axios code here
         register(userName, nickName, pwd);
+        setIsSubmitting(false);
     };
-    
+
     return  (
         <div>
             <h1 align="center">Welcome to Our App</h1>
@@ -33,7 +34,7 @@ function Register(user) {
                 </form>  
             </div>
         </div>
-        );
+    );
 }
 
 export default Register;
