@@ -381,7 +381,7 @@ function ChatView() {
               accept="audio/mp3"
             />
           </button>
-          <button className="func_btu" onClick={() => popupWindow()}>
+          <button id="recordAudio" className="func_btu" onClick={() => popupWindow()}>
             Record Audio
           </button>
           <button className="func_btu">
@@ -408,7 +408,7 @@ function ChatView() {
         <div id="popup1" class="overlay">
           <div class="popup">
             <h2>Record</h2>
-            <a class="close" onClick={() => closepopWindow()}>
+            <a id="closepop" class="close" onClick={() => closepopWindow()}>
               &times;
             </a>
             <p>

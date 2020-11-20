@@ -271,6 +271,7 @@ exports[`Test snapshot Test Profile 1`] = `
           </button>
           <button
             className="func_btu"
+            id="recordAudio"
             onClick={[Function]}
           >
             Record Audio
@@ -320,6 +321,7 @@ exports[`Test snapshot Test Profile 1`] = `
             </h2>
             <a
               class="close"
+              id="closepop"
               onClick={[Function]}
             >
               ×
