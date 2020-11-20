@@ -24,6 +24,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  registration_date: {
+    type: Date,
+    required: true,
+  },
+  // image: {
+  //   type: Buffer,
+  //   required: false,
+  // },
+  // contact_list: {
+  //   type: Array,
+  //   required: true
+  // }
 });
 
 const User = mongoose.model('User', UserSchema);

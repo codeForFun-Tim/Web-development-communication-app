@@ -46,7 +46,9 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
   User.findOne({ email })
     // eslint-disable-next-line consistent-return
     .then((user) => {
+      // console.log("email: ",email);
       if (!user) {
+        // console.log("inside the user");
         success = false;
         message = 'No user with that email';
         return done(null, false, { message });
@@ -55,10 +57,15 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
         bcrypt.compare(password, user.password, (bcryptErr, same) => {
           if (same) {
             // The user provided the correct password.
+            // console.log("same if");
             success = true;
+            message = 'success';
+            return done(null, user, {message});
           } else {
-
+            // console.log("same else");
             success = false;
+            message = 'Recheck your password';
+            return done(null,false, {message});
           }
         });
     })
@@ -89,6 +96,7 @@ function checkAuthenticated(req, res, next) {
 }
 
 function checkNotAuthenticated(req, res, next) {
+  console.log("checkNotAuthenticated");
   if (req.isAuthenticated()) {
     return res.status(200);
   }
