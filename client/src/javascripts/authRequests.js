@@ -17,14 +17,9 @@ async function register(email, username, password) {
 }
 
 async function login(email, password) {
-  try{
-      await axios.post(`${api.url}/login`,
+      return axios.post(`${api.url}/login`,
       `email=${email}&password=${password}`
       );
-  }
-  catch(err){
-      console.log(err);
-  }
 }
 
 async function logout() {

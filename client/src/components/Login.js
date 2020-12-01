@@ -15,9 +15,7 @@ const Login = () => {
     const pwd = document.getElementById('password').value;
     setError(false);
     setLoading(true);
-    // leave axios code here
-    //
-    login(name, pwd);
+    login(name, pwd).then(() => {window.open("/main","_self")}).catch((e) => {setError("Something went wrong. Please try again later.");});
     setLoading(false);
   }
 
