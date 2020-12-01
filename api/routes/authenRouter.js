@@ -25,7 +25,7 @@ checkNotAuthenticated,
   handleInputCheck,
   async (req, res) => {
     // console.log(1);
-    console.log("req body: ",req.body);
+    //console.log("req body: ",req.body);
     const  email  = req.body.email;
     const  username  = req.body.username;
     const password  = req.body.password;
@@ -102,14 +102,37 @@ router.post('/login',
   checkNotAuthenticated,
   passport.authenticate('local'),
   (req, res) => {
-    console.log(1);
+    //console.log(1);
     res.sendStatus(200);
   },
   (req, res) => {
-    console.log(2);
+    //console.log(2);
     res.status(401);
     res.json('[!] Invalid credentials');
   });
+
+router.put('/changePassword',
+  checkNotAuthenticated,
+  passport.authenticate('local'),
+  async (req,res) => {
+    const email = req.body.email;
+    const newPassword  = req.body.newPassword;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    User.findByUsername(email).then(function(sanitizedUser){
+      if (sanitizedUser){
+          sanitizedUser.setPassword(hashedPassword, function(){
+              sanitizedUser.save();
+              res.status(200).json({message: 'password reset successful'});
+          });
+      } else {
+          res.status(500).json({message: 'This user does not exist'});
+      }
+  },function(err){
+      console.error(err);
+  })
+  }
+  
+)
 
 router.post('/logout', checkAuthenticated, (req, res) => {
   req.logout();
