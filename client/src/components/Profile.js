@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/Profile.css';
 import Avatar from '../images/AvatarCat.png';
-import NavBar from './NaviBar';
+import NaviBar from './NaviBar';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ const Profile = () => {
 
   return (
     <div>
-      <NavBar />
+      <NaviBar />
       <h1 align="center">Profile</h1>
       <div className="mainProfile">
         <img src={Avatar} alt="Girl in a jacket" className="avatar" />

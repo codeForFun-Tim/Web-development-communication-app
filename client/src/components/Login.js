@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import { login } from '../javascripts/authRequests'
 import '../stylesheets/LoginRegister.css'
 
 const Login = () => {
@@ -13,17 +13,12 @@ const Login = () => {
   const handleLogin = () => {
     const name = document.getElementById('userName').value;
     const pwd = document.getElementById('password').value;
-    //setUsername(name);
-    //setPassword(pwd);
     setError(false);
     setLoading(true);
-    fetch('http://localhost:8080/users/login', { username: name, password: pwd }).catch(error => {
-      // wait for backend
-      // if (error.response.status === 401) setError(error.response.data.message);
-      // else 
-      setLoading(false);
-      setError("Something went wrong. Please try again later.");
-    });
+    // leave axios code here
+    //
+    login(name, pwd);
+    setLoading(false);
   }
 
   return  (
