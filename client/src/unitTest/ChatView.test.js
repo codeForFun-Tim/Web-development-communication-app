@@ -29,34 +29,39 @@ describe('Test All ChatView Functions', () => {
       const ul = document.getElementById('myul');
 
       const input = document.getElementById('myInput');
-      input.value = 'c';
+      input.value = 'x';
       act(() => {
         Simulate.change(input);
         Simulate.keyUp(input, {keyCode: 67});
       });
       const list = ul.getElementsByTagName('li');
-      expect(list[0].style.display).toBe('none');
+      expect(list[0].style.display).toBe("none");
     });
 
-    test('click contacts name',() => {
+    test('click contacts name', () => {
         const ul = document.getElementById('myul');
         const li = ul.getElementsByTagName('li');
+
         act(() => {
-            Simulate.click(li[0]);
+            // Simulate.click(li[0]);
+            li[0].click()
         });
         const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe('Any');
+        expect(title).toBe('cat');
+
         act(() => {
-            Simulate.click(li[1]);
+            // Simulate.click(li[1]);
+            li[1].click()
         });
         const title2 = document.getElementById('chat_title').innerHTML;
-        expect(title2).toBe('Bob');
+        expect(title2).toBe('pig');
+
         act(() => {
-            Simulate.click(li[2]);
+            // Simulate.click(li[2]);
+            li[2].click()
         });
         const title3 = document.getElementById('chat_title').innerHTML;
-        expect(title3).toBe('Cat');
-
+        expect(title3).toBe('dog');
     });
 
     test('send message',() => {
@@ -91,5 +96,17 @@ describe('Test All ChatView Functions', () => {
         });
         expect(popup.style.visibility).toBe('hidden');
         expect(recordedAudio.src).toBe('http://localhost/');
+    });
+
+    test('delete user from contact list', () => {
+        const btu = document.getElementById('deleteUser');
+        const li = document.getElementById('1');
+        // const currentTitle = li.value;
+        act(() => {
+            li.click()
+            btu.click()
+        });
+        const title = document.getElementById('chat_title').innerHTML;
+        expect(title).toBe("pig");
     });
   });

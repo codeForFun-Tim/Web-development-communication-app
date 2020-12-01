@@ -2,7 +2,34 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/ChatView.css';
 
+let mycontacts = [{name: "cat", id: 1}, {name: "pig", id: 2}, {name: "dog", id: 3}];
+let currentContactID = 0;
+
 function ChatView() {
+
+  // -----------------update contact list------------------------
+  const [contactNum, setcontact] = useState(0);
+
+  useEffect(() => {
+    const myul = document.getElementById('myul');
+    myul.innerHTML = '';
+    for (let i = 0; i < mycontacts.length; i++) {
+      const myli = document.createElement('LI');
+      const myh2 = document.createElement('H2');
+      myli.setAttribute('value', mycontacts[i].name);
+      myli.setAttribute('id', mycontacts[i].id);
+      myli.onclick = function(e) {contacts_handler(e, 'value')};
+      myh2.innerHTML = mycontacts[i].name
+      myli.appendChild(myh2);
+      myul.appendChild(myli);
+    }
+  }, [contactNum]);
+
+  // run once when first loading the page
+  useEffect(() => {
+    setcontact(mycontacts.length);
+  }, []);
+
   // -----------------update search result------------------------
   const [name, setName] = useState('');
 
@@ -20,6 +47,28 @@ function ChatView() {
       }
     }
   }, [name]);
+  
+  // -----------------Delete selected user---------------------
+  function deleteUser(){
+    if(mycontacts.length !== 0 || currentContactID !==0 ) {
+      const index = mycontacts.findIndex(o => o.id === parseInt(currentContactID));
+      mycontacts.splice(index, 1);
+      // console.log(mycontacts);
+      currentContactID = 0;
+      setcontact(mycontacts.length);
+      if (mycontacts.length !== 0) {
+        setTitle(mycontacts[0].name);
+      }
+      else {
+        setTitle('No Contacts');
+      }
+    }
+  }
+
+  // -----------------Add new user---------------------
+  function addUser(){
+    setcontact(mycontacts);
+  }
 
   // -----------------update chat title------------------------
   const [title, setTitle] = useState('');
@@ -32,8 +81,9 @@ function ChatView() {
   }, [title]);
 
   function contacts_handler(e) {
-    console.log(e.currentTarget.getAttribute('value'));
+    // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
+    currentContactID = e.currentTarget.getAttribute('id');
     setTitle(currentname);
   }
 
@@ -217,8 +267,16 @@ function ChatView() {
             onKeyUp={(event) => setName(event.target.value)}
           />
         </header>
+        <footer>
+          <button id = "deleteUser" onClick = {() => deleteUser()}>
+            Delete
+          </button>
+          <button id = "addUser" onClick = {() => addUser()}>
+            Add
+          </button>
+        </footer>
         <ul id="myul">
-          <li
+          {/* <li
             value={'Any'}
             onClick={(e) => contacts_handler(e, 'value')}
           >
@@ -295,7 +353,7 @@ function ChatView() {
             onClick={(e) => contacts_handler(e, 'value')}
           >
             <h2>Monkey</h2>
-          </li>
+          </li> */}
         </ul>
       </aside>
       <main>
