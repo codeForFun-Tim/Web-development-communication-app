@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import MainPage from './MainPage';
 import Profile from './Profile';
+import Status from './Status';
 
 class App extends Component {
   render() {
@@ -24,6 +25,9 @@ class App extends Component {
           </Route>
           <Route exact path="/main">
             <MainPage />
+          </Route>
+          <Route exact path="/status">
+            <Status />
           </Route>
         </div>
       </Router>
