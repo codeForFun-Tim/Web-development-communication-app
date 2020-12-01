@@ -1,10 +1,10 @@
 {
-  "name": "hw5_backend",
+  "name": "project_backend",
   "version": "1.0.0",
-  "description": "Guess the celebrity app backend",
+  "description": "Web chatting app backend",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "test": "yarn test"
   },
   "keywords": [
@@ -15,6 +15,7 @@
   "author": "Eric Fouh",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "supertest": "^6.0.1"
   }
 }

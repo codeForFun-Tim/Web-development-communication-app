@@ -395,3 +395,27 @@ input[type='file'] {
   color: #59b8f3;
   font-size: 20px;
 }
+
+#addUser {
+  width: 50%;
+  height: 40px;
+  border: none;
+  /* border-color: #3b3e49; */
+  display: inline-block;
+  background-color:  #3b3e49;
+  font-size: 18px;
+  font-weight: normal;
+  color: #df1313;
+}
+
+#deleteUser {
+  width: 50%;
+  height: 40px;
+  border: none;
+  /* border-color: #3b3e49; */
+  display: inline-block;
+  background-color: #3b3e49;
+  font-size: 18px;
+  font-weight: normal;
+  color: #df1313;
+}
