@@ -17,8 +17,8 @@ script:
   - yarn
   - npm install jest@26.6.0
   - npm ls jest
-  - jest --updateSnapshot
-  - yarn test src/unitTest --coverage
+  # - jest --updateSnapshot
+  - yarn test src/unitTest --updateSnapshot --coverage
 # safelist
 branches:
   only:
