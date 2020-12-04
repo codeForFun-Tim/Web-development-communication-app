@@ -12,7 +12,8 @@ async function register(email, username, password) {
     );
   }
   catch(err){
-      console.log(err);
+      // console.log(err);
+      return err;
   }
 }
 

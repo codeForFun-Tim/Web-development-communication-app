@@ -93,17 +93,17 @@ function ChatView() {
   useEffect(() => {
     if (message !== '') {
       const myli = document.createElement('LI');
-      myli.setAttribute('class', 'me');
+      myli.setAttribute('className', 'me');
       const mydiv = document.createElement('div');
-      mydiv.setAttribute('class', 'entete');
+      mydiv.setAttribute('className', 'entete');
       const myh3 = document.createElement('H3');
       myh3.innerHTML = '10:12AM, Today';
       const myh2 = document.createElement('H2');
       myh2.innerHTML = 'me';
       const myspan = document.createElement('span');
-      myspan.setAttribute('class', 'status blue');
+      myspan.setAttribute('className', 'status blue');
       const msg = document.createElement('div');
-      msg.setAttribute('class', 'message');
+      msg.setAttribute('className', 'message');
       msg.innerHTML = message;
 
       mydiv.appendChild(myh3);
@@ -363,61 +363,61 @@ function ChatView() {
           </div>
         </header>
         <ul id="chat">
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
+          <li className="you">
+            <div className="entete">
+              <span className="status green"></span>
               <h2>Vincent</h2>
               <h3>10:12AM, Today</h3>
             </div>
-            {/* <div class="triangle"></div> */}
-            <div class="message">Hi, this is the first message</div>
+            {/* <div className="triangle"></div> */}
+            <div className="message">Hi, this is the first message</div>
           </li>
-          {/* <li class="me">
-            <div class="entete">
+          {/* <li className="me">
+            <div className="entete">
               <h3>10:12AM, Today</h3>
               <h2>me</h2>
-              <span class="status blue"></span>
+              <span className="status blue"></span>
             </div>
-            <div class="message">This is the second message.</div>
+            <div className="message">This is the second message.</div>
           </li>
-          <li class="me">
-            <div class="entete">
+          <li className="me">
+            <div className="entete">
               <h3>10:12AM, Today</h3>
               <h2>me</h2>
-              <span class="status blue"></span>
+              <span className="status blue"></span>
             </div>
-            <div class="message">OK</div>
+            <div className="message">OK</div>
           </li> */}
-          <li class="you">
-            <div class="entete">
-              <span class="status green"></span>
+          <li className="you">
+            <div className="entete">
+              <span className="status green"></span>
               <h2>Vincent</h2>
               <h3>10:12AM, Today</h3>
             </div>
-            <div class="message">Hello</div>
+            <div className="message">Hello</div>
           </li>
-          {/* <li class="me">
-            <div class="entete">
+          {/* <li className="me">
+            <div className="entete">
               <h3>10:12AM, Today</h3>
               <h2>me</h2>
-              <span class="status blue"></span>
+              <span className="status blue"></span>
             </div>
-            <div class="message">Yes yes.</div>
+            <div className="message">Yes yes.</div>
           </li>
-          <li class="me">
-            <div class="entete">
+          <li className="me">
+            <div className="entete">
               <h3>10:12AM, Today</h3>
               <h2>me</h2>
-              <span class="status blue"></span>
+              <span className="status blue"></span>
             </div>
-            <div class="message">OK</div>
+            <div className="message">OK</div>
           </li> */}
         </ul>
         <div id="btu_div">
           <button className="func_btu">Video Call</button>
           <button className="func_btu">
-            <label for="image-upload" class="custom-file-upload">
-              <i class="fa fa-cloud-upload"></i> Send Image
+            <label htmlFor="image-upload" className="custom-file-upload">
+              <i className="fa fa-cloud-upload"></i> Send Image
             </label>
             <input
               id="image-upload"
@@ -427,8 +427,8 @@ function ChatView() {
             />
           </button>
           <button className="func_btu">
-            <label for="audio-upload" class="custom-file-upload">
-              <i class="fa fa-cloud-upload"></i> Send Audio
+            <label htmlFor="audio-upload" className="custom-file-upload">
+              <i className="fa fa-cloud-upload"></i> Send Audio
             </label>
             <input
               id="audio-upload"
@@ -441,8 +441,8 @@ function ChatView() {
             Record Audio
           </button>
           <button className="func_btu">
-            <label for="video-upload" class="custom-file-upload">
-              <i class="fa fa-cloud-upload"></i> Send Video
+            <label htmlFor="video-upload" className="custom-file-upload">
+              <i className="fa fa-cloud-upload"></i> Send Video
             </label>
             <input
               id="video-upload"
@@ -461,10 +461,10 @@ function ChatView() {
             Send
           </a>
         </footer>
-        <div id="popup1" class="overlay">
-          <div class="popup">
+        <div id="popup1" className="overlay">
+          <div className="popup">
             <h2>Record</h2>
-            <a id="closepop" class="close" onClick={() => closepopWindow()}>
+            <a id="closepop" className="close" onClick={() => closepopWindow()}>
               &times;
             </a>
             <p>
