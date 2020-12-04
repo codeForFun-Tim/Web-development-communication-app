@@ -17,8 +17,7 @@ describe('Test snapshot', () => {
 
 // functonal component functions tests
 describe('Test functonal component functions', () => {
-  console.log = jest.fn()
-  expect(console.log).toHaveBeenCalled();
+
   let container;
   beforeEach(() => {
     container = document.createElement('div');
@@ -43,16 +42,5 @@ describe('Test functonal component functions', () => {
     const password = container.querySelector('#password');
     expect(userName.value).toBe("");
     expect(password.value).toBe("");
-  });
-
-  test('Test function inside Login component failure', async() => {
-    act(() => {
-      ReactDOM.render(<Router><Login /></Router>, container);
-    });
-    const loginBtn = container.querySelector('#loginBtn');
-    await act(async () => {
-      fetch = jest.fn(() => Promise.reject({ json: () => ({ message: 'failed', data: { player: 'tester', point: 2, id: 1 }})}));
-      loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
   });
 });
