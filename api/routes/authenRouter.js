@@ -30,7 +30,7 @@ checkNotAuthenticated,
     const  username  = req.body.username;
     const password  = req.body.password;
     const registrationDate = Date.now();
-
+    /**
     if (file && !checkFileSize(file)) {
       res.status(413);
       res.json(`[!] Profile picture is too large (max = ${maxFileKb}KB)`);
@@ -42,6 +42,7 @@ checkNotAuthenticated,
       res.json('[!] Invalid file type (only PNG or JPEG allowed)');
       return;
     }
+    */
 
     try {
       // console.log(2);
@@ -59,7 +60,7 @@ checkNotAuthenticated,
                   res.status(409);
                   res.json(`[!] Username is already in use: ${username}`);
                 } else {
-
+                  /**
                   if (file) {
                     let bytes;
 
@@ -77,6 +78,7 @@ checkNotAuthenticated,
                       image = Buffer.from(bytes, 'base64');
                     }
                   }
+                  */
                   // console.log(3);
                   const newUser = new User({
                     email,
