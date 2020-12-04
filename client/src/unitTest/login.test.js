@@ -17,6 +17,8 @@ describe('Test snapshot', () => {
 
 // functonal component functions tests
 describe('Test functonal component functions', () => {
+  console.log = jest.fn()
+  expect(console.log).toHaveBeenCalled();
   let container;
   beforeEach(() => {
     container = document.createElement('div');
