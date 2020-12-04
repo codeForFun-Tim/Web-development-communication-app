@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
 
-    message_ID:{
+    message_ID:{ 
         type: String,
         required: true,
     },
@@ -27,7 +27,7 @@ const messageSchema = new mongoose.Schema({
         required: true,
     },
 
-    to: { //user id (receiver)
+    to: { //user id (receiver) 
         type: String,
         required: true,
     }
@@ -35,6 +35,7 @@ const messageSchema = new mongoose.Schema({
 
     // audio message  audio/mpeg
     // video message  video/mp4
+    // image .png, .jpg
 
 });
 

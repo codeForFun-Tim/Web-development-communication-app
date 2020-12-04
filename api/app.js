@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const User = require('./model/user');
+const Message = require('./model/message');
 require('dotenv').config();
 const cors = require('cors');
 
