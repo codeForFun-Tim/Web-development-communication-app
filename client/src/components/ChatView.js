@@ -96,17 +96,21 @@ function ChatView() {
   useEffect(() => {
     if (message !== '') {
       const myli = document.createElement('LI');
-      myli.setAttribute('className', 'me');
+      myli.setAttribute('class', 'me');
       const mydiv = document.createElement('div');
-      mydiv.setAttribute('className', 'entete');
+      mydiv.setAttribute('class', 'entete');
       const myh3 = document.createElement('H3');
-      myh3.innerHTML = '10:12AM, Today';
+      let raw_date = new Date();
+      const month = raw_date.getMonth() + 1;
+      const date = raw_date.getFullYear() + '-' + month + '-' + raw_date.getDate();
+      const time = new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' });
+      myh3.innerHTML = date + ' ' + time;
       const myh2 = document.createElement('H2');
       myh2.innerHTML = 'me';
       const myspan = document.createElement('span');
-      myspan.setAttribute('className', 'status blue');
+      myspan.setAttribute('class', 'status blue');
       const msg = document.createElement('div');
-      msg.setAttribute('className', 'message');
+      msg.setAttribute('class', 'message');
       msg.innerHTML = message;
 
       mydiv.appendChild(myh3);

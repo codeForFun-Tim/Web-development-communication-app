@@ -5,18 +5,20 @@ import '../stylesheets/LoginRegister.css'
 
 function Register(user) {
     const history=useHistory()
+    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
-    const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = () => {
+        const email = document.getElementById('email').value;
         const userName = document.getElementById('userName').value;
-        const nickName = document.getElementById('nickName').value;
         const pwd = document.getElementById('password').value;
         setIsSubmitting(true);
         // leave axios code here
-        register(userName, nickName, pwd);
+        register(email, userName, pwd)
+        .then(() => {window.open("/login","_self")})
+        .catch((e) => {console.log(e)});
         setIsSubmitting(false);
     };
 
@@ -26,8 +28,8 @@ function Register(user) {
             <div className="main">
                 <p className="sign" align="center">Register</p>
                 <form className="formLogin">
-                    <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
-                    <input className="nickName" id="nickName" type="text" align="center" placeholder="Nickname" />
+                    <input className="userName" id="email" type="text" align="center" placeholder="Email: cat@gmail.com" />
+                    <input className="nickName" id="userName" type="text" align="center" placeholder="Username" />
                     <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                     <input type="button" id="submitBtn" value={isSubmitting ? 'Submitting' : 'Register'} onClick={handleSubmit} className="registerBtn2" />
                 </form>  

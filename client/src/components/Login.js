@@ -25,7 +25,7 @@ const Login = () => {
         <div className="main">
             <p className="sign" align="center">Login</p>
             <form className="formLogin">
-                <input className="userName" id="userName" type="text" align="center" placeholder="Username: cat@gmail.com" />
+                <input className="userName" id="userName" type="text" align="center" placeholder="Email: cat@gmail.com" />
                 <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                 <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
                 <input type="button" id="loginBtn" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />

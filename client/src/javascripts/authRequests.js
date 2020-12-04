@@ -4,17 +4,10 @@ import { api } from '../api';
 import axios from 'axios';
 
 async function register(email, username, password) { 
-  try{
-      console.log("api url Register: ",`${api.url}/Register`);
-    await axios.post(`${api.url}/Register`,
-  
+    console.log("api url Register: ",`${api.url}/Register`);
+    return axios.post(`${api.url}/Register`, 
     `email=${email}&username=${username}&password=${password}`
     );
-  }
-  catch(err){
-      // console.log(err);
-      return err;
-  }
 }
 
 async function login(email, password) {
