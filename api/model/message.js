@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
 
-    message_ID:{ 
-        type: String,
-        required: true,
-    },
+    // message_ID:{                           
+    //     type: String,
+    //     required: true,
+    // },
+
+    // _ID
+
 
     message_type: {
         type: String,

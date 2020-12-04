@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { changePassword } from '../javascripts/authRequests'
 import '../stylesheets/Profile.css';
 import Avatar from '../images/AvatarCat.png';
 import NaviBar from './NaviBar';
@@ -6,19 +7,14 @@ import NaviBar from './NaviBar';
 const Profile = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
-  useEffect(() => {
-    const url = window.location.href;
-    if (url.split('/').length === 4) {
-      setUsername(url.split('/').pop());
-    }
-    if (username !== '') {
-      /**
-        getUser(username).then((response) => {
-            setUserData(response.json())
-        });
-        */
-    }
-  });
+
+  const handleChangePassword = (event) => {
+    event.preventDefault();
+    let email = 'guangzhe@test.com';
+    let oldPassword = '123';
+    let newPassword = document.getElementById('newPassword').value;
+    changePassword(email, oldPassword, newPassword).then(() => {window.open("/login","_self")}).catch((e) => {console.log(e);});
+  }
 
   return (
     <div>
@@ -42,7 +38,7 @@ const Profile = () => {
             align="center"
             placeholder="new password"
           />
-          <button id="resetBtn" className="resetBtn" align="center">
+          <button id="resetBtn" className="resetBtn" align="center" onClick={handleChangePassword}>
             <b>Change Password</b>
           </button>
           <button className="deactivateBtn" align="center">

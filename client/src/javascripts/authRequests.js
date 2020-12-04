@@ -36,6 +36,18 @@ async function logout() {
     });
 }
 
+async function changePassword(email, oldPassword, newPassword) {
+  return axios.post(`${api.url}/changePassword`,
+  `_id=${'5fcaaf5a048342225cfc90c4'}&oldPassword=${oldPassword}&newPassword=${newPassword}`
+  );
+}
+
+async function getUser(email) {
+  return axios.get(`${api.url}/getUser`,
+  `email=${email}`
+  );
+}
+
 async function checkAuth() {
   return fetch(`${api.url}/checkAuth`,
     {
@@ -53,5 +65,7 @@ export {
   register,
   login,
   logout,
+  changePassword,
+  getUser,
   checkAuth,
 };

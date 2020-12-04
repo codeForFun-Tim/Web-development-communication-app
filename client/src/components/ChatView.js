@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/ChatView.css';
+import sendMessageAPI from '../javascripts/message';
 
 let mycontacts = [{name: "cat", id: 1}, {name: "pig", id: 2}, {name: "dog", id: 3}];
 let currentContactID = 0;
+let currentContactTitle = 'default';
 
 function ChatView() {
 
@@ -84,7 +86,8 @@ function ChatView() {
     // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
     currentContactID = e.currentTarget.getAttribute('id');
-    setTitle(currentname);
+    currentContactTitle = currentname;
+    setTitle(currentContactTitle);
   }
 
   // -----------------update chat message------------------------
@@ -122,6 +125,12 @@ function ChatView() {
     const msg = document.getElementById('textarea').value;
     setMessage(msg);
     document.getElementById('textarea').value = '';
+    // send to back end
+    const msgType = 'text';
+    const msgFrom = 'me';
+    const msgTo = currentContactTitle;
+    const roomID = 123;
+    sendMessageAPI(msg, msgType, msgFrom, msgTo, roomID);
   }
 
   // -----------------upload image/audio/video------------------------

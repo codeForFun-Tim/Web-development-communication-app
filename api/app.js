@@ -7,6 +7,7 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const passportLocalMongoose = require('passport-local-mongoose');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
@@ -197,3 +198,5 @@ module.exports = {
 };
 
 expressApp.use(require('./routes/authenRouter'));
+expressApp.use(require('./routes/messageRouter'));
+
