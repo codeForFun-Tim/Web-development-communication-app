@@ -17,13 +17,13 @@ script:
   - yarn
   - npm install jest@26.6.0
   - npm ls jest
-  - yarn test --coverage
-  - cd ..
-  - cd api
-  - npm i async
-  - npm install supertest --save-dev
-  - node app.js
-  - jest test --coverage
+  - yarn test src/unitTest --coverage
+  # - cd ..
+  # - cd api
+  # - npm i async
+  # - npm install supertest --save-dev
+  # - node app.js
+  # - jest test --coverage
   # - yarn test app.test.js ChatView.test.js login.test.js mainPage.test.js naviBar.test.js profile.test.js register.test.js--coverage
 # safelist
 branches:
