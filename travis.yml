@@ -18,7 +18,7 @@ script:
   - npm install jest@26.6.0
   - npm ls jest
   - yarn test src/unitTest --coverage
-  - u
+  - -u
   - yarn test src/unitTest --coverage
 # safelist
 branches:
