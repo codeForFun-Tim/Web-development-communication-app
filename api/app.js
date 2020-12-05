@@ -154,7 +154,8 @@ function sendDatabaseErrorResponse(res, err) {
 const expressApp = express();
 expressApp.use(cors()); // replace webapp with your express app
 
-const port = 8080;
+const port = process.env.PORT || 8080;
+
 // Start server
 expressApp.listen(port, () => {
   console.log(`Server running on port:${port}`);
