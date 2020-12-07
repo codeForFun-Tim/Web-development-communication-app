@@ -15,7 +15,7 @@ const Login = () => {
     const pwd = document.getElementById('password').value;
     setError(false);
     setLoading(true);
-    login(name, pwd).then(() => {window.open("/main","_self")}).catch((e) => {setError("Something went wrong. Please try again later.");});
+    login(name, pwd).then(() => {localStorage.setItem('curr_user', name); window.open("/main","_self")}).catch((e) => {setError("Incorrect password/Something went wrong. Please try again later.");});
     setLoading(false);
   }
 

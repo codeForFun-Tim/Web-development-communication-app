@@ -13,8 +13,18 @@ const Profile = () => {
     let email = 'guangzhe@test.com';
     let oldPassword = '123';
     let newPassword = document.getElementById('newPassword').value;
-    changePassword(email, oldPassword, newPassword).then(() => {window.open("/login","_self")}).catch((e) => {console.log(e);});
+    changePassword(email, oldPassword, newPassword).then(() => {localStorage.clear(); window.open("/login","_self")}).catch((e) => {console.log(e);});
   }
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("curr_user");
+    if (loggedInUser && loggedInUser !== "") {
+      setUsername(loggedInUser);
+    }
+    else {
+      window.open("/login","_self");
+    }
+  }, []);
 
   return (
     <div>
