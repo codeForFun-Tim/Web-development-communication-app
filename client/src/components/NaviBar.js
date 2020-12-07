@@ -1,9 +1,22 @@
 import '../stylesheets/NaviBar.css';
+import React, { useState, useEffect } from 'react'
+
 const NaviBar = () => {
+  const [username, setUsername] = useState('');
 
   const logout = () => {
     localStorage.clear();  
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("curr_user");
+    if (loggedInUser && loggedInUser !== "") {
+      setUsername(loggedInUser);
+    }
+    else {
+      window.open("/login","_self");
+    }
+  }, []);
 
   return (
     <div>
@@ -19,6 +32,9 @@ const NaviBar = () => {
         </li>
         <li className="nav_li">
           <a href="/status" onClick={logout}>Logout</a>
+        </li>
+        <li className="nav_li">
+          <a href="/main">{username}</a>
         </li>
       </ul>
     </div>

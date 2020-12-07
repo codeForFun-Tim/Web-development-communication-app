@@ -5,7 +5,7 @@ import { login } from '../javascripts/authRequests'
 import '../stylesheets/LoginRegister.css'
 
 const Login = () => {
-  //const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   //const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,6 +18,14 @@ const Login = () => {
     login(name, pwd).then(() => {localStorage.setItem('curr_user', name); window.open("/main","_self")}).catch((e) => {setError("Incorrect password/Something went wrong. Please try again later.");});
     setLoading(false);
   }
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("curr_user");
+    if (loggedInUser && loggedInUser !== "") {
+      setUsername(loggedInUser);
+      window.open("/main","_self")
+    }
+  }, []);
 
   return  (
     <div>
