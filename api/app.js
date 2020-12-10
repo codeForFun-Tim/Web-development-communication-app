@@ -189,6 +189,8 @@ expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(express.urlencoded({ extended: false }));
 expressApp.use(logger('dev'));
 expressApp.use(flash());
+expressApp.use(express.static('public')); // for serving the HTML file
+
 expressApp.use(session({
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),

@@ -140,12 +140,15 @@ function ChatView() {
 
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
-  const onFileUpload = (selectedFile, type) => {
+  const onFileUpload = (data, type) => {
     // Create an object of formData
     const msgFrom = localStorage.getItem("curr_user");
     const msgTo = localStorage.getItem("curr_receiver");
-    sendMediaAPI(selectedFile, type, msgFrom, msgTo, null);
-    console.log(selectedFile);
+    data.append("from", msgFrom);
+    data.append("to", msgTo);
+    data.append("message_type", type);
+    data.append("roomID", "123");
+    sendMediaAPI(data);
     // Request made to the backend api
     // Send formData object
     //axios.post("api/uploadfile", formData);
@@ -158,8 +161,12 @@ function ChatView() {
     if (selectedFile) {
       // finally we should use the data retrieved from mongoDB in setMessage
       const src = URL.createObjectURL(selectedFile);
-      const blob = new Blob([selectedFile], {type: selectedFile.type})
-      onFileUpload(blob, selectedFile.type);
+      const blob = new Blob([selectedFile], {type: selectedFile.type});
+      const data = new FormData();
+      blob.lastModifiedDate = new Date();
+      blob.name = selectedFile.name;
+      data.append("media_message_content", blob);
+      onFileUpload(data, selectedFile.type);
       // image
       if (
         selectedFile.name.endsWith('.png') ||
