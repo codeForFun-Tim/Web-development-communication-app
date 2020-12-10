@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/ChatView.css';
-import sendMessageAPI from '../javascripts/message';
+import { sendMessageAPI, sendMediaAPI } from '../javascripts/message';
 
-let mycontacts = [{name: "cat", id: 1}, {name: "pig", id: 2}, {name: "dog", id: 3}];
+let mycontacts = [{name: "cat@gmail.com", id: 1}, {name: "dog@gmail.com", id: 2}, {name: "guangzhe@test.com", id: 3}];
 let currentContactID = 0;
 let currentContactTitle = 'default';
+localStorage.setItem("curr_receiver", mycontacts[0].name);
 
 function ChatView() {
 
@@ -86,8 +87,8 @@ function ChatView() {
     // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
     currentContactID = e.currentTarget.getAttribute('id');
-    currentContactTitle = currentname;
-    setTitle(currentContactTitle);
+    setTitle(currentname);
+    localStorage.setItem("curr_receiver", currentname);
   }
 
   // -----------------update chat message------------------------
@@ -131,19 +132,20 @@ function ChatView() {
     document.getElementById('textarea').value = '';
     // send to back end
     const msgType = 'text';
-    const msgFrom = 'me';
-    const msgTo = currentContactTitle;
-    const roomID = 123;
-    sendMessageAPI(msg, msgType, msgFrom, msgTo, roomID);
+    const msgFrom = localStorage.getItem("curr_user");
+    const msgTo = localStorage.getItem("curr_receiver");
+    //const roomID = "5fd14b2e099e3b2aa8672745";
+    sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
   }
 
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
-  const onFileUpload = (selectedFile) => {
+  const onFileUpload = (selectedFile, type) => {
     // Create an object of formData
-    const formData = new FormData();
-    // Update the formData object
-    formData.append('myFile', selectedFile, selectedFile.name);
+    const msgFrom = localStorage.getItem("curr_user");
+    const msgTo = localStorage.getItem("curr_receiver");
+    sendMediaAPI(selectedFile, type, msgFrom, msgTo, null);
+    console.log(selectedFile);
     // Request made to the backend api
     // Send formData object
     //axios.post("api/uploadfile", formData);
@@ -154,9 +156,10 @@ function ChatView() {
     // Update the state
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      onFileUpload(selectedFile);
       // finally we should use the data retrieved from mongoDB in setMessage
       const src = URL.createObjectURL(selectedFile);
+      const blob = new Blob([selectedFile], {type: selectedFile.type})
+      onFileUpload(blob, selectedFile.type);
       // image
       if (
         selectedFile.name.endsWith('.png') ||
@@ -372,14 +375,14 @@ function ChatView() {
       <main>
         <header>
           <div>
-            <h2 id="chat_title">Vincent Porter</h2>
+        <h2 id="chat_title">{mycontacts[0].name}</h2>
           </div>
         </header>
         <ul id="chat">
           <li className="you">
             <div className="entete">
               <span className="status green"></span>
-              <h2>Vincent</h2>
+              <h2>{mycontacts[0].name} </h2>
               <h3>10:12AM, Today</h3>
             </div>
             {/* <div className="triangle"></div> */}
@@ -404,7 +407,7 @@ function ChatView() {
           <li className="you">
             <div className="entete">
               <span className="status green"></span>
-              <h2>Vincent</h2>
+              <h2>{mycontacts[0].name} </h2>
               <h3>10:12AM, Today</h3>
             </div>
             <div className="message">Hello</div>

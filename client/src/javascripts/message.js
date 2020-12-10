@@ -17,4 +17,24 @@ async function sendMessageAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
     }
 }
 
-export default sendMessageAPI;
+async function sendMediaAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
+    const apiUrl = `${api.url}/sendMessage`;
+    try {
+        const response = await axios.post(apiUrl, {
+            media_message_content : msgContent,
+            message_type : msgType,
+            from : msgFrom,
+            to : msgTo,
+            roomID : roomID,
+        });
+        return response;
+    } catch(error) {
+        throw new Error(error);
+    }
+}
+
+
+export {
+    sendMessageAPI,
+    sendMediaAPI,
+  };

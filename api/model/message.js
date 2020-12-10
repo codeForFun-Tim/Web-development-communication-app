@@ -25,6 +25,11 @@ const messageSchema = new mongoose.Schema({
         required: false,
     },
 
+    media_message_content:{ // contain image, audio, and video 
+        type: Buffer,
+        required: false,
+    },
+
     from: { //user id (sender)
         type: String,
         required: true,
@@ -36,9 +41,7 @@ const messageSchema = new mongoose.Schema({
     }
 
 
-    // audio message  audio/mpeg
-    // video message  video/mp4
-    // image .png, .jpg
+
 
 });
 

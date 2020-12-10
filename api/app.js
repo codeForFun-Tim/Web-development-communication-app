@@ -18,6 +18,8 @@ const User = require('./model/user');
 const Message = require('./model/message');
 require('dotenv').config();
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
 
 /**
  * MongoDB initialization.
@@ -36,6 +38,20 @@ mongoose.connect(process.env.DB_URL, {
   }
 });
 
+/**
+ * Multer initialization.
+ */
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+    const a = file.originalname.split('.');
+    cb(null, `${file.fieldname}-${Date.now()}.${a[a.length - 1]}`);
+  },
+});
+
+const parser = multer({ storage });
 
 /**
  * Passport initialization.
@@ -88,12 +104,18 @@ passport.deserializeUser((id, done) => {
 
 /**
  * Functions used to protect routes based on authentication status.
+ * TODO: add cookies 
  */
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
+    console.log('if req in checkAuth',req);
+    //console.log('if res in checkAuth',res);
+    //console.log('if next in checkAuth',next);
     return next();
   }
-
+  console.log('el req in checkAuth',req);
+  // console.log('el res in checkAuth',res);
+  // console.log('el next in checkAuth',next);
   return res.status(401).json('[!] Not authorized');
 }
 
@@ -160,7 +182,7 @@ const port = process.env.PORT || 8080;
 expressApp.listen(port, () => {
   console.log(`Server running on port:${port}`);
 });
-
+expressApp.use(fileUpload()); 
 expressApp.enable('trust proxy');
 expressApp.use(bodyParser.json());
 expressApp.use(bodyParser.urlencoded({ extended: true }));
@@ -196,6 +218,7 @@ module.exports = {
   expressApp,
   mongoose,
   passport,
+  parser,
   sendDatabaseErrorResponse,
 };
 

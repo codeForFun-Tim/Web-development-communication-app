@@ -15,7 +15,7 @@ const roomSchema = new mongoose.Schema({
        required: true
     },
 
-    userList: { //just two user (maybe store id)
+    userList: { //just two user (maybe email)
         type: Array,
         required: true
     },
