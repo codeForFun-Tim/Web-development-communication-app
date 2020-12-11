@@ -2,7 +2,7 @@
 project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Classroom
 
 ## Deployment:
-Heroku: https://excellent-web-app.herokuapp.com/register
+* Heroku: https://excellent-web-app.herokuapp.com/register
 
 ## Links:
 * Swagger API Documentation : https://app.swaggerhub.com/apis-docs/UPenn_CIS557/CIS557_WebApp_Weichu_Guangzhe_Tim/1.0.0
