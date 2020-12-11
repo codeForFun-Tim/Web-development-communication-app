@@ -61,7 +61,7 @@ describe('Test All ChatView Functions', () => {
             li[2].click()
         });
         const title3 = document.getElementById('chat_title').innerHTML;
-        expect(title3).toBe('dog');
+        expect(title3).toBe('guangzhe@test.com');
     });
 
     test('send message',() => {
@@ -107,6 +107,6 @@ describe('Test All ChatView Functions', () => {
             btu.click()
         });
         const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe("pig");
+        expect(title).toBe("dog@gmail.com");
     });
   });

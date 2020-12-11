@@ -483,3 +483,21 @@ video {
   margin: 0 auto;
   border-radius: 6px;
 }
+
+#accept_call {
+  border: none;
+  border-radius: 2px;
+  background: rgb(68, 192, 68);
+  color: white;
+  height: 25px;
+  cursor: pointer;
+}
+
+#decline_call {
+  border: none;
+  border-radius: 2px;
+  background: rgb(211, 72, 72);
+  color: white;
+  height: 25px;
+  cursor: pointer;
+}

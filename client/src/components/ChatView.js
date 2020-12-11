@@ -290,8 +290,14 @@ function ChatView() {
 
   function inviteVideoCall(){
     const videoCallDiv = 
-      `<button onclick="document.getElementById('video_call').click()">` +
-      'Accept Call' +
+      '<div>'+
+      'Calling...'+
+      '</div>'+
+      `<button class="vc_btu" id="decline_call" onclick="document.getElementsById('decline_call').style.visibility = 'hidden'; document.getElementsById('accept_call').style.visibility = 'hidden'">`+
+      'Decline'+
+      '</button>'+
+      `<button class="vc_btu" id="accept_call" onclick="document.getElementById('video_call').click()">` +
+      'Accept' +
       '</button>';
     setMessage(videoCallDiv);
   }
