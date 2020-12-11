@@ -11,9 +11,9 @@ project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Clas
 ## Team Aggrements:
 
 ### Forming
--Express opinions without reservation in terms of timeline, sketchy work division, and our expectation for the project.
--Develop a sense of shared responsibility as for how to divide our work, how we should keep track of progress along the way, and how we should evaluate the success of our project.
--Discuss major tools and techniques used in the project and make sure we are able to reach a consensus.
+- Express opinions without reservation in terms of timeline, sketchy work division, and our expectation for the project.
+- Develop a sense of shared responsibility as for how to divide our work, how we should keep track of progress along the way, and how we should evaluate the success of our project.
+- Discuss major tools and techniques used in the project and make sure we are able to reach a consensus.
 
 ### Storming
 - Work on solving all potential conflicts based on mutual understanding and mutual respect.
