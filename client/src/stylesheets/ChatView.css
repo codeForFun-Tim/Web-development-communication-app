@@ -501,3 +501,21 @@ video {
   height: 25px;
   cursor: pointer;
 }
+
+#yes_decline{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-color: #fa6f6f;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #fa6f6f;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  cursor: pointer;
+}

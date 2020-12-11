@@ -288,15 +288,39 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
+  function declineCall() {
+    const popup = document.getElementById('popup2');
+    popup.style.visibility = 'hidden';
+    const closepop2 = document.getElementById('closepop2');
+    const yes_decline = document.getElementById('yes_decline');
+    closepop2.style.visibility = 'hidden';
+    yes_decline.style.visibility = 'hidden';
+    document.getElementById('decline_call').style.visibility = 'hidden'; 
+    document.getElementById('accept_call').style.visibility = 'hidden';
+    document.getElementById('call_msg').innerHTML = 'Call Ended';
+    setMessage(`${myUserName} Declined The Call`);
+  }
+
+  function closepopWindow2() {
+    const popup = document.getElementById('popup2');
+    popup.style.visibility = 'hidden';
+    const closepop2 = document.getElementById('closepop2');
+    const yes_decline = document.getElementById('yes_decline');
+    closepop2.style.visibility = 'hidden';
+    yes_decline.style.visibility = 'hidden';
+  }
+
   function inviteVideoCall(){
     const videoCallDiv = 
-      '<div>'+
+      '<div id="call_msg">'+
       'Calling...'+
       '</div>'+
-      `<button class="vc_btu" id="decline_call" onclick="document.getElementsById('decline_call').style.visibility = 'hidden'; document.getElementsById('accept_call').style.visibility = 'hidden'">`+
+      `<button id="decline_call" onclick="document.getElementById('popup2').style.visibility = 'visible'; 
+      document.getElementById('closepop2').style.visibility = 'visible';
+      document.getElementById('yes_decline').style.visibility = 'visible'">`+
       'Decline'+
       '</button>'+
-      `<button class="vc_btu" id="accept_call" onclick="document.getElementById('video_call').click()">` +
+      `<button id="accept_call" onclick="document.getElementById('video_call').click()">` +
       'Accept' +
       '</button>';
     setMessage(videoCallDiv);
@@ -439,6 +463,19 @@ function ChatView() {
             </p>
             <p>
               <audio id="recordedAudio"></audio>
+            </p>
+          </div>
+        </div>
+        <div id="popup2" className="overlay">
+          <div className="popup">
+            <h3>Are you sure to decline the call?</h3>
+            <a id="closepop2" className="close" onClick={() => closepopWindow2()}>
+              &times;
+            </a>
+            <p>
+              <button id="yes_decline" onClick={() => declineCall()}>
+                YES
+              </button>
             </p>
           </div>
         </div>
