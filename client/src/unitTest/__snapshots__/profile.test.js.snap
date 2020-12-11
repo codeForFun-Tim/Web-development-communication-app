@@ -33,6 +33,25 @@ exports[`Test snapshot Test Profile 1`] = `
           Status
         </a>
       </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/status"
+          onClick={[Function]}
+        >
+          Logout
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/main"
+        >
+          
+        </a>
+      </li>
     </ul>
   </div>
   <h1
@@ -80,6 +99,7 @@ exports[`Test snapshot Test Profile 1`] = `
         align="center"
         className="resetBtn"
         id="resetBtn"
+        onClick={[Function]}
       >
         <b>
           Change Password

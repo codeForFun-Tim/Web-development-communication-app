@@ -38,6 +38,25 @@ exports[`Test snapshot Test Profile 1`] = `
             Status
           </a>
         </li>
+        <li
+          className="nav_li"
+        >
+          <a
+            href="/status"
+            onClick={[Function]}
+          >
+            Logout
+          </a>
+        </li>
+        <li
+          className="nav_li"
+        >
+          <a
+            href="/main"
+          >
+            
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -80,7 +99,7 @@ exports[`Test snapshot Test Profile 1`] = `
             <h2
               id="chat_title"
             >
-              Vincent Porter
+              cat@gmail.com
             </h2>
           </div>
         </header>
@@ -97,7 +116,8 @@ exports[`Test snapshot Test Profile 1`] = `
                 className="status green"
               />
               <h2>
-                Vincent
+                cat@gmail.com
+                 
               </h2>
               <h3>
                 10:12AM, Today
@@ -119,7 +139,8 @@ exports[`Test snapshot Test Profile 1`] = `
                 className="status green"
               />
               <h2>
-                Vincent
+                cat@gmail.com
+                 
               </h2>
               <h3>
                 10:12AM, Today
@@ -137,8 +158,16 @@ exports[`Test snapshot Test Profile 1`] = `
         >
           <button
             className="func_btu"
+            id="video_call"
+            onClick={[Function]}
           >
             Video Call
+          </button>
+          <button
+            className="func_btu"
+            onClick={[Function]}
+          >
+            invite
           </button>
           <button
             className="func_btu"
@@ -259,6 +288,33 @@ exports[`Test snapshot Test Profile 1`] = `
               <audio
                 id="recordedAudio"
               />
+            </p>
+          </div>
+        </div>
+        <div
+          className="overlay"
+          id="popup2"
+        >
+          <div
+            className="popup"
+          >
+            <h3>
+              Are you sure to decline the call?
+            </h3>
+            <a
+              className="close"
+              id="closepop2"
+              onClick={[Function]}
+            >
+              ×
+            </a>
+            <p>
+              <button
+                id="yes_decline"
+                onClick={[Function]}
+              >
+                YES
+              </button>
             </p>
           </div>
         </div>

@@ -22,15 +22,15 @@ exports[`Test snapshot Test Login 1`] = `
       <input
         align="center"
         className="userName"
-        id="userName"
-        placeholder="Username: cat@gmail.com"
+        id="email"
+        placeholder="Email: cat@gmail.com"
         type="text"
       />
       <input
         align="center"
         className="nickName"
-        id="nickName"
-        placeholder="Nickname"
+        id="userName"
+        placeholder="Username"
         type="text"
       />
       <input

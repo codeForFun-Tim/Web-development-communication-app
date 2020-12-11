@@ -26,7 +26,7 @@ exports[`Test snapshot Test Profile 1`] = `
           align="center"
           className="userName"
           id="userName"
-          placeholder="Username: cat@gmail.com"
+          placeholder="Email: cat@gmail.com"
           type="text"
         />
         <input

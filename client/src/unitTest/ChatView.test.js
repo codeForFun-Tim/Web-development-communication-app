@@ -109,4 +109,62 @@ describe('Test All ChatView Functions', () => {
         const title = document.getElementById('chat_title').innerHTML;
         expect(title).toBe("dog@gmail.com");
     });
+
+    test('click Video Call',() => {
+        const btu = document.getElementById('video_call');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const msg_title = document.getElementById('call_msg');
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(msg_title).not.toBe(null);
+        expect(msg_decl_btu).not.toBe(null);
+        expect(msg_accp_btu).not.toBe(null);
+    });
+
+    test('click Decline Button',() => {
+        const btu = document.getElementById('decline_call');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const popup = document.getElementById('popup2')
+        expect(popup.style.visibility).toBe('');
+    });
+
+    test('close popup window 2',() => {
+        const btu = document.getElementById('closepop2');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const popup = document.getElementById('popup2')
+        const yes_decline_btu = document.getElementById('yes_decline');
+        const msg_title = document.getElementById('call_msg').innerHTML;
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(msg_title).toBe('Calling...');
+        expect(msg_decl_btu).not.toBe(null);
+        expect(msg_accp_btu).not.toBe(null);
+    });
+
+    test('click decline yes button',() => {
+        const btu1 = document.getElementById('decline_call');
+        const btu2 = document.getElementById('yes_decline');
+        act(() => {
+            Simulate.click(btu1);
+            Simulate.click(btu2);
+        });
+        const popup = document.getElementById('popup2')
+        const yes_decline_btu = document.getElementById('yes_decline');
+        const msg_title = document.getElementById('call_msg').innerHTML;
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(msg_title).toBe('Call Ended');
+        expect(msg_decl_btu.style.visibility).toBe('hidden');
+        expect(msg_accp_btu.style.visibility).toBe('hidden');
+    });
   });
