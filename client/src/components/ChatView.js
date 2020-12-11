@@ -1,12 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
-import { sendMessageAPI, sendMediaAPI } from '../javascripts/message';
+import { sendMessageAPI, sendMediaAPI, videoCallAPI } from '../javascripts/message';
+import Room from './Room';
 
 let mycontacts = [{name: "cat@gmail.com", id: 1}, {name: "dog@gmail.com", id: 2}, {name: "guangzhe@test.com", id: 3}];
 let currentContactID = 0;
-let currentContactTitle = 'default';
+// let currentContactTitle = 'default';
 localStorage.setItem("curr_receiver", mycontacts[0].name);
+// hard code my name, and current room name
+let myUserName = 'test_user';
+let CurrentroomID = 'test_room_name';
 
 function ChatView() {
 
@@ -87,6 +91,7 @@ function ChatView() {
     // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
     currentContactID = e.currentTarget.getAttribute('id');
+    // currentContactTitle = currentname;
     setTitle(currentname);
     localStorage.setItem("curr_receiver", currentname);
   }
@@ -279,8 +284,43 @@ function ChatView() {
     closepopWindow();
   }
 
-  return (
-    <div id="container">
+  // -----------------start video call------------------------
+  const [roomName, setRoomName] = useState('');
+  const [token, setToken] = useState(null);
+
+  function inviteVideoCall(){
+    const videoCallDiv = 
+      `<button onclick="document.getElementById('video_call').click()">` +
+      'Accept Call' +
+      '</button>';
+    setMessage(videoCallDiv);
+  }
+
+  async function startVideoCall(){
+    const username = myUserName;
+    const roomName = CurrentroomID;
+    setRoomName(roomName);
+    setcontact(0);
+    inviteVideoCall();
+    const data = await videoCallAPI(username, roomName);
+    setToken(data.token);
+  }
+
+  const handleLogout = useCallback(event => {
+    setToken(null);
+    setcontact(mycontacts.length);
+    setMessage('End Video Call');
+  }, []);
+
+  // -----------------render html------------------------
+  let render;
+  if (token) {
+    render = (
+      <Room roomName={roomName} token={token} handleLogout={handleLogout} />
+    );
+  } else {
+    render = (
+      <div id="container">
       <aside>
         <header>
           <input
@@ -299,84 +339,6 @@ function ChatView() {
           </button>
         </footer>
         <ul id="myul">
-          {/* <li
-            value={'Any'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Any</h2>
-          </li>
-          <li
-            value={'Bob'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Bob</h2>
-          </li>
-          <li
-            value={'Cat'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Cat</h2>
-          </li>
-          <li
-            value={'Fish'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Fish</h2>
-          </li>
-          <li
-            value={'Tiger'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Tiger</h2>
-          </li>
-          <li
-            value={'Pig'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Pig</h2>
-          </li>
-          <li
-            value={'Deer'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Deer</h2>
-          </li>
-          <li
-            value={'Snake'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Snake</h2>
-          </li>
-          <li
-            value={'Iiger'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Iiger</h2>
-          </li>
-          <li
-            value={'Lion'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Lion</h2>
-          </li>
-          <li
-            value={'Bear'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Bear</h2>
-          </li>
-          <li
-            value={'Bird'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Bird</h2>
-          </li>
-          <li
-            value={'Monkey'}
-            onClick={(e) => contacts_handler(e, 'value')}
-          >
-            <h2>Monkey</h2>
-          </li> */}
         </ul>
       </aside>
       <main>
@@ -392,25 +354,8 @@ function ChatView() {
               <h2>{mycontacts[0].name} </h2>
               <h3>10:12AM, Today</h3>
             </div>
-            {/* <div className="triangle"></div> */}
             <div className="message">Hi, this is the first message</div>
           </li>
-          {/* <li className="me">
-            <div className="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>me</h2>
-              <span className="status blue"></span>
-            </div>
-            <div className="message">This is the second message.</div>
-          </li>
-          <li className="me">
-            <div className="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>me</h2>
-              <span className="status blue"></span>
-            </div>
-            <div className="message">OK</div>
-          </li> */}
           <li className="you">
             <div className="entete">
               <span className="status green"></span>
@@ -419,25 +364,10 @@ function ChatView() {
             </div>
             <div className="message">Hello</div>
           </li>
-          {/* <li className="me">
-            <div className="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>me</h2>
-              <span className="status blue"></span>
-            </div>
-            <div className="message">Yes yes.</div>
-          </li>
-          <li className="me">
-            <div className="entete">
-              <h3>10:12AM, Today</h3>
-              <h2>me</h2>
-              <span className="status blue"></span>
-            </div>
-            <div className="message">OK</div>
-          </li> */}
         </ul>
         <div id="btu_div">
-          <button className="func_btu">Video Call</button>
+          <button className="func_btu" id="video_call" onClick={() => startVideoCall()}>Video Call</button>
+          <button className="func_btu" onClick={() => inviteVideoCall()}>invite</button>
           <button className="func_btu">
             <label htmlFor="image-upload" className="custom-file-upload">
               <i className="fa fa-cloud-upload"></i> Send Image
@@ -508,7 +438,9 @@ function ChatView() {
         </div>
       </main>
     </div>
-  );
-}
+    );
+  }
+  return render;
+};
 
 export default ChatView;

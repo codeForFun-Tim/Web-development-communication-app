@@ -226,4 +226,5 @@ module.exports = {
 
 expressApp.use(require('./routes/authenRouter'));
 expressApp.use(require('./routes/messageRouter'));
+expressApp.use(require('./routes/videoCallRouter'));
 

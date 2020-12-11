@@ -24,8 +24,23 @@ async function sendMediaAPI(data) {
 
 }
 
+async function videoCallAPI(username, roomName) {
+    const data = await fetch('http://localhost:8080/video/token', {
+      method: 'POST',
+      body: JSON.stringify({
+        identity: username,
+        room: roomName
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json());
+    return Promise.resolve(data);
+}
+
 
 export {
     sendMessageAPI,
     sendMediaAPI,
+    videoCallAPI,
   };
