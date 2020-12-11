@@ -47,14 +47,14 @@ describe('Test All ChatView Functions', () => {
             li[0].click()
         });
         const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe('cat');
+        expect(title).toBe('cat@gmail.com');
 
         act(() => {
             // Simulate.click(li[1]);
             li[1].click()
         });
         const title2 = document.getElementById('chat_title').innerHTML;
-        expect(title2).toBe('pig');
+        expect(title2).toBe('dog@gmail.com');
 
         act(() => {
             // Simulate.click(li[2]);
