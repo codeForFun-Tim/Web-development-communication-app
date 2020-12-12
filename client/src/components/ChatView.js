@@ -6,8 +6,6 @@ import { getUser, addContact } from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [{name: "cat@gmail.com", id: 1}, {name: "dog@gmail.com", id: 2}, {name: "guangzhe@test.com", id: 3}];
-// users enter the same CurrentroomID to start video call
-let CurrentroomID = 'test_room';
 localStorage.setItem("curr_receiver", mycontacts[0].name);
 
 function ChatView() {
@@ -96,12 +94,18 @@ function ChatView() {
     // if newContact exist, add new contact to contact list
     if(newContact !== '') {
       const current_user = localStorage.getItem("curr_user");
-      const res = addContact(current_user, newContact);
-      if (res === 201){
-        const new_contact = {name: newContact};
-        mycontacts.push(new_contact);
-        setcontact(mycontacts.length);
-      }
+      console.log(current_user);
+      console.log(newContact);
+      addContact(current_user, newContact)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201){
+          const new_contact = {name: newContact};
+          mycontacts.push(new_contact);
+          setcontact(mycontacts.length);
+        }
+      }).catch(() => {alert("Non-existed User.");});
+
     }
   }, [newContact]);
   
@@ -123,7 +127,6 @@ function ChatView() {
   }
 
   function addUser(){
-    console.log('adduser');
     const popup = document.getElementById('popup3');
     const closepop = document.getElementById('closepop3');
     const btu = document.getElementById('add_contact_submit');
@@ -364,7 +367,7 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
-  function inviteVideoCall(){
+  function inviteVideoCall() {
     const videoCallDiv = 
       `<button onclick="document.getElementById('video_call').click()">` +
       'Accept Call' +
@@ -372,9 +375,22 @@ function ChatView() {
     setMessage(videoCallDiv);
   }
 
+  function generateRoomID() {
+    const sender = localStorage.getItem("curr_user");
+    const receiver = localStorage.getItem("curr_receiver");
+    let roomid = '';
+    if(sender>receiver){
+      roomid = sender.concat(receiver);
+    }
+    else{
+      roomid = receiver.concat(sender);
+    }
+    return roomid;
+  }
+
   async function startVideoCall(){
     const username = localStorage.getItem("curr_user");
-    const roomName = CurrentroomID;
+    const roomName = generateRoomID();
     setRoomName(roomName);
     setcontact(0);
     inviteVideoCall();
@@ -420,14 +436,14 @@ function ChatView() {
       <main>
         <header>
           <div>
-        <h2 id="chat_title">{mycontacts[0].name}</h2>
+        <h2 id="chat_title">{mycontacts.length === 0 ? '' : mycontacts[0].name}</h2>
           </div>
         </header>
         <ul id="chat">
           <li className="you">
             <div className="entete">
               <span className="status green"></span>
-              <h2>{mycontacts[0].name} </h2>
+              <h2>{mycontacts.length === 0 ? '' : mycontacts[0].name} </h2>
               <h3>10:12AM, Today</h3>
             </div>
             <div className="message">Hi, this is the first message</div>
@@ -435,7 +451,7 @@ function ChatView() {
           <li className="you">
             <div className="entete">
               <span className="status green"></span>
-              <h2>{mycontacts[0].name} </h2>
+              <h2>{mycontacts.length === 0 ? '' : mycontacts[0].name}</h2>
               <h3>10:12AM, Today</h3>
             </div>
             <div className="message">Hello</div>

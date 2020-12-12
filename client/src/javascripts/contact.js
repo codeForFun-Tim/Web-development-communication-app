@@ -15,15 +15,10 @@ async function getUser(username) {
 
 async function addContact(username, addUserName) {
     const apiUrl = `${api.url}/addContact`;
-    try {
-        const response = await axios.post(apiUrl, {
+    return axios.post(apiUrl, {
             username : username,
             addUserName : addUserName,
-        });
-        return response;
-    } catch(error) {
-        throw new Error(error);
-    }
+    });
 };
 
 async function deleteContact(username, delUserName) {

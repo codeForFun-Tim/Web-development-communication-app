@@ -15,7 +15,7 @@ const router = express.Router();
 router.get(
     '/getUser', async (req,res) => {
         const userName = req.query.username;
-        const user = await User.findOne({username: userName});
+        const user = await User.findOne({email: userName});
         if(user != null){
             const contacts = user.contact_list;
             const registrationDate = user.registration_date;
@@ -36,25 +36,29 @@ router.post(
         const userToAdd = req.body.addUserName; //make sure the frontend has the 'addUserName'
         const curUser = req.body.username; // make sure the frontend has the 'username' 
         // const roomID = req.body.RID;
-
-        const userInDB = User.findOne(
-            {username: userToAdd}
+        console.log('userToAdd',userToAdd);
+        console.log('curUser', curUser);
+        const userInDB = await User.findOne(
+            {email: userToAdd}
         );
         if(userInDB === null){ // no such user
+            console.log('userInDB is null');
             res.sendStatus(400);
         }
         else{
-
+            console.log('inside else statement');
             // const ifRoom = Room.findOne(
             //     { $or: [{userList: [userToAdd, curUser]}, {userList: [curUser, userToAdd]} ]}, (err,room) =>{
-                    const userToUpdate = await User.findOneAndUpdate({username:curUser}, 
-                        {$push: { contact_list: userToAdd }},
-                        done
-                     );
+                    const userToUpdate = await User.findOne({email:curUser});
                     if (userToUpdate != null){
+                        //update contact list TODO: TWO WAY (A -> B, THEN B -> A)
+                        console.log('userToUpdate type',typeof(userToUpdate));
+                        userToUpdate.contact_list.push(userToAdd);
+                        userToUpdate.save();       
                         res.send(201);
                     }
                     else{
+                        console.log('60 行的400');
                         res.send(400);
                     }
                     //  res.sendStatus(201);
