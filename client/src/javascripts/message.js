@@ -26,18 +26,13 @@ async function sendMediaAPI(data) {
 
 async function getMessageAPI(msgFrom, msgTo) {
   const apiUrl = `${api.url}/getMessageViaRoom`;
-  try {
-      const response = await axios.get(apiUrl, 
+    return axios.get(apiUrl, 
       {params: {
           from : msgFrom,
           to : msgTo,
       }});
-      console.log(response);
-      return response;
-  } catch(error) {
-      throw new Error(error);
-  }
-}
+} 
+
 
 async function videoCallAPI(username, roomName) {
     const data = await fetch('http://localhost:8080/video/token', {

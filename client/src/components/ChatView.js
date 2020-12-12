@@ -156,9 +156,36 @@ function ChatView() {
     setTitle(currentname);
     localStorage.setItem("curr_receiver", currentname);
     const msgFrom = localStorage.getItem("curr_user");
-    getMessageAPI(msgFrom, currentname);
+    const chatWindow = document.getElementById('chat');
+    chatWindow.innerHTML = '';
+    setMessage('');
+    let messageArray = [];
+    getMessageAPI(msgFrom, currentname)
+    .then((res) => 
+      {
+        const data = res.data;
+        for (var i = 0; i < data.length; i++) {
+          messageArray.push(data[i]);
+        }
+        messageArray.sort(sortByTime);
+        for (var index in messageArray) {
+          console.log(messageArray[index], msgFrom, currentname);
+          if (messageArray[index].name === msgFrom) {
+            setMessage(messageArray[index].content);
+          }
+          else {
+            setOtherMessage(messageArray[index]);
+          }
+        }
+      }
+    )
+    .catch((e) => {});
   }
-
+  function sortByTime(a, b){
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(a.time) - new Date(b.time);
+  };
   // -----------------update chat message------------------------
   const [message, setMessage] = useState('');
 
@@ -205,6 +232,38 @@ function ChatView() {
     //const roomID = "5fd14b2e099e3b2aa8672745";
     sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
   }
+
+    // -----------------update chat message------------------------
+    const [otherMessage, setOtherMessage] = useState(null); // here message is an object
+    const currentContactName = localStorage.getItem("curr_receiver");
+    useEffect(() => {
+      if (otherMessage !== null) {
+        const myli = document.createElement('LI');
+        myli.setAttribute('class', 'you');
+        const mydiv = document.createElement('div');
+        mydiv.setAttribute('class', 'entete');
+        const myh3 = document.createElement('H3');
+        console.log(otherMessage.content);
+        myh3.innerHTML = otherMessage.time;
+        const myh2 = document.createElement('H2');
+        myh2.innerHTML = currentContactName;
+        const myspan = document.createElement('span');
+        myspan.setAttribute('class', 'status blue');
+        const msg = document.createElement('div');
+        msg.setAttribute('class', 'message');
+        msg.innerHTML = otherMessage.content;
+  
+        mydiv.appendChild(myh3);
+        mydiv.appendChild(myh2);
+        mydiv.appendChild(myspan);
+        myli.appendChild(mydiv);
+        myli.appendChild(msg);
+  
+        const myul = document.getElementById('chat');
+        myul.appendChild(myli);
+        myul.scrollTop = myul.scrollHeight;
+      }
+    }, [otherMessage]);
 
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
@@ -436,26 +495,10 @@ function ChatView() {
       <main>
         <header>
           <div>
-        <h2 id="chat_title">{mycontacts.length === 0 ? '' : mycontacts[0].name}</h2>
+        <h2 id="chat_title">{}</h2>
           </div>
         </header>
         <ul id="chat">
-          <li className="you">
-            <div className="entete">
-              <span className="status green"></span>
-              <h2>{mycontacts.length === 0 ? '' : mycontacts[0].name} </h2>
-              <h3>10:12AM, Today</h3>
-            </div>
-            <div className="message">Hi, this is the first message</div>
-          </li>
-          <li className="you">
-            <div className="entete">
-              <span className="status green"></span>
-              <h2>{mycontacts.length === 0 ? '' : mycontacts[0].name}</h2>
-              <h3>10:12AM, Today</h3>
-            </div>
-            <div className="message">Hello</div>
-          </li>
         </ul>
         <div id="btu_div">
           <button className="func_btu" id="video_call" onClick={() => startVideoCall()}>Video Call</button>
@@ -502,9 +545,9 @@ function ChatView() {
             id="textarea"
             placeholder="Type your message"
           ></textarea>
-          <a id="submitbtu" href="#" onClick={() => sendMessage()}>
+          {title === '' ? <a id="submitbtu" href="#" style={{color:'gray'}}>Send</a> : <a id="submitbtu" href="#" onClick={() => sendMessage()}>
             Send
-          </a>
+          </a>}
         </footer>
         <div id="popup1" className="overlay">
           <div className="popup">
