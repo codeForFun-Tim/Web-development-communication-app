@@ -10,6 +10,16 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 // const User = new Schema({});
 
+const LockoutSchema = new mongoose.Schema({
+  attempts: {
+    type: Number,
+    required: true,
+  },
+  lastFailedDatetime: {
+    type: Number,
+    required: true,
+  },
+});
 
 
 const UserSchema = new Schema({
@@ -38,6 +48,11 @@ const UserSchema = new Schema({
   contact_list: {
     type: Array,
     required: true
+  },
+  
+  lockout: {
+    type: LockoutSchema,
+    required: true,
   }
 });
 

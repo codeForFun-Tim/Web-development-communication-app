@@ -4,7 +4,7 @@ import axios from 'axios';
 async function getUser(username) {
     const apiUrl = `${api.url}/getUser`;
     try {
-        const response = await axios.post(apiUrl, {
+        const response = await axios.get(apiUrl, {
                 params: {username: username}
             });
         return response;
@@ -22,11 +22,11 @@ async function addContact(username, addUserName) {
 };
 
 async function deleteContact(username, delUserName) {
-    const apiUrl = `${api.url}/delContact`;
+    const apiUrl = `${api.url}/blockUser`;
     try {
         const response = await axios.put(apiUrl, {
             username : username,
-            delUserName : delUserName,
+            userToBlock : delUserName,
         });
         return response;
     } catch(error) {
@@ -38,4 +38,5 @@ async function deleteContact(username, delUserName) {
 export {
     getUser,
     addContact,
+    deleteContact,
   };

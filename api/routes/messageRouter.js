@@ -50,13 +50,13 @@ router.get('/getMessageViaRoom',
       }
       if(message.message_type ==='text'){
         const textMessage = message.text_message_content; // now message is a text
-        returnedMessage.push({content: textMessage, type: message.message_type, time:message.timeStamp});
+        returnedMessage.push({content: textMessage, type: message.message_type, time:message.timeStamp, sender: message.from});
       }
       else if(message.message_type === 'audio/mpeg' ||
         message.message_type === 'video/mp4' ||
         message.message_type === 'image/jpeg'){
           const mediaMessage = message.media_message_content;
-          returnedMessage.push({content: mediaMessage, type: message.message_type, time:message.timeStamp});
+          returnedMessage.push({content: mediaMessage, type: message.message_type, time:message.timeStamp,sender: message.from});
       }
       else{
         console.log("not a valid message type");

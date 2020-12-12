@@ -87,7 +87,9 @@ checkNotAuthenticated,
                     username,
                     password: hashedPassword,
                     registration_date:registrationDate,
-                    image
+                    image,
+                    lockout: { attempts: 0, lastFailedDatetime: -1 },
+
                   });
                   newUser.save()
                     .then(() => res.sendStatus(201))

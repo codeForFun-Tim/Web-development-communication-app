@@ -54,7 +54,12 @@ router.post(
                         //update contact list TODO: TWO WAY (A -> B, THEN B -> A)
                         console.log('userToUpdate type',typeof(userToUpdate));
                         userToUpdate.contact_list.push(userToAdd);
-                        userToUpdate.save();       
+                        userToUpdate.save();   
+                        // newUser must not be null
+                        const newUser = await User.findOne({email:userToAdd});
+                        newUser.contact_list.push(curUser);
+                        newUser.save();
+                        
                         res.send(201);
                     }
                     else{
@@ -64,34 +69,52 @@ router.post(
                     //  res.sendStatus(201);
                 }
                 
-            //)
-            // if(ifRoom === null){ // no such room 
-            //     const newRoom = new Room ({
-            //        userList: [userToAdd,]
-            //        messageList: []
-            //     });
-            // }
 
         }
-
-        // see if userToAdd and curUser has a room: if yes, append userToAdd to curUser's contact list
-        // if no, then create a new room and then append userToAdd to curUser's contact list
-
-        
-        
- 
-        // const userToUpdate = await User.findOneAndUpdate({username:curUser}, 
-        //                         {$push: { contact_list: userToAdd }},
-        //                         done
-        //                      );
-        // if (userToUpdate != null){
-        //     res.send(201);
-        // }
-        // else{
-        //     res.send(400);
-        // }
-    //}
 )
+
+router.put('/blockUser',async (req,res) => {
+    const curUser = req.body.username;
+    const userToBlcok = req.body.userToBlock;
+
+    const userInDB = await User.findOne(
+        {email: userToBlcok}
+    )
+
+    if(userInDB === null){
+        console.log('userInDB is null');
+        res.sendStatus(400);
+    }
+
+    const userToUpdate = await User.findOne({email:curUser});
+    if(userToUpdate != null){ //remove userToBlock in the curUser's contact list
+    const index = userToUpdate.contact_list.indexOf(userToBlock);
+        if(index != null){
+            userToUpdate.contact_list.splice(index,1);
+            userToUpdate.save();
+
+            const secondIndex = userInDB.contact_list.indexOf(curUser);
+            if(secondIndex != null){
+                userInDB.contact_list.splice(secondIndex,1);
+                userInDB.save();
+               }
+
+            res.sendStatus(201);
+        }
+        else{
+            res.sendStatus(400);
+        }
+    }
+
+//    const secondIndex = userInDB.contact_list.indexOf(curUser);
+//    if(secondIndex != null){
+//     userInDB.contact_list.splice(secondIndex,1);
+//     userInDB.save();
+//    }
+
+
+
+})
 
 
 /*

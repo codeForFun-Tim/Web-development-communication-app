@@ -2,11 +2,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
-import { getUser, addContact } from '../javascripts/contact';
+import { getUser, addContact, deleteContact} from '../javascripts/contact';
 import Room from './Room';
 
-let mycontacts = [{name: "cat@gmail.com", id: 1}, {name: "dog@gmail.com", id: 2}, {name: "guangzhe@test.com", id: 3}];
-localStorage.setItem("curr_receiver", mycontacts[0].name);
+let mycontacts = [];
+// let mycontacts = ["cat@gmail.com", "dog@gmail.com", "guangzhe@test.com"];
+// localStorage.setItem("curr_receiver", mycontacts[0].name);
+
+function array_move(arr, old_index, new_index) {
+  if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+          arr.push(undefined);
+      }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  return arr;
+};
 
 function ChatView() {
 
@@ -19,19 +31,39 @@ function ChatView() {
     for (let i = 0; i < mycontacts.length; i++) {
       const myli = document.createElement('LI');
       const myh2 = document.createElement('H2');
-      myli.setAttribute('value', mycontacts[i].name);
+      myli.setAttribute('value', mycontacts[i]);
       myli.setAttribute('id', mycontacts[i].id);
       myli.onclick = function(e) {contacts_handler(e, 'value')};
-      myh2.innerHTML = mycontacts[i].name
+      myh2.innerHTML = mycontacts[i]
       myli.appendChild(myh2);
       myul.appendChild(myli);
     }
   }, [contactNum]);
 
-  // run once when first loading the page
+  // -----------------initialization when f------------------------
   useEffect(() => {
-    //mycontacts = 
-    setcontact(mycontacts.length);
+    // get all contacts from backend
+    const current_user = localStorage.getItem("curr_user");
+    getUser(current_user)
+    .then((res) => {
+      console.log(res);
+      //mycontacts = [];
+      //mycontacts = res.data.contacts; // put returned data into mycontacts
+      for (var i = 0; i < res.data.contacts.length; i++) {
+        mycontacts.push(res.data.contacts[i]);
+      }
+      console.log(mycontacts);
+      setcontact(mycontacts.length); // refresh contact list
+      // set current receiver
+      if(mycontacts.length !== 0) {
+        localStorage.setItem("curr_receiver", mycontacts[0]);
+      }
+      else {
+        localStorage.setItem("curr_receiver", 'NO CONTACTS');
+      }
+    }).catch(() => {alert("error");});
+    //setcontact(mycontacts.length); // refresh contact list
+
   }, []);
 
   // -----------------update search result------------------------
@@ -54,14 +86,19 @@ function ChatView() {
 
   // -----------------Delete selected user---------------------
   function deleteUser(){
+    const currentUserName = localStorage.getItem("curr_user");
     const currentContactName = localStorage.getItem("curr_receiver");
     if(mycontacts.length !== 0 || currentContactName !=='' ) {
-      const index = mycontacts.findIndex(o => o.name === currentContactName);
+      // delete from frontend
+      const index = mycontacts.findIndex(x => x === currentContactName);
       mycontacts.splice(index, 1);
+      // delete from backend
+      deleteContact(currentUserName, currentContactName);
+      // refresh contact list
       setcontact(mycontacts.length);
       if (mycontacts.length !== 0) {
-        localStorage.setItem("curr_receiver", mycontacts[0].name);
-        setTitle(mycontacts[0].name);
+        localStorage.setItem("curr_receiver", mycontacts[0]);
+        setTitle(mycontacts[0]);
       }
       else {
         localStorage.setItem("curr_receiver", '');
@@ -69,22 +106,6 @@ function ChatView() {
       }
     }
   }
-
-  // function deleteUser(){
-  //   if(mycontacts.length !== 0 || currentContactID !==0 ) {
-  //     const index = mycontacts.findIndex(o => o.id === parseInt(currentContactID));
-  //     mycontacts.splice(index, 1);
-  //     // console.log(mycontacts);
-  //     currentContactID = 0;
-  //     setcontact(mycontacts.length);
-  //     if (mycontacts.length !== 0) {
-  //       setTitle(mycontacts[0].name);
-  //     }
-  //     else {
-  //       setTitle('No Contacts');
-  //     }
-  //   }
-  // }
 
   // -----------------Add new user---------------------
   const [newContact, setnewContact] = useState('');
@@ -100,8 +121,7 @@ function ChatView() {
       .then((res) => {
         console.log(res);
         if (res.status === 201){
-          const new_contact = {name: newContact};
-          mycontacts.push(new_contact);
+          mycontacts.push(newContact);
           setcontact(mycontacts.length);
         }
       }).catch(() => {alert("Non-existed User.");});
@@ -148,11 +168,11 @@ function ChatView() {
   }, [title]);
 
   function contacts_handler(e) {
-    // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
-    // currentContactID = e.currentTarget.getAttribute('id');
-    // currentContactName = currentname;
-    // currentContactTitle = currentname;
+    // move current selected contact to the first place
+    const curr_index = mycontacts.findIndex(x => x === currentContactName);
+    mycontacts = array_move(mycontacts, curr_index, 0);
+    setcontact(0);
     setTitle(currentname);
     localStorage.setItem("curr_receiver", currentname);
     const msgFrom = localStorage.getItem("curr_user");
@@ -169,18 +189,20 @@ function ChatView() {
         }
         messageArray.sort(sortByTime);
         for (var index in messageArray) {
-          console.log(messageArray[index], msgFrom, currentname);
-          if (messageArray[index].name === msgFrom) {
+          if (messageArray[index].sender === msgFrom) {
             if (messageArray[index].type === 'image/jpeg') {
-              setMessage(createImageDiv(messageArray[index].content));
+              //console.log(messageArray[index], 'image1');
+              setRetrieveMessage(messageArray[index]);
             }
             else {
-              setMessage(messageArray[index].content);
+              //console.log(messageArray[index], msgFrom);
+              setRetrieveMessage(messageArray[index]);
             }
           }
           else {
             if (messageArray[index].type === 'image/jpeg') {
-              setOtherMessage(createImageDiv(messageArray[index].content));
+              //console.log(messageArray[index], 'image2');
+              setOtherMessage(messageArray[index]);
             }
             else {
               setOtherMessage(messageArray[index]);
@@ -191,18 +213,17 @@ function ChatView() {
     )
     .catch((e) => {});
   }
+
   function sortByTime(a, b){
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
     return new Date(a.time) - new Date(b.time);
   };
 
-  function createImageDiv(data) {
-    const src = URL.createObjectURL(data);
+  function createImageDiv(message) {
+    const src = `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
     return `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
   }
-
-
 
   // -----------------update chat message------------------------
   const [message, setMessage] = useState('');
@@ -261,7 +282,6 @@ function ChatView() {
         const mydiv = document.createElement('div');
         mydiv.setAttribute('class', 'entete');
         const myh3 = document.createElement('H3');
-        console.log(otherMessage.content);
         myh3.innerHTML = otherMessage.time;
         const myh2 = document.createElement('H2');
         myh2.innerHTML = currentContactName;
@@ -269,8 +289,12 @@ function ChatView() {
         myspan.setAttribute('class', 'status blue');
         const msg = document.createElement('div');
         msg.setAttribute('class', 'message');
-        msg.innerHTML = otherMessage.content;
-  
+        if (otherMessage.type === 'text') {
+          msg.innerHTML = otherMessage.content;
+        }
+        else {
+          msg.innerHTML = createImageDiv(otherMessage);
+        }
         mydiv.appendChild(myh3);
         mydiv.appendChild(myh2);
         mydiv.appendChild(myspan);
@@ -283,6 +307,39 @@ function ChatView() {
       }
     }, [otherMessage]);
 
+    const [retrievemessage, setRetrieveMessage] = useState(null);
+    useEffect(() => {
+      if (retrievemessage !== null) {
+        const myli = document.createElement('LI');
+        myli.setAttribute('class', 'me');
+        const mydiv = document.createElement('div');
+        mydiv.setAttribute('class', 'entete');
+        const myh3 = document.createElement('H3');
+        myh3.innerHTML = retrievemessage.time;
+        const myh2 = document.createElement('H2');
+        myh2.innerHTML = 'me';
+        const myspan = document.createElement('span');
+        myspan.setAttribute('class', 'status blue');
+        const msg = document.createElement('div');
+        msg.setAttribute('class', 'message');
+        if (retrievemessage.type === 'text') {
+          msg.innerHTML = retrievemessage.content;
+        }
+        else {
+          msg.innerHTML = createImageDiv(retrievemessage);
+        }
+  
+        mydiv.appendChild(myh3);
+        mydiv.appendChild(myh2);
+        mydiv.appendChild(myspan);
+        myli.appendChild(mydiv);
+        myli.appendChild(msg);
+  
+        const myul = document.getElementById('chat');
+        myul.appendChild(myli);
+        myul.scrollTop = myul.scrollHeight;
+      }
+    }, [retrievemessage]);
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
   const onFileUpload = (data, type) => {
@@ -451,7 +508,7 @@ function ChatView() {
       '</button>';
     setMessage(videoCallDiv);
   }
-
+// Generate local room ID
   function generateRoomID() {
     const sender = localStorage.getItem("curr_user");
     const receiver = localStorage.getItem("curr_receiver");
