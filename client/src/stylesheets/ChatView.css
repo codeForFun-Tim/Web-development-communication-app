@@ -483,3 +483,20 @@ video {
   margin: 0 auto;
   border-radius: 6px;
 }
+
+#add_contact_input {
+  height: 50px;
+  width: 300px;
+  font-size: 18px;
+}
+
+#add_contact_submit {
+  height: 40px;
+  width: 70px;
+  border: none;
+  border-radius: 5px;
+  background: rgb(95, 201, 95);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}

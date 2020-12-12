@@ -7,6 +7,7 @@ async function sendMessageAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
         const response = await axios.post(apiUrl, {
             text_message_content : msgContent,
             message_type : msgType,
+            media_message_content: null,
             from : msgFrom,
             to : msgTo,
             roomID : roomID,
@@ -21,7 +22,21 @@ async function sendMediaAPI(data) {
     const apiUrl = `${api.url}/sendMessage`;
     console.log(data.get('media_message_content'));
     return axios.post(apiUrl, data); 
+}
 
+async function getMessageAPI(msgFrom, msgTo) {
+  const apiUrl = `${api.url}/getMessageViaRoom`;
+  try {
+      const response = await axios.get(apiUrl, 
+      {params: {
+          from : msgFrom,
+          to : msgTo,
+      }});
+      console.log(response);
+      return response;
+  } catch(error) {
+      throw new Error(error);
+  }
 }
 
 async function videoCallAPI(username, roomName) {
@@ -42,5 +57,6 @@ async function videoCallAPI(username, roomName) {
 export {
     sendMessageAPI,
     sendMediaAPI,
+    getMessageAPI,
     videoCallAPI,
   };

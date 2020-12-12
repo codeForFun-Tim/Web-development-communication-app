@@ -1,16 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
-import { sendMessageAPI, sendMediaAPI, videoCallAPI } from '../javascripts/message';
+import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
+import { getUser, addContact } from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [{name: "cat@gmail.com", id: 1}, {name: "dog@gmail.com", id: 2}, {name: "guangzhe@test.com", id: 3}];
-let currentContactID = 0;
-// let currentContactTitle = 'default';
+// users enter the same CurrentroomID to start video call
+let CurrentroomID = 'test_room';
 localStorage.setItem("curr_receiver", mycontacts[0].name);
-// hard code my name, and current room name
-let myUserName = 'test_user';
-let CurrentroomID = 'test_room_name';
 
 function ChatView() {
 
@@ -34,6 +32,7 @@ function ChatView() {
 
   // run once when first loading the page
   useEffect(() => {
+    //mycontacts = 
     setcontact(mycontacts.length);
   }, []);
 
@@ -54,27 +53,85 @@ function ChatView() {
       }
     }
   }, [name]);
-  
+
   // -----------------Delete selected user---------------------
   function deleteUser(){
-    if(mycontacts.length !== 0 || currentContactID !==0 ) {
-      const index = mycontacts.findIndex(o => o.id === parseInt(currentContactID));
+    const currentContactName = localStorage.getItem("curr_receiver");
+    if(mycontacts.length !== 0 || currentContactName !=='' ) {
+      const index = mycontacts.findIndex(o => o.name === currentContactName);
       mycontacts.splice(index, 1);
-      // console.log(mycontacts);
-      currentContactID = 0;
       setcontact(mycontacts.length);
       if (mycontacts.length !== 0) {
+        localStorage.setItem("curr_receiver", mycontacts[0].name);
         setTitle(mycontacts[0].name);
       }
       else {
+        localStorage.setItem("curr_receiver", '');
         setTitle('No Contacts');
       }
     }
   }
 
+  // function deleteUser(){
+  //   if(mycontacts.length !== 0 || currentContactID !==0 ) {
+  //     const index = mycontacts.findIndex(o => o.id === parseInt(currentContactID));
+  //     mycontacts.splice(index, 1);
+  //     // console.log(mycontacts);
+  //     currentContactID = 0;
+  //     setcontact(mycontacts.length);
+  //     if (mycontacts.length !== 0) {
+  //       setTitle(mycontacts[0].name);
+  //     }
+  //     else {
+  //       setTitle('No Contacts');
+  //     }
+  //   }
+  // }
+
   // -----------------Add new user---------------------
+  const [newContact, setnewContact] = useState('');
+
+  useEffect(() => {
+    // search if newContact exist in the database
+    // if newContact exist, add new contact to contact list
+    if(newContact !== '') {
+      const current_user = localStorage.getItem("curr_user");
+      const res = addContact(current_user, newContact);
+      if (res === 201){
+        const new_contact = {name: newContact};
+        mycontacts.push(new_contact);
+        setcontact(mycontacts.length);
+      }
+    }
+  }, [newContact]);
+  
+  function addNewContact() {
+    const input_value = document.getElementById('add_contact_input').value;
+    setnewContact(input_value);
+    closepopWindow3();
+  }
+
+  function closepopWindow3() {
+    const popup = document.getElementById('popup3');
+    const closepop = document.getElementById('closepop3');
+    const btu = document.getElementById('add_contact_submit');
+    const input = document.getElementById('add_contact_input');
+    popup.style.visibility = 'hidden';
+    closepop.style.visibility = 'hidden';
+    btu.style.visibility = 'hidden';
+    input.style.visibility = 'hidden';
+  }
+
   function addUser(){
-    setcontact(mycontacts);
+    console.log('adduser');
+    const popup = document.getElementById('popup3');
+    const closepop = document.getElementById('closepop3');
+    const btu = document.getElementById('add_contact_submit');
+    const input = document.getElementById('add_contact_input');
+    popup.style.visibility = 'visible';
+    closepop.style.visibility = 'visible';
+    btu.style.visibility = 'visible';
+    input.style.visibility = 'visible';
   }
 
   // -----------------update chat title------------------------
@@ -90,10 +147,13 @@ function ChatView() {
   function contacts_handler(e) {
     // console.log(e.currentTarget.getAttribute('value'));
     const currentname = e.currentTarget.getAttribute('value');
-    currentContactID = e.currentTarget.getAttribute('id');
+    // currentContactID = e.currentTarget.getAttribute('id');
+    // currentContactName = currentname;
     // currentContactTitle = currentname;
     setTitle(currentname);
     localStorage.setItem("curr_receiver", currentname);
+    const msgFrom = localStorage.getItem("curr_user");
+    getMessageAPI(msgFrom, currentname);
   }
 
   // -----------------update chat message------------------------
@@ -166,37 +226,53 @@ function ChatView() {
     if (selectedFile) {
       // finally we should use the data retrieved from mongoDB in setMessage
       const src = URL.createObjectURL(selectedFile);
-      const blob = new Blob([selectedFile], {type: selectedFile.type});
       const data = new FormData();
-      blob.lastModifiedDate = new Date();
-      blob.name = selectedFile.name;
-      data.append("media_message_content", blob);
+      data.append("media_message_content", selectedFile);
       onFileUpload(data, selectedFile.type);
       // image
       if (
         selectedFile.name.endsWith('.png') ||
         selectedFile.name.endsWith('.jpg')
       ) {
-        const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
-        setMessage(imgDiv);
+        if (selectedFile.size/1024/1024 < 3) {
+          const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+          setMessage(imgDiv);
+        }
+        else {
+          alert("Image is too big, make sure it is less than 3 MB.");
+        }
+
       }
       // audio
       else if (selectedFile.name.endsWith('.mp3')) {
+        if (selectedFile.size/1024/1024 < 3) {
         const audioDiv =
           '<audio controls>' +
           `<source src=${src} type="audio/mpeg">` +
           'Your browser does not support the audio element.' +
           '</audio>';
         setMessage(audioDiv);
+        }
+        else {
+          alert("Audio is too big, make sure it is less than 3 MB.");
+        }
       }
       // video
       else if (selectedFile.name.endsWith('.mp4')) {
-        const videoDiv =
+        if (selectedFile.size/1024/1024 < 3) {
+          const videoDiv =
           '<video width="320" height="240" controls>' +
           `<source src=${src} type="video/mp4">` +
           'Your browser does not support the video tag.' +
           '</video>';
-        setMessage(videoDiv);
+          setMessage(videoDiv);
+        }
+        else {
+          alert("Video is too big, make sure it is less than 3 MB.");
+        }
+      }
+      else {
+        alert("Invalid file type.");
       }
     }
   };
@@ -297,7 +373,7 @@ function ChatView() {
   }
 
   async function startVideoCall(){
-    const username = myUserName;
+    const username = localStorage.getItem("curr_user");
     const roomName = CurrentroomID;
     setRoomName(roomName);
     setcontact(0);
@@ -433,6 +509,26 @@ function ChatView() {
             </p>
             <p>
               <audio id="recordedAudio"></audio>
+            </p>
+          </div>
+        </div>
+        <div id="popup3" className="overlay">
+          <div className="popup">
+            <h2>Add New Contact</h2>
+            <a id="closepop3" className="close" onClick={() => closepopWindow3()}>
+              &times;
+            </a>
+            <p>
+              <input
+                id="add_contact_input"
+                type="text"
+                placeholder="Input Contact Name"
+              />
+            </p>
+            <p>
+              <button id="add_contact_submit" onClick={() => addNewContact()}>
+                Submit
+              </button>
             </p>
           </div>
         </div>

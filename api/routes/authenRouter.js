@@ -101,7 +101,7 @@ checkNotAuthenticated,
       res.status(559).json(`[!] Could not register user: ${err}`);
     }
   });
-
+// TODO : return a cookie OR JSON webtoken (get from the frontend )
 router.post('/login',
   checkNotAuthenticated,
   passport.authenticate('local'),

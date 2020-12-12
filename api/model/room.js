@@ -12,7 +12,7 @@ const roomSchema = new mongoose.Schema({
 
     roomNum: { // primary key
        type: String,
-       required: true
+       required: false,
     },
 
     userList: { //just two user (maybe email)
