@@ -171,10 +171,20 @@ function ChatView() {
         for (var index in messageArray) {
           console.log(messageArray[index], msgFrom, currentname);
           if (messageArray[index].name === msgFrom) {
-            setMessage(messageArray[index].content);
+            if (messageArray[index].type === 'image/jpeg') {
+              setMessage(createImageDiv(messageArray[index].content));
+            }
+            else {
+              setMessage(messageArray[index].content);
+            }
           }
           else {
-            setOtherMessage(messageArray[index]);
+            if (messageArray[index].type === 'image/jpeg') {
+              setOtherMessage(createImageDiv(messageArray[index].content));
+            }
+            else {
+              setOtherMessage(messageArray[index]);
+            }
           }
         }
       }
@@ -186,6 +196,14 @@ function ChatView() {
     // to get a value that is either negative, positive, or zero.
     return new Date(a.time) - new Date(b.time);
   };
+
+  function createImageDiv(data) {
+    const src = URL.createObjectURL(data);
+    return `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+  }
+
+
+
   // -----------------update chat message------------------------
   const [message, setMessage] = useState('');
 
