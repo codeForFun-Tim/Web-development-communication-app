@@ -170,9 +170,10 @@ function ChatView() {
   function contacts_handler(e) {
     const currentname = e.currentTarget.getAttribute('value');
     // move current selected contact to the first place
-    const curr_index = mycontacts.findIndex(x => x === currentContactName);
+    const curr_index = mycontacts.findIndex(x => x === currentname);
     mycontacts = array_move(mycontacts, curr_index, 0);
     setcontact(0);
+    setcontact(mycontacts.length);
     setTitle(currentname);
     localStorage.setItem("curr_receiver", currentname);
     const msgFrom = localStorage.getItem("curr_user");
@@ -190,23 +191,10 @@ function ChatView() {
         messageArray.sort(sortByTime);
         for (var index in messageArray) {
           if (messageArray[index].sender === msgFrom) {
-            if (messageArray[index].type === 'image/jpeg') {
-              //console.log(messageArray[index], 'image1');
-              setRetrieveMessage(messageArray[index]);
-            }
-            else {
-              //console.log(messageArray[index], msgFrom);
-              setRetrieveMessage(messageArray[index]);
-            }
+            setRetrieveMessage(messageArray[index]);
           }
-          else {
-            if (messageArray[index].type === 'image/jpeg') {
-              //console.log(messageArray[index], 'image2');
-              setOtherMessage(messageArray[index]);
-            }
-            else {
-              setOtherMessage(messageArray[index]);
-            }
+          else if (messageArray[index].sender === currentname) {              
+            setOtherMessage(messageArray[index]);
           }
         }
       }
@@ -221,8 +209,30 @@ function ChatView() {
   };
 
   function createImageDiv(message) {
-    const src = `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const src = `data:image/jpeg;base64,${base64}`;
+    //const src = `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
     return `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+  }
+
+  function createAudioDiv(message) {
+    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const src = `data:audio/mpeg;base64,${base64}`;
+    //const src = `data:audio/mpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+    return  '<audio controls>' +
+            `<source src=${src} type="audio/mpeg">` +
+            'Your browser does not support the audio element.' +
+            '</audio>';;
+  }
+
+  function createVideoDiv(message) {
+    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const src = `data:video/mp4;base64,${base64}`;
+    //const src = `data:video/mp4;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+    return  '<video width="320" height="240" controls>' +
+            `<source src=${src} type="video/mp4">` +
+            'Your browser does not support the video tag.' +
+            '</video>';
   }
 
   // -----------------update chat message------------------------
@@ -292,8 +302,17 @@ function ChatView() {
         if (otherMessage.type === 'text') {
           msg.innerHTML = otherMessage.content;
         }
-        else {
+        else if (otherMessage.type === 'image/jpeg') {
           msg.innerHTML = createImageDiv(otherMessage);
+        }
+        else if (otherMessage.type === 'video/mp4') {
+          msg.innerHTML = createVideoDiv(otherMessage);
+        }
+        else if (otherMessage.type === 'audio/mpeg'){
+          msg.innerHTML = createAudioDiv(otherMessage);
+        } 
+        else {
+          msg.innerHTML = 'Invalid Yype';
         }
         mydiv.appendChild(myh3);
         mydiv.appendChild(myh2);
@@ -325,10 +344,18 @@ function ChatView() {
         if (retrievemessage.type === 'text') {
           msg.innerHTML = retrievemessage.content;
         }
-        else {
+        else if (retrievemessage.type === 'image/jpeg') {
           msg.innerHTML = createImageDiv(retrievemessage);
         }
-  
+        else if (retrievemessage.type === 'video/mp4') {
+          msg.innerHTML = createVideoDiv(retrievemessage);
+        }
+        else if (retrievemessage.type === 'audio/mpeg'){
+          msg.innerHTML = createAudioDiv(retrievemessage);
+        } 
+        else {
+          msg.innerHTML = 'Invalid Yype';
+        }
         mydiv.appendChild(myh3);
         mydiv.appendChild(myh2);
         mydiv.appendChild(myspan);
@@ -340,6 +367,7 @@ function ChatView() {
         myul.scrollTop = myul.scrollHeight;
       }
     }, [retrievemessage]);
+  
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
   const onFileUpload = (data, type) => {
@@ -371,18 +399,18 @@ function ChatView() {
         selectedFile.name.endsWith('.png') ||
         selectedFile.name.endsWith('.jpg')
       ) {
-        if (selectedFile.size/1024/1024 < 3) {
+        if (selectedFile.size/1024/1024 < 1) {
           const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
           setMessage(imgDiv);
         }
         else {
-          alert("Image is too big, make sure it is less than 3 MB.");
+          alert("Image is too big, make sure it is less than 1 MB.");
         }
 
       }
       // audio
       else if (selectedFile.name.endsWith('.mp3')) {
-        if (selectedFile.size/1024/1024 < 3) {
+        if (selectedFile.size/1024/1024 < 1) {
         const audioDiv =
           '<audio controls>' +
           `<source src=${src} type="audio/mpeg">` +
@@ -391,12 +419,12 @@ function ChatView() {
         setMessage(audioDiv);
         }
         else {
-          alert("Audio is too big, make sure it is less than 3 MB.");
+          alert("Audio is too big, make sure it is less than 1 MB.");
         }
       }
       // video
       else if (selectedFile.name.endsWith('.mp4')) {
-        if (selectedFile.size/1024/1024 < 3) {
+        if (selectedFile.size/1024/1024 < 1) {
           const videoDiv =
           '<video width="320" height="240" controls>' +
           `<source src=${src} type="video/mp4">` +
@@ -405,7 +433,7 @@ function ChatView() {
           setMessage(videoDiv);
         }
         else {
-          alert("Video is too big, make sure it is less than 3 MB.");
+          alert("Video is too big, make sure it is less than 1 MB.");
         }
       }
       else {
@@ -439,7 +467,7 @@ function ChatView() {
   }
 
   let mediaRecorder;
-
+  let updaterRecord;
   function Recording() {
     const recordedAudio = document.getElementById('recordedAudio');
     const startRecord = document.getElementById('startRecord');
@@ -462,6 +490,7 @@ function ChatView() {
           const blob = new Blob(chunks, {
             type: 'audio/ogg; codecs=opus',
           });
+          updaterRecord = blob;
           recordedAudio.src = window.URL.createObjectURL(blob);
           recordedAudio.controls = true;
           recordedAudio.autoplay = true;
@@ -494,6 +523,9 @@ function ChatView() {
       'Your browser does not support the audio element.' +
       '</audio>';
     setMessage(audioDiv);
+    const data = new FormData();
+    data.append("media_message_content", updaterRecord);
+    onFileUpload(data, "audio/mpeg");
     closepopWindow();
   }
 
@@ -501,13 +533,58 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
-  function inviteVideoCall() {
-    const videoCallDiv = 
-      `<button onclick="document.getElementById('video_call').click()">` +
-      'Accept Call' +
-      '</button>';
-    setMessage(videoCallDiv);
+  function sendVideoCall(msg) {
+    // update front end
+    setMessage(msg);
+    // send to back end
+    const msgType = 'text';
+    const msgFrom = localStorage.getItem("curr_user");
+    const msgTo = localStorage.getItem("curr_receiver");
+    //const roomID = "5fd14b2e099e3b2aa8672745";
+    sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
   }
+
+  function declineCall() {
+    const popup = document.getElementById('popup2');
+    popup.style.visibility = 'hidden';
+    const closepop2 = document.getElementById('closepop2');
+    const yes_decline = document.getElementById('yes_decline');
+    closepop2.style.visibility = 'hidden';
+    yes_decline.style.visibility = 'hidden';
+    document.getElementById('decline_call').style.visibility = 'hidden'; 
+    document.getElementById('accept_call').style.visibility = 'hidden';
+    document.getElementById('call_msg').innerHTML = 'Call Ended';
+    const myUserName = localStorage.getItem("curr_user");
+    sendVideoCall(`${myUserName} Declined The Call`);
+    // setMessage(`${myUserName} Declined The Call`);
+  }
+
+  function closepopWindow2() {
+    const popup = document.getElementById('popup2');
+    popup.style.visibility = 'hidden';
+    const closepop2 = document.getElementById('closepop2');
+    const yes_decline = document.getElementById('yes_decline');
+    closepop2.style.visibility = 'hidden';
+    yes_decline.style.visibility = 'hidden';
+  }
+
+  function inviteVideoCall(){
+    const videoCallDiv = 
+      '<div id="call_msg">'+
+      'Calling...'+
+      '</div>'+
+      `<button id="decline_call" onclick="document.getElementById('popup2').style.visibility = 'visible'; 
+      document.getElementById('closepop2').style.visibility = 'visible';
+      document.getElementById('yes_decline').style.visibility = 'visible'">`+
+      'Decline'+
+      '</button>'+
+      `<button id="accept_call" onclick="document.getElementById('video_call').click()">` +
+      'Accept' +
+      '</button>';
+    sendVideoCall(videoCallDiv);
+    // setMessage(videoCallDiv);
+  }
+
 // Generate local room ID
   function generateRoomID() {
     const sender = localStorage.getItem("curr_user");
@@ -535,7 +612,8 @@ function ChatView() {
   const handleLogout = useCallback(event => {
     setToken(null);
     setcontact(mycontacts.length);
-    setMessage('End Video Call');
+    sendVideoCall('End Video Call');
+    // setMessage('End Video Call');
   }, []);
 
   // -----------------render html------------------------
@@ -646,6 +724,19 @@ function ChatView() {
             </p>
           </div>
         </div>
+        <div id="popup2" className="overlay">
+          <div className="popup">
+            <h3>Are you sure to decline the call?</h3>
+            <a id="closepop2" className="close" onClick={() => closepopWindow2()}>
+              &times;
+            </a>
+            <p>
+              <button id="yes_decline" onClick={() => declineCall()}>
+                YES
+              </button>
+            </p>
+          </div>
+        </div>        
         <div id="popup3" className="overlay">
           <div className="popup">
             <h2>Add New Contact</h2>

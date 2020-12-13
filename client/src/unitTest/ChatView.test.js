@@ -47,21 +47,21 @@ describe('Test All ChatView Functions', () => {
             li[0].click()
         });
         const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe('cat');
+        expect(title).toBe('cat@gmail.com');
 
         act(() => {
             // Simulate.click(li[1]);
             li[1].click()
         });
         const title2 = document.getElementById('chat_title').innerHTML;
-        expect(title2).toBe('pig');
+        expect(title2).toBe('dog@gmail.com');
 
         act(() => {
             // Simulate.click(li[2]);
             li[2].click()
         });
         const title3 = document.getElementById('chat_title').innerHTML;
-        expect(title3).toBe('dog');
+        expect(title3).toBe('guangzhe@test.com');
     });
 
     test('send message',() => {
@@ -107,6 +107,64 @@ describe('Test All ChatView Functions', () => {
             btu.click()
         });
         const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe("pig");
+        expect(title).toBe("dog@gmail.com");
+    });
+
+    test('click Video Call',() => {
+        const btu = document.getElementById('video_call');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const msg_title = document.getElementById('call_msg');
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(msg_title).not.toBe(null);
+        expect(msg_decl_btu).not.toBe(null);
+        expect(msg_accp_btu).not.toBe(null);
+    });
+
+    test('click Decline Button',() => {
+        const btu = document.getElementById('decline_call');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const popup = document.getElementById('popup2')
+        expect(popup.style.visibility).toBe('');
+    });
+
+    test('close popup window 2',() => {
+        const btu = document.getElementById('closepop2');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const popup = document.getElementById('popup2')
+        const yes_decline_btu = document.getElementById('yes_decline');
+        const msg_title = document.getElementById('call_msg').innerHTML;
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(msg_title).toBe('Calling...');
+        expect(msg_decl_btu).not.toBe(null);
+        expect(msg_accp_btu).not.toBe(null);
+    });
+
+    test('click decline yes button',() => {
+        const btu1 = document.getElementById('decline_call');
+        const btu2 = document.getElementById('yes_decline');
+        act(() => {
+            Simulate.click(btu1);
+            Simulate.click(btu2);
+        });
+        const popup = document.getElementById('popup2')
+        const yes_decline_btu = document.getElementById('yes_decline');
+        const msg_title = document.getElementById('call_msg').innerHTML;
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(msg_title).toBe('Call Ended');
+        expect(msg_decl_btu.style.visibility).toBe('hidden');
+        expect(msg_accp_btu.style.visibility).toBe('hidden');
     });
   });

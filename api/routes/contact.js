@@ -31,8 +31,6 @@ router.get(
 
 router.post(
     '/addContact', async (req,res) => {
-        
-        
         const userToAdd = req.body.addUserName; //make sure the frontend has the 'addUserName'
         const curUser = req.body.username; // make sure the frontend has the 'username' 
         // const roomID = req.body.RID;

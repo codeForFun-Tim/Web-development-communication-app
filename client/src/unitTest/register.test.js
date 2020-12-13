@@ -38,10 +38,9 @@ describe('Test functonal component functions', () => {
         submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       });
       const userName = container.querySelector('#userName');
-      const nickName = container.querySelector('#nickName');
+      // const nickName = container.querySelector('#nickName');
       const password = container.querySelector('#password');
       expect(userName.value).toBe("");
-      expect(nickName.value).toBe("");
       expect(password.value).toBe("");
     });
   
@@ -56,4 +55,3 @@ describe('Test functonal component functions', () => {
         });
       });
   });
-  
