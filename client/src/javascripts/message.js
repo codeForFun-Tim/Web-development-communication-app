@@ -35,7 +35,7 @@ async function getMessageAPI(msgFrom, msgTo) {
 
 
 async function videoCallAPI(username, roomName) {
-    const data = await fetch('http://localhost:8080/video/token', {
+    const data = await fetch(`${api.url}/video/token`, {
       method: 'POST',
       body: JSON.stringify({
         identity: username,
