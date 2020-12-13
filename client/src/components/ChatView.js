@@ -46,9 +46,6 @@ function ChatView() {
     const current_user = localStorage.getItem("curr_user");
     getUser(current_user)
     .then((res) => {
-      console.log(res);
-      //mycontacts = [];
-      //mycontacts = res.data.contacts; // put returned data into mycontacts
       for (var i = 0; i < res.data.contacts.length; i++) {
         mycontacts.push(res.data.contacts[i]);
       }
