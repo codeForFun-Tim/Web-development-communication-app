@@ -23,45 +23,48 @@ function array_move(arr, old_index, new_index) {
 function ChatView() {
 
   // -----------------update contact list------------------------
-  const [contactNum, setcontact] = useState(0);
+  const [contactNum, setcontact] = useState(-1);
 
   useEffect(() => {
-    const myul = document.getElementById('myul');
-    myul.innerHTML = '';
-    for (let i = 0; i < mycontacts.length; i++) {
-      const myli = document.createElement('LI');
-      const myh2 = document.createElement('H2');
-      myli.setAttribute('value', mycontacts[i]);
-      myli.setAttribute('id', mycontacts[i].id);
-      myli.onclick = function(e) {contacts_handler(e, 'value')};
-      myh2.innerHTML = mycontacts[i]
-      myli.appendChild(myh2);
-      myul.appendChild(myli);
+    if (contactNum !== -1) {
+      const myul = document.getElementById('myul');
+      myul.innerHTML = '';
+      for (let i = 0; i < mycontacts.length; i++) {
+        const myli = document.createElement('LI');
+        const myh2 = document.createElement('H2');
+        myli.setAttribute('value', mycontacts[i]);
+        myli.setAttribute('id', mycontacts[i]);
+        myli.onclick = function(e) {event_handler(e, 'value')};
+        myh2.innerHTML = mycontacts[i]
+        myli.appendChild(myh2);
+        myul.appendChild(myli);
+      }
+      const currentContactName = localStorage.getItem("curr_receiver");
+      contacts_handler(currentContactName);
     }
   }, [contactNum]);
 
   // -----------------initialization when f------------------------
-  useEffect(() => {
-    // get all contacts from backend
-    const current_user = localStorage.getItem("curr_user");
-    getUser(current_user)
-    .then((res) => {
-      for (var i = 0; i < res.data.contacts.length; i++) {
-        mycontacts.push(res.data.contacts[i]);
-      }
-      console.log(mycontacts);
-      setcontact(mycontacts.length); // refresh contact list
-      // set current receiver
-      if(mycontacts.length !== 0) {
-        localStorage.setItem("curr_receiver", mycontacts[0]);
-      }
-      else {
-        localStorage.setItem("curr_receiver", 'NO CONTACTS');
-      }
-    }).catch(() => {alert("error");});
-    //setcontact(mycontacts.length); // refresh contact list
+  // useEffect(() => {
+  //   // get all contacts from backend
+  //   const current_user = localStorage.getItem("curr_user");
+  //   getUser(current_user)
+  //   .then((res) => {
+  //     for (var i = 0; i < res.data.contacts.length; i++) {
+  //       mycontacts.push(res.data.contacts[i]);
+  //     }
+  //     // set current receiver
+  //     if(mycontacts.length !== 0) {
+  //       localStorage.setItem("curr_receiver", mycontacts[0]);
+  //       setcontact(mycontacts.length); // refresh contact list
+  //     }
+  //     else {
+  //       localStorage.setItem("curr_receiver", '');
+  //     }
+  //   }).catch(() => {alert("error");});
+  //   //setcontact(mycontacts.length); // refresh contact list
 
-  }, []);
+  // }, []);
 
   // -----------------update search result------------------------
   const [name, setName] = useState('');
@@ -112,11 +115,8 @@ function ChatView() {
     // if newContact exist, add new contact to contact list
     if(newContact !== '') {
       const current_user = localStorage.getItem("curr_user");
-      console.log(current_user);
-      console.log(newContact);
       addContact(current_user, newContact)
       .then((res) => {
-        console.log(res);
         if (res.status === 201){
           mycontacts.push(newContact);
           setcontact(mycontacts.length);
@@ -164,15 +164,26 @@ function ChatView() {
     }
   }, [title]);
 
-  function contacts_handler(e) {
-    const currentname = e.currentTarget.getAttribute('value');
+  function event_handler(e) {
+    const current_click_name = e.currentTarget.getAttribute('value');
+    localStorage.setItem("curr_receiver", current_click_name);
     // move current selected contact to the first place
-    const curr_index = mycontacts.findIndex(x => x === currentname);
+    const curr_index = mycontacts.findIndex(x => x === current_click_name);
     mycontacts = array_move(mycontacts, curr_index, 0);
     setcontact(0);
     setcontact(mycontacts.length);
+  }
+
+  function contacts_handler(current_click_name) {
+    // const currentname = e.currentTarget.getAttribute('value');
+    const currentname = current_click_name;
+    // // move current selected contact to the first place
+    // const curr_index = mycontacts.findIndex(x => x === currentname);
+    // mycontacts = array_move(mycontacts, curr_index, 0);
+    // setcontact(0);
+    // setcontact(mycontacts.length);
     setTitle(currentname);
-    localStorage.setItem("curr_receiver", currentname);
+    // localStorage.setItem("curr_receiver", currentname);
     const msgFrom = localStorage.getItem("curr_user");
     const chatWindow = document.getElementById('chat');
     chatWindow.innerHTML = '';
@@ -530,14 +541,42 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    if(token === null) {
+      if(mycontacts.length === 0 ) {
+        // mycontacts= [];
+        // setcontact(mycontacts.length);
+        // get all contacts from backend
+        const current_user = localStorage.getItem("curr_user");
+        getUser(current_user)
+        .then((res) => {
+          for (var i = 0; i < res.data.contacts.length; i++) {
+            mycontacts.push(res.data.contacts[i]);
+          }
+          // set current receiver
+          if(mycontacts.length !== 0) {
+            localStorage.setItem("curr_receiver", mycontacts[0]);
+            setcontact(mycontacts.length); // refresh contact list
+          }
+          else {
+            localStorage.setItem("curr_receiver", '');
+          }
+        }).catch(() => {alert("error");});
+      }
+      else{
+        // set current receiver
+        localStorage.setItem("curr_receiver", mycontacts[0]);
+        // let contacts = [];
+        setTitle('loading...');
+        setcontact(0);
+      }
+    }
+  }, [token]);
+
   function sendVideoCall(msg) {
-    // update front end
-    setMessage(msg);
-    // send to back end
     const msgType = 'text';
     const msgFrom = localStorage.getItem("curr_user");
     const msgTo = localStorage.getItem("curr_receiver");
-    //const roomID = "5fd14b2e099e3b2aa8672745";
     sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
   }
 
@@ -553,7 +592,6 @@ function ChatView() {
     document.getElementById('call_msg').innerHTML = 'Call Ended';
     const myUserName = localStorage.getItem("curr_user");
     sendVideoCall(`${myUserName} Declined The Call`);
-    // setMessage(`${myUserName} Declined The Call`);
   }
 
   function closepopWindow2() {
@@ -579,7 +617,6 @@ function ChatView() {
       'Accept' +
       '</button>';
     sendVideoCall(videoCallDiv);
-    // setMessage(videoCallDiv);
   }
 
 // Generate local room ID
@@ -600,17 +637,14 @@ function ChatView() {
     const username = localStorage.getItem("curr_user");
     const roomName = generateRoomID();
     setRoomName(roomName);
-    setcontact(0);
     inviteVideoCall();
     const data = await videoCallAPI(username, roomName);
     setToken(data.token);
   }
 
   const handleLogout = useCallback(event => {
-    setToken(null);
-    setcontact(mycontacts.length);
     sendVideoCall('End Video Call');
-    // setMessage('End Video Call');
+    setToken(null);
   }, []);
 
   // -----------------render html------------------------
