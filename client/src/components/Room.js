@@ -7,6 +7,31 @@ const Room = ({ roomName, token, handleLogout }) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
+    let minutesLabel = document.getElementById("minutes");
+    let secondsLabel = document.getElementById("seconds");
+    let totalSeconds = 0;
+    setInterval(setTime, 1000);
+
+    function setTime()
+    {
+        ++totalSeconds;
+        secondsLabel.innerHTML = pad(totalSeconds%60);
+        minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+    }
+
+    function pad(val)
+    {
+        var valString = val + "";
+        if(valString.length < 2)
+        {
+            return "0" + valString;
+        }
+        else
+        {
+            return valString;
+        }
+    }
+
     const participantConnected = participant => {
       setParticipants(prevParticipants => [...prevParticipants, participant]);
     };
@@ -48,6 +73,11 @@ const Room = ({ roomName, token, handleLogout }) => {
   return (
     <div className="room">
       <h2>Room: {roomName}</h2>
+      <div id="timercontainer">
+        <label id="minutes" className="timer">00</label>
+        <label id="colon" className="timer">:</label>
+        <label id="seconds" className="timer">00</label>
+      </div>
       <button onClick={handleLogout}>End Call</button>
       <div className="video-participant">
         <div className="local-participant">

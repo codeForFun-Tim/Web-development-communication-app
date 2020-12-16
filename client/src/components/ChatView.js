@@ -41,6 +41,7 @@ function ChatView() {
       }
       const currentContactName = localStorage.getItem("curr_receiver");
       contacts_handler(currentContactName);
+      setcontact(-1);
     }
   }, [contactNum]);
 
@@ -643,7 +644,10 @@ function ChatView() {
   }
 
   const handleLogout = useCallback(event => {
-    sendVideoCall('End Video Call');
+    const minutesLabel = document.getElementById("minutes").innerHTML;
+    const secondsLabel = document.getElementById("seconds").innerHTML;
+    const username = localStorage.getItem("curr_user");
+    sendVideoCall(`${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room`);
     setToken(null);
   }, []);
 
