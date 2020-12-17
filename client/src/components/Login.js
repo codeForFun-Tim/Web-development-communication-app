@@ -15,7 +15,15 @@ const Login = () => {
     const pwd = document.getElementById('password').value;
     setError(false);
     setLoading(true);
-    login(name, pwd).then(() => {localStorage.setItem('curr_user', name); window.open("/main","_self")}).catch((e) => {setError("Incorrect password/Something went wrong. Please try again later.");});
+    login(name, pwd).then(() => 
+      {
+        localStorage.setItem('curr_user', name); window.open("/main","_self")
+      }).catch((e) => 
+        {
+          console.log(e.response.data);
+          console.log(e.response.statusText);
+          setError("Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.");
+        });
     setLoading(false);
   }
 
@@ -35,7 +43,7 @@ const Login = () => {
             <form className="formLogin">
                 <input className="userName" id="userName" type="text" align="center" placeholder="Email: cat@gmail.com" />
                 <input className="pass" id="password" type="password" align="center" placeholder="Password" />
-                <p className="forgotPwd" align="center"><a href="#" />Forgot Password?</p>
+                <Link to='/changePassword'><p className="forgotPwd" align="center">Forgot Password?</p></Link>
                 <input type="button" id="loginBtn" value={loading ? 'Loading' : 'Sign In'} onClick={handleLogin} disabled={loading} className="loginBtn" />
                 <Link to='/Register'>
                   <button id="registerBtn" className="registerBtn" align="center">

@@ -122,7 +122,15 @@ function ChatView() {
           mycontacts.push(newContact);
           setcontact(mycontacts.length);
         }
-      }).catch(() => {alert("Non-existed User.");});
+      }).catch((e) => {
+        console.log(e.response);
+        if (e.response.status === 406) {
+          alert("Already in your contact list.");
+        }
+        else{
+          alert("Non-existed User.");
+        }
+      });
 
     }
   }, [newContact]);
@@ -409,7 +417,7 @@ function ChatView() {
         selectedFile.name.endsWith('.jpg')
       ) {
         if (selectedFile.size/1024/1024 < 1) {
-          const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+          const imgDiv = `<img width="320" height="240" src=${src} alt="vThe picture is gone.">`;
           setMessage(imgDiv);
         }
         else {
