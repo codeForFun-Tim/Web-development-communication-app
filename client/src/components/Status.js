@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NaviBar from './NaviBar';
-import { addTextStatus, addMediaStatus, getFeed } from '../javascripts/status';
+import { addTextStatus, addMediaStatus, getFeed, viewedStatus } from '../javascripts/status';
 import '../stylesheets/Status.css';
 import Avatar from '../images/AvatarCat.png';
 
@@ -74,12 +74,16 @@ const Status = () => {
           if (feedArray[statusIndex].type === "image/jpeg") {
             let src = createImageDiv(feedArray[statusIndex]);
             setImageSrc(src);
+            viewedStatus(loggedInUser, feedArray[statusIndex]._id).catch(() => {});
           }
           else if(feedArray[statusIndex].type === "image/gif") {
-            setImageSrc(createGifDiv(feedArray[statusIndex]));
+            let src = createImageDiv(feedArray[statusIndex]);
+            setImageSrc(src);
+            viewedStatus(loggedInUser, feedArray[statusIndex]._id).catch(() => {});
           }
           else {
             setTextContent(feedArray[statusIndex].textStatus);
+            viewedStatus(loggedInUser, feedArray[statusIndex]._id).catch(() => {});
           }
           statusIndex += 1;
           //feedArray.shift();

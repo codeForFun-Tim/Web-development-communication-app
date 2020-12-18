@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
-import { getUser, addContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
+import { getUser, addContact, checkContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [];
@@ -326,7 +326,31 @@ function ChatView() {
   }, [message]);
 
   function sendMessage() {
-    const msg = document.getElementById('textarea').value;
+    const current_user = localStorage.getItem("curr_user");
+    let msg = document.getElementById('textarea').value;
+    if (msg.startsWith("@")) {
+      let latest_contacts = [];
+      getUser(current_user)
+      .then((res) => {
+        for (var i = 0; i < res.data.contacts.length; i++) {
+          latest_contacts.push(res.data.contacts[i]);
+        }
+        console.log(latest_contacts);
+        let msgCopy = "";
+        alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
+        const mentionArray = msg.trim().split(',');
+        for (var mentioned in mentionArray) {
+          let mentionedUser = mentionArray[mentioned].substring(1);
+          console.log(mentionedUser);
+          console.log(latest_contacts.includes(mentionedUser));
+          if (latest_contacts.includes(mentionedUser)){
+            msgCopy += `<a href="/otherProfile/${mentionedUser}" target="_blank">${mentionArray[mentioned]}</a>`; 
+          }
+          console.log(msgCopy);
+        }
+        msg = msgCopy;
+      });
+    }
     setMessage(msg);
     document.getElementById('textarea').value = '';
     // send to back end

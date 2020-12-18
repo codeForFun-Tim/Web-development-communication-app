@@ -136,6 +136,7 @@ async (req, res) => {
   
     // Keep track of who the user already follows,
     // to make sure they don't get suggested to the user.
+    // currUserContactsSet.add(userName);
     user.contact_list.forEach((curContact) => {
         currUserContactsSet.add(curContact);
     });
@@ -154,7 +155,7 @@ async (req, res) => {
   
         // If the user isn't already following the followee-of-followee,
         // add them to the set of suggested users.
-        if (!currUserContactsSet.has(contactsOfCurUser[i])) {
+        if (!currUserContactsSet.has(contactsOfCurUser[i]) && contactsOfCurUser[i] !== userName) {
           suggestedUsers.add(contactsOfCurUser[i]);
         }
       }
@@ -190,9 +191,25 @@ response: contacts
 
 2. /addContact: otherUsername
 response: status,  200: UI refresh/add otherUsername; 5xx: alert error
-
-
-
 */
+
+router.get('/checkFriends',
+    async (req,res) =>{
+        const currUser = req.query.currUser;
+        const mentionedUser = req.query.mentionedUser;
+
+        const friendsOfCurrUser = await User.findOne({email:currUser}).contact_list;
+
+        if(!friendsOfCurrUser.includes(mentionedUser)){
+            console.log('Please @ your friend(s) in your contact list!');
+            res.sendStatus(401);
+        }
+        else{
+            console.log('@ success');
+            res.sendStatus(201);
+        }
+
+    }
+)
 
 module.exports = router;

@@ -30,21 +30,19 @@ async function getFeed(logUser) {
         }});
 }
 
-async function getStatus(statusId) {
-    /**
-    try{
-        console.log("api url getFeed: ",`${api.url}/getStatus`);
-        await axios.post(`${api.url}/getStatus/${statusId}`);
-    }
-    catch(err){
-        console.log(err);
-    }
-    */
+async function viewedStatus(viewer, statusId) {
+    // eslint-disable-next-line no-undef
+    const apiUrl = `${api.url}/viewStatus`;
+    const formData = new FormData();
+    formData.append('viewer', viewer);
+    formData.append('statusId', statusId);
+    console.log(viewer, statusId);
+    return axios.post(apiUrl, formData); 
 }
 
 export {
     addTextStatus,
     addMediaStatus,
     getFeed,
-    getStatus,
+    viewedStatus,
   };

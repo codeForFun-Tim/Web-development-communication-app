@@ -18,12 +18,12 @@ router.get('/getStatus',async (req,res)=> {
 
     // console.log('req',req);
     const loggedUser = req.query.logUser;
-    console.log('loggedUser',loggedUser);
+    // console.log('loggedUser',loggedUser);
     const result = [];
     const currUser = await User.findOne({email:loggedUser});
-    console.log('currUser',currUser);
+    // console.log('currUser',currUser);
     const contacts = currUser.contact_list;
-    console.log('contacts',contacts);
+    // console.log('contacts',contacts);
     
     if(contacts === null){
         console.log('You need at least one contact to use status functionality! ');
@@ -54,6 +54,25 @@ router.get('/getStatus',async (req,res)=> {
         res.send(result);
     }
 });
+
+// viewer, statusId
+router.post('/viewStatus',async (req, res)=>{
+    console.log('come');
+    const currUser = req.body.viewer; // current user
+    const statusID= req.body.statusId;
+    
+    
+    const statusObj = await Status.findOne({_id: ObjectId(statusID)});
+    if (statusObj != null) {
+        statusObj.viewedPeople.push(currUser); //viewedPeople will have emails representing different users 
+        statusObj.save();
+        res.sendStatus(201);
+    }
+    else {
+        console.log('Cannot add person to viewedPeople in the Status Schema!');
+        res.sendStatus(400);
+    }
+})
 
 
 /*

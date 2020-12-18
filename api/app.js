@@ -242,6 +242,34 @@ const port = process.env.PORT || 8080;
 expressApp.listen(port, () => {
   console.log(`Server running on port:${port}`);
 });
+
+
+// expressApp.enable('trust proxy');
+// expressApp.use(bodyParser.json());
+// expressApp.use(bodyParser.urlencoded({ extended: true }));
+// expressApp.use(express.urlencoded({ extended: false }));
+// expressApp.use(logger('dev'));
+// expressApp.use(flash());
+// expressApp.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   store: new MongoStore({ mongooseConnection: mongoose.connection }),
+//   resave: false,
+//   saveUninitialized: false,
+// }));
+// expressApp.use(express.json());
+// expressApp.use(express.static(path.join(__dirname, 'public')));
+// expressApp.use(passport.initialize());
+// expressApp.use(passport.session());
+// expressApp.use(methodOverride('_method'));
+// expressApp.use((req, res, next) => {
+//   // res.header('Access-Control-Allow-Origin', 'https://photogram-front.herokuapp.com');
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+
+
 expressApp.use(fileUpload()); 
 expressApp.enable('trust proxy');
 expressApp.use(bodyParser.json());
