@@ -10,7 +10,6 @@ const Status = () => {
   const [imageSrc, setImageSrc] = useState('text');
   const [textContent, setTextContent] = useState('');
   const [senderList, setSenderList] = useState([]);
-
     /**
     const [feed, setFeed] = useState(null);
     const [status, setStatus] = useState(null);
@@ -33,7 +32,7 @@ const Status = () => {
   };
 
   function createImageDiv(message) {
-    let base64 = btoa(new Uint8Array(message.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
     const src = `data:image/jpeg;base64,${base64}`;
     return src;
   }
@@ -65,32 +64,32 @@ const Status = () => {
       feedArray.sort(sortByTime);      
       //const feedArray = ['image', 'text'];
       //const senderArray = [<div className="circle" key='0'>A</div>, <div className="circle" key='1'>B</div>];
-  
       let statusIndex = 0
       setTextContent("Welcome to Status Page");
-      // const interval = setInterval(() => {
-      //   if (statusIndex < feedArray.length) {
-      //     //setSenderList(senderArray);
-      //     if (feedArray[statusIndex].type === "image/jpeg") {
-      //       console.log(feedArray[statusIndex]);
-      //       setImageSrc(createImageDiv(feedArray[statusIndex].mediaStatus));
-      //     }
-      //     else if(feedArray[statusIndex].type === "image/gif") {
-      //       setImageSrc(createGifDiv(feedArray[statusIndex].mediaStatus));
-      //     }
-      //     else {
-      //       setTextContent(feedArray[statusIndex].textStatus);
-      //     }
-      //     setType(feedArray[statusIndex].type);
-      //     statusIndex += 1;
-      //     feedArray.shift();
-      //   }
-      //   else {
-      //     setTextContent("");
-      //     setType('text');
-      //   }
-      // }, 3000);
-      // return () => clearInterval(interval);
+      const interval = setInterval(() => {
+        if (statusIndex < feedArray.length) {
+          setType(feedArray[statusIndex].type);
+          //console.log(feedArray[statusIndex]);
+          //setSenderList(senderArray);
+          if (feedArray[statusIndex].type === "image/jpeg") {
+            let src = createImageDiv(feedArray[statusIndex]);
+            setImageSrc(src);
+          }
+          else if(feedArray[statusIndex].type === "image/gif") {
+            setImageSrc(createGifDiv(feedArray[statusIndex]));
+          }
+          else {
+            setTextContent(feedArray[statusIndex].textStatus);
+          }
+          statusIndex += 1;
+          //feedArray.shift();
+        }
+        else {
+          setTextContent("");
+          setType('text');
+        }
+      }, 3000);
+      return () => clearInterval(interval);
     })
     .catch((e) => 
     {
@@ -155,7 +154,7 @@ const Status = () => {
           {}
         </div>
         <div id='status'> 
-          {type === 'image' ? <img className='imageStatus' src={imageSrc} alt="lost..."></img> : <p className='textStatus'> {textContent} </p> }
+          {type === 'image/jpeg' || type === 'image/gif' ? <img className='imageStatus' width="400" height="300" src={imageSrc} alt="lost..."></img> : <p className='textStatus'> {textContent} </p> }
         </div>
         <div id="popup1" className="overlay">
         <div className="popup">
