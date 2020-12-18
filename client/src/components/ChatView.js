@@ -325,40 +325,43 @@ function ChatView() {
     }
   }, [message]);
 
-  function sendMessage() {
+  async function sendMessage() {
     const current_user = localStorage.getItem("curr_user");
     let msg = document.getElementById('textarea').value;
     if (msg.startsWith("@")) {
+      let ifContact = true;
       let latest_contacts = [];
-      getUser(current_user)
-      .then((res) => {
-        for (var i = 0; i < res.data.contacts.length; i++) {
+      const res = await getUser(current_user);
+      for (var i = 0; i < res.data.contacts.length; i++) {
           latest_contacts.push(res.data.contacts[i]);
+      }
+      let msgCopy = "";
+      //alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
+      const mentionArray = msg.trim().split(',');
+      for (var mentioned in mentionArray) {
+        let mentionedUser = mentionArray[mentioned].substring(1);
+        if (latest_contacts.includes(mentionedUser)){
+          msgCopy += (`<a href="/otherProfile/${mentionedUser}" target="_blank">${mentionArray[mentioned]}</a> `); 
         }
-        console.log(latest_contacts);
-        let msgCopy = "";
-        alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
-        const mentionArray = msg.trim().split(',');
-        for (var mentioned in mentionArray) {
-          let mentionedUser = mentionArray[mentioned].substring(1);
-          console.log(mentionedUser);
-          console.log(latest_contacts.includes(mentionedUser));
-          if (latest_contacts.includes(mentionedUser)){
-            msgCopy += `<a href="/otherProfile/${mentionedUser}" target="_blank">${mentionArray[mentioned]}</a>`; 
-          }
-          console.log(msgCopy);
+        else {
+          ifContact = false;
         }
-        msg = msgCopy;
-      });
+      }
+      if (!ifContact) {
+        alert("Some mentioned users are not your friends.");
+      }
+      msg = msgCopy;
+    };
+    if (msg !== '') {
+      setMessage(msg);
+      document.getElementById('textarea').value = '';
+      // send to back end
+      const msgType = 'text';
+      const msgFrom = localStorage.getItem("curr_user");
+      const msgTo = localStorage.getItem("curr_receiver");
+      //const roomID = "5fd14b2e099e3b2aa8672745";
+      sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
     }
-    setMessage(msg);
-    document.getElementById('textarea').value = '';
-    // send to back end
-    const msgType = 'text';
-    const msgFrom = localStorage.getItem("curr_user");
-    const msgTo = localStorage.getItem("curr_receiver");
-    //const roomID = "5fd14b2e099e3b2aa8672745";
-    sendMessageAPI(msg, msgType, msgFrom, msgTo, null);
   }
 
     // -----------------update chat message------------------------
