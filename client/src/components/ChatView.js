@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
-import { getUser, addContact, deleteContact} from '../javascripts/contact';
+import { getUser, addContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [];
@@ -149,6 +149,7 @@ function ChatView() {
     popup.style.visibility = 'hidden';
     closepop.style.visibility = 'hidden';
     btu.style.visibility = 'hidden';
+    input.value = '';
     input.style.visibility = 'hidden';
   }
 
@@ -161,6 +162,43 @@ function ChatView() {
     closepop.style.visibility = 'visible';
     btu.style.visibility = 'visible';
     input.style.visibility = 'visible';
+  }
+
+  // -----------------Suggest new user-------------------------
+  function suggest_event_handler(e){
+    const clickeditem = e.currentTarget.innerHTML;
+    const input = document.getElementById('add_contact_input');
+    input.value = clickeditem;
+  }
+
+  function showDropDown() {
+    const current_user = localStorage.getItem("curr_user");
+    getSuggestedUsers(current_user)
+      .then((res) => {
+        if (res.status === 200){
+          const suggestuser = document.getElementsByClassName("suggestuser");
+          for (let i = 0; i < res.data.length; i++) {
+            suggestuser[i].innerHTML = res.data[i];
+            suggestuser[i].onclick = function(e) {suggest_event_handler(e)}
+          }
+        }
+      }).catch((e) => {
+        console.log(e.response);
+      });
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
   }
 
   // -----------------update chat title------------------------
@@ -783,13 +821,23 @@ function ChatView() {
             <a id="closepop3" className="close" onClick={() => closepopWindow3()}>
               &times;
             </a>
-            <p>
+            <div>
               <input
                 id="add_contact_input"
                 type="text"
                 placeholder="Input Contact Name"
               />
-            </p>
+              <div className="dropdown">
+                <button onClick={() => showDropDown()} className="dropbtn">+</button>
+                <div id="myDropdown" className="dropdown-content">
+                  <a className="suggestuser">1</a>
+                  <a className="suggestuser">2</a>
+                  <a className="suggestuser">3</a>
+                  <a className="suggestuser">4</a>
+                  <a className="suggestuser">5</a>
+                </div>
+              </div>
+            </div>
             <p>
               <button id="add_contact_submit" onClick={() => addNewContact()}>
                 Submit
