@@ -34,9 +34,7 @@ class App extends Component {
           <Route exact path="/changePassword">
             <ForgetPassword />
           </Route>
-          <Route exact path="/otherProfile/:otherUser">
-            <OtherProfile />
-          </Route>
+          <Route exact path="/otherProfile/:otherUser" component= {OtherProfile} />
         </div>
       </Router>
     );
