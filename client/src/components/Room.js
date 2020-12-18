@@ -32,6 +32,24 @@ const Room = ({ roomName, token, handleLogout }) => {
         }
     }
 
+    const timeoutPromise = () => new Promise(resolve => {
+      setTimeout(() => resolve(false), 5000);
+    });
+    
+    const participantConnectedPromise = room => new Promise(resolve => {
+      if (room.participants.size > 0) {
+        resolve(true);
+      } else {
+        room.once('participantConnected', () => resolve(true));
+     }
+    });
+
+    const endCallPromise = () => new Promise(resolve => {
+      document.getElementById('endcall').addEventListener('click', function(e) {
+        resolve(false);
+      })
+    });
+
     const participantConnected = participant => {
       setParticipants(prevParticipants => [...prevParticipants, participant]);
     };
@@ -42,13 +60,28 @@ const Room = ({ roomName, token, handleLogout }) => {
       );
     };
 
+    let activeRoom;
+
     Video.connect(token, {
       name: roomName
     }).then(room => {
+      activeRoom = room;
       setRoom(room);
       room.on('participantConnected', participantConnected);
       room.on('participantDisconnected', participantDisconnected);
       room.participants.forEach(participantConnected);
+      // added 
+      return Promise.race([
+        participantConnectedPromise(room),
+        timeoutPromise(),
+        endCallPromise()
+      ]);
+    }).then(didParticipantConnect => {
+      if (!didParticipantConnect) {
+        console.log('call ended, disconnecting...');
+        activeRoom.disconnect();
+        handleLogout();
+      }
     });
 
     return () => {
@@ -78,7 +111,7 @@ const Room = ({ roomName, token, handleLogout }) => {
         <label id="colon" className="timer">:</label>
         <label id="seconds" className="timer">00</label>
       </div>
-      <button onClick={handleLogout}>End Call</button>
+      <button id="endcall">End Call</button>
       <div className="video-participant">
         <div className="local-participant">
             {room ? (
