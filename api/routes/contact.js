@@ -39,6 +39,7 @@ router.post(
         const userInDB = await User.findOne(
             {email: userToAdd}
         );
+
         if(userInDB === null){ // no such user
             console.log('userInDB is null');
             res.sendStatus(400);
@@ -48,9 +49,12 @@ router.post(
             // const ifRoom = Room.findOne(
             //     { $or: [{userList: [userToAdd, curUser]}, {userList: [curUser, userToAdd]} ]}, (err,room) =>{
                     const userToUpdate = await User.findOne({email:curUser});
+                    // console.log('userToUpdate',user)
                     if (userToUpdate != null){
+                        // const ifAdded = userToUpdate.contact_list.includes(userInDB.contact_list);
+                        if(!userToUpdate.contact_list.includes(userToAdd)){ // check if the added user has already a contact
                         //update contact list TODO: TWO WAY (A -> B, THEN B -> A)
-                        console.log('userToUpdate type',typeof(userToUpdate));
+                        console.log('userToUpdate',userToUpdate);
                         userToUpdate.contact_list.push(userToAdd);
                         userToUpdate.save();   
                         // newUser must not be null
@@ -61,8 +65,13 @@ router.post(
                         res.send(201);
                     }
                     else{
+                        console.log("This user is already in your contact list");
+                        res.sendStatus(406);
+                    }
+                }
+                    else{
                         console.log('60 行的400');
-                        res.send(400);
+                        res.sendStatus(400);
                     }
                     //  res.sendStatus(201);
                 }
@@ -73,12 +82,12 @@ router.post(
 
 router.put('/blockUser',async (req,res) => {
     const curUser = req.body.username;
-    const userToBlcok = req.body.userToBlock;
+    const userToBlock = req.body.userToBlock;
 
     const userInDB = await User.findOne(
-        {email: userToBlcok}
+        {email: userToBlock}
     )
-
+    // console.log('userInDB',userInDB);
     if(userInDB === null){
         console.log('userInDB is null');
         res.sendStatus(400);
@@ -87,11 +96,15 @@ router.put('/blockUser',async (req,res) => {
     const userToUpdate = await User.findOne({email:curUser});
     if(userToUpdate != null){ //remove userToBlock in the curUser's contact list
     const index = userToUpdate.contact_list.indexOf(userToBlock);
+    // console.log('indes',index);
+    // console.log('userToUpdate',userToUpdate);
         if(index != null){
             userToUpdate.contact_list.splice(index,1);
             userToUpdate.save();
 
             const secondIndex = userInDB.contact_list.indexOf(curUser);
+
+            // console.log('second index',secondIndex);
             if(secondIndex != null){
                 userInDB.contact_list.splice(secondIndex,1);
                 userInDB.save();
@@ -103,14 +116,6 @@ router.put('/blockUser',async (req,res) => {
             res.sendStatus(400);
         }
     }
-
-//    const secondIndex = userInDB.contact_list.indexOf(curUser);
-//    if(secondIndex != null){
-//     userInDB.contact_list.splice(secondIndex,1);
-//     userInDB.save();
-//    }
-
-
 
 })
 

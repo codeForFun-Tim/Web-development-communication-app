@@ -41,6 +41,7 @@ function ChatView() {
       }
       const currentContactName = localStorage.getItem("curr_receiver");
       contacts_handler(currentContactName);
+      setcontact(-1);
     }
   }, [contactNum]);
 
@@ -121,7 +122,15 @@ function ChatView() {
           mycontacts.push(newContact);
           setcontact(mycontacts.length);
         }
-      }).catch(() => {alert("Non-existed User.");});
+      }).catch((e) => {
+        console.log(e.response);
+        if (e.response.status === 406) {
+          alert("Already in your contact list.");
+        }
+        else{
+          alert("Non-existed User.");
+        }
+      });
 
     }
   }, [newContact]);
@@ -408,7 +417,7 @@ function ChatView() {
         selectedFile.name.endsWith('.jpg')
       ) {
         if (selectedFile.size/1024/1024 < 1) {
-          const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+          const imgDiv = `<img width="320" height="240" src=${src} alt="vThe picture is gone.">`;
           setMessage(imgDiv);
         }
         else {
@@ -643,7 +652,10 @@ function ChatView() {
   }
 
   const handleLogout = useCallback(event => {
-    sendVideoCall('End Video Call');
+    const minutesLabel = document.getElementById("minutes").innerHTML;
+    const secondsLabel = document.getElementById("seconds").innerHTML;
+    const username = localStorage.getItem("curr_user");
+    sendVideoCall(`${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room`);
     setToken(null);
   }, []);
 

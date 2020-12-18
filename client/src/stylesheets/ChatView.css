@@ -445,6 +445,16 @@ input[type='file'] {
   margin-bottom: 1em;
 }
 
+#timercontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.timer {
+  font-size: 20px;
+  color: white;
+}
+
 .video-participant {
   display: flex;
   /* margin-top: 20px; */

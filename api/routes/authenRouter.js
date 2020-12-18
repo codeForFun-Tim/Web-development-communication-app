@@ -166,7 +166,7 @@ router.post('/login',
 router.post('/changePassword', 
    function(req, res) {
 
-    User.findOne({ _id: ObjectId(req.body._id) }, async (err, user) => {
+    User.findOne({ email: req.body.email }, async (err, user) => {
       console.log(user);
       // Check if error connecting
       if (err) {

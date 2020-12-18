@@ -60,10 +60,11 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
 
   // Lockout settings.
   const attemptsToLockout = 3;
-  // 5 minutes in milliseconds.
-  const msToLockout = 5 * 60 * 1000;
-  // 24 hours in milliseconds.
-  const msOfLockout = 24 * 60 * 60 * 1000;
+  // 2 minutes in milliseconds.
+  const msToLockout = 2 * 60 * 1000;
+  // 1 hour (now just 1 minute for testing) in milliseconds.
+  // 1 * 60 * 
+  const msOfLockout = 1 * 60 * 1000;
   let lockedOut = false;
 
   let success = false;

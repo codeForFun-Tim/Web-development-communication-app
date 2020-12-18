@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { changePassword } from '../javascripts/authRequests'
+import { getUser } from '../javascripts/contact';
 import '../stylesheets/Profile.css';
 import Avatar from '../images/AvatarCat.png';
 import NaviBar from './NaviBar';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({name:'', registration:''});
 
   const handleChangePassword = (event) => {
     event.preventDefault();
-    let email = 'guangzhe@test.com';
-    let oldPassword = '123';
+    let email = username;
     let newPassword = document.getElementById('newPassword').value;
-    changePassword(email, oldPassword, newPassword).then(() => {localStorage.clear(); window.open("/login","_self")}).catch((e) => {console.log(e);});
+    changePassword(email, newPassword).then(() => {localStorage.clear(); window.open("/login","_self")}).catch((e) => {console.log(e);});
   }
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("curr_user");
     if (loggedInUser && loggedInUser !== "") {
       setUsername(loggedInUser);
+      getUser(loggedInUser)
+      .then((res) => {
+        const registrationDate = res.data.registrationDate;
+        setUserData({name: loggedInUser, registration: registrationDate})
+      });
     }
     else {
       window.open("/login","_self");
@@ -33,12 +38,10 @@ const Profile = () => {
       <div className="mainProfile">
         <img src={Avatar} alt="Girl in a jacket" className="avatar" />
         <p id="userName" className="data" align="center">
-          {' '}
-          data.name{' '}
+          {userData.name}
         </p>
         <p id="registrationDate" className="data" align="center">
-          {' '}
-          data.registrationDate{' '}
+          {userData.registration}
         </p>
         <form className="formLogin">
           <input

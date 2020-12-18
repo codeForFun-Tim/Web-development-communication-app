@@ -5,6 +5,7 @@ import Register from './Register';
 import MainPage from './MainPage';
 import Profile from './Profile';
 import Status from './Status';
+import ForgetPassword from './ForgetPassword';
 
 class App extends Component {
   render() {
@@ -28,6 +29,9 @@ class App extends Component {
           </Route>
           <Route exact path="/status">
             <Status />
+          </Route>
+          <Route exact path="/changePassword">
+            <ForgetPassword />
           </Route>
         </div>
       </Router>

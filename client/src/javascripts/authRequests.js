@@ -29,9 +29,9 @@ async function logout() {
     });
 }
 
-async function changePassword(email, oldPassword, newPassword) {
+async function changePassword(email, newPassword) {
   return axios.post(`${api.url}/changePassword`,
-  `_id=${'5fcaaf5a048342225cfc90c4'}&oldPassword=${oldPassword}&newPassword=${newPassword}`
+  `email=${email}&&newPassword=${newPassword}`
   );
 }
 
