@@ -412,10 +412,7 @@ function ChatView() {
       data.append("media_message_content", selectedFile);
       onFileUpload(data, selectedFile.type);
       // image
-      if (
-        selectedFile.name.endsWith('.png') ||
-        selectedFile.name.endsWith('.jpg')
-      ) {
+      if (selectedFile.name.endsWith('.jpg')) {
         if (selectedFile.size/1024/1024 < 1) {
           const imgDiv = `<img width="320" height="240" src=${src} alt="vThe picture is gone.">`;
           setMessage(imgDiv);
@@ -707,7 +704,7 @@ function ChatView() {
               id="image-upload"
               type="file"
               onChange={onFileChange}
-              accept="image/png, image/jpg"
+              accept="image/jpeg"
             />
           </button>
           <button className="func_btu">

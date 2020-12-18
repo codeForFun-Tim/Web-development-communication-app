@@ -6,6 +6,7 @@ import MainPage from './MainPage';
 import Profile from './Profile';
 import Status from './Status';
 import ForgetPassword from './ForgetPassword';
+import OtherProfile from './OtherProfile';
 
 class App extends Component {
   render() {
@@ -32,6 +33,9 @@ class App extends Component {
           </Route>
           <Route exact path="/changePassword">
             <ForgetPassword />
+          </Route>
+          <Route exact path="/otherProfile/:otherUser">
+            <OtherProfile />
           </Route>
         </div>
       </Router>

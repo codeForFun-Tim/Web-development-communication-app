@@ -21,6 +21,33 @@ const LockoutSchema = new mongoose.Schema({
   },
 });
 
+// const StatusSchema = new mongoose.Schema({
+//   // statusID:{
+//   //   type: String,
+
+//   // }
+//   textStatus: {
+//     type: String,
+//     required: false,
+//   },
+//   mediaStatus: { // include image and gif
+//     type: Buffer,
+//     required: false,
+//   },
+//   type: {
+//     type: String,
+//     required: true,
+//   },
+//   creationTime: {
+//     type: Date,
+//     required: true,
+//   },
+//   viewed: {
+//     type: Date,
+//     required: true,
+//   }
+// });
+
 
 const UserSchema = new Schema({
   email: { // username
@@ -48,6 +75,11 @@ const UserSchema = new Schema({
   contact_list: {
     type: Array,
     required: true
+  },
+
+  status_list:{
+    type: Array, // status id
+    required: false,
   },
   
   lockout: {

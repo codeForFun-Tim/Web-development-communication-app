@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import NaviBar from './NaviBar';
-// import { getFeed, getStatus } from '../javascripts/status';
+import { addTextStatus, addMediaStatus, getFeed } from '../javascripts/status';
 import '../stylesheets/Status.css';
 import Avatar from '../images/AvatarCat.png';
 
 const Status = () => {
   const [username, setUsername] = useState('');
+  const [type, setType] = useState('text');
+  const [imageSrc, setImageSrc] = useState('text');
+  const [textContent, setTextContent] = useState('');
+  const [senderList, setSenderList] = useState([]);
+
     /**
     const [feed, setFeed] = useState(null);
     const [status, setStatus] = useState(null);
@@ -21,7 +26,25 @@ const Status = () => {
     };   
     */
 
-   useEffect(() => {
+   function sortByTime(a, b){
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(b.creationTime) - new Date(a.creationTime);
+  };
+
+  function createImageDiv(message) {
+    let base64 = btoa(new Uint8Array(message.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const src = `data:image/jpeg;base64,${base64}`;
+    return src;
+  }
+
+  function createGifDiv(message) {
+    let base64 = btoa(new Uint8Array(message.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const src = `data:image/gif;base64,${base64}`;
+    return src;
+  }
+
+  useEffect(() => {
     const loggedInUser = localStorage.getItem("curr_user");
     if (loggedInUser && loggedInUser !== "") {
       setUsername(loggedInUser);
@@ -29,28 +52,57 @@ const Status = () => {
     else {
       window.open("/login","_self");
     }
+    getFeed(loggedInUser)
+    .then((res) => 
+    {
+      let feedArray = [];
+      //let senderArray = [];
+      const data = res.data;
+      for (var i = 0; i < data.length; i++) {
+        feedArray.push(data[i]);
+        //senderArray.push(data[i].);
+      }
+      feedArray.sort(sortByTime);      
+      //const feedArray = ['image', 'text'];
+      //const senderArray = [<div className="circle" key='0'>A</div>, <div className="circle" key='1'>B</div>];
+  
+      let statusIndex = 0
+      setTextContent("Welcome to Status Page");
+      // const interval = setInterval(() => {
+      //   if (statusIndex < feedArray.length) {
+      //     //setSenderList(senderArray);
+      //     if (feedArray[statusIndex].type === "image/jpeg") {
+      //       console.log(feedArray[statusIndex]);
+      //       setImageSrc(createImageDiv(feedArray[statusIndex].mediaStatus));
+      //     }
+      //     else if(feedArray[statusIndex].type === "image/gif") {
+      //       setImageSrc(createGifDiv(feedArray[statusIndex].mediaStatus));
+      //     }
+      //     else {
+      //       setTextContent(feedArray[statusIndex].textStatus);
+      //     }
+      //     setType(feedArray[statusIndex].type);
+      //     statusIndex += 1;
+      //     feedArray.shift();
+      //   }
+      //   else {
+      //     setTextContent("");
+      //     setType('text');
+      //   }
+      // }, 3000);
+      // return () => clearInterval(interval);
+    })
+    .catch((e) => 
+    {
+      console.log(e);
+      alert("No contacts!");
+    });
   }, []);
 
-
-  const displayStatus = async(type) => {
-      // const status = getStatus();
-      if (type === 'img') {
-          const statusDiv = document.createElement('img');
-          statusDiv.setAttribute('class', 'imageStatus');
-          statusDiv.src = Avatar;
-          document.getElementById('status').innerHTML = '';
-          document.getElementById('status').appendChild(statusDiv);
-      }
-      else {
-          const statusDiv = document.createElement('p');
-          statusDiv.setAttribute('class', 'textStatus');
-          statusDiv.innerText = 'Hello';
-          document.getElementById('status').innerHTML = '';
-          document.getElementById('status').appendChild(statusDiv);
-      }
-  }
-
   function sendStatus() {
+      const loggedInUser = localStorage.getItem("curr_user");
+      const text = document.getElementById('textarea').value;
+      addTextStatus(loggedInUser, text).catch(() => alert("Failed to send this status."));
       closepopWindow();
   }
 
@@ -78,36 +130,20 @@ const Status = () => {
       sendBtn.style.visibility = 'visible';
   }
 
-  // On file upload (click the upload button)
-  const onFileUpload = (selectedFile) => {
-      // Create an object of formData
-      const formData = new FormData();
-      // Update the formData object
-      formData.append('myFile', selectedFile, selectedFile.name);
-      // Request made to the backend api
-      // Send formData object
-      //axios.post("api/uploadfile", formData);
-  };
-
   function selectImage(event) {
+    const loggedInUser = localStorage.getItem("curr_user");
       const selectedFile = event.target.files[0];
       if (selectedFile) {
-          onFileUpload(selectedFile);
-          // finally we should use the data retrieved from mongoDB in setMessage
-          const src = URL.createObjectURL(selectedFile);
-          // image
-          if (
-            selectedFile.name.endsWith('.png') ||
-            selectedFile.name.endsWith('.jpg')
-          ) {
-            const imgDiv = `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
-            //setMessage(imgDiv);
+        if (selectedFile.name.endsWith('.jpg') || selectedFile.name.endsWith('.gif')) {
+          if (selectedFile.size/1024/1024 < 1) {
+            addMediaStatus(loggedInUser, selectedFile).catch(() => alert("Failed to send this Image/Gif."));;
           }
+          else {
+            alert("Image is too big, make sure it is less than 1 MB.");
+          }
+        }
       }
   }
-
-  const feedArray = [<div className="circle" key='0'><button id='btn0' className="statusLink" onClick={displayStatus.bind(this, 'img')}>A</button></div>, 
-      <div className="circle" key='1'><button id='1' className="statusLink" onClick={displayStatus.bind(this, 'text')}>B</button></div>];
 
   return (
     <div>
@@ -116,9 +152,11 @@ const Status = () => {
       <p align="center" onClick={() => popupWindow()}><button>Send New Status</button></p>
       <div className="mainProfile">
         <div className="outer" id='outer'>
-          {feedArray}
+          {}
         </div>
-        <div id='status'>  </div>
+        <div id='status'> 
+          {type === 'image' ? <img className='imageStatus' src={imageSrc} alt="lost..."></img> : <p className='textStatus'> {textContent} </p> }
+        </div>
         <div id="popup1" className="overlay">
         <div className="popup">
           <h2>New Status</h2>
@@ -128,10 +166,10 @@ const Status = () => {
               <button id='imageOption'>
                   <label htmlFor="image-upload">Image</label>
                   <input
-                      id="image-upload"
-                      type="file"
-                      onChange={selectImage}
-                      accept="image/png, image/jpg"
+                    id="image-upload"
+                    type="file"
+                    onChange={selectImage}
+                    accept="image/jpeg, image/gif"
                   />
               </button>
               <textarea id='textarea' rows="4" cols="40" style={{visibility: 'hidden'}}></textarea>

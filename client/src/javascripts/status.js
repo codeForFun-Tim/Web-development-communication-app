@@ -2,34 +2,32 @@ import { api } from '../api';
 import axios from 'axios';
 
 
-async function addStatus(text, image, creationTime) {
+async function addTextStatus(currentUser, text) {
     // eslint-disable-next-line no-undef
-    /**
+    const apiUrl = `${api.url}/sendStatus`;
     const formData = new FormData();
-    formData.append('text', text);
-    formData.append('image', image);
-    formData.append('creationTime', creationTime);
-
-    return fetch(`${api.url}/addStatus`,
-      {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-        mode: 'cors',
-      });
-      */
+    formData.append('currentUser', currentUser)
+    formData.append('statusType', 'text');
+    formData.append('text_status_content', text);
+    return axios.post(apiUrl, formData); 
 }
 
-async function getFeed() {
-    /**
-    try{
-        console.log("api url getFeed: ",`${api.url}/getFeed`);
-        await axios.post(`${api.url}/getFeed`);
-    }
-    catch(err){
-        console.log(err);
-    }
-    */
+async function addMediaStatus(currentUser, image) {
+    // eslint-disable-next-line no-undef
+    const apiUrl = `${api.url}/sendStatus`;
+    const formData = new FormData();
+    formData.append('currentUser', currentUser)
+    formData.append('statusType', image.type);
+    formData.append('media_status_content', image);
+    return axios.post(apiUrl, formData); 
+}
+
+async function getFeed(logUser) {
+    const apiUrl = `${api.url}/getStatus`;
+    return axios.get(apiUrl, 
+        {params: {
+            logUser : logUser,
+        }});
 }
 
 async function getStatus(statusId) {
@@ -45,7 +43,8 @@ async function getStatus(statusId) {
 }
 
 export {
-    addStatus,
+    addTextStatus,
+    addMediaStatus,
     getFeed,
     getStatus,
   };

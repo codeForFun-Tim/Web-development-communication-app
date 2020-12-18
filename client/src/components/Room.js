@@ -6,6 +6,7 @@ const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
 
+
   useEffect(() => {
     let minutesLabel = document.getElementById("minutes");
     let secondsLabel = document.getElementById("seconds");
@@ -53,7 +54,7 @@ const Room = ({ roomName, token, handleLogout }) => {
 
     return () => {
       setRoom(currentRoom => {
-        if (currentRoom && currentRoom.localParticipant.state === 'connected') {
+        if (currentRoom && currentRoom.localParticipant.state === 'connected' && currentRoom.participants.size <= 1) {
           currentRoom.localParticipant.tracks.forEach(function(trackPublication) {
             trackPublication.track.stop();
           });
