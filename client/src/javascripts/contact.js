@@ -34,9 +34,23 @@ async function deleteContact(username, delUserName) {
     }
 };
 
+async function getSuggestedUsers(username){ //username is an email
+    const apiUrl = `${api.url}/getSuggestedUsers`;
+    try{
+        const response = await axios.get(apiUrl,{
+            params: {username: username},
+        });
+        return response;
+    }
+    catch(err){
+        throw new Error(err);
+    }
+};
+
 
 export {
     getUser,
     addContact,
     deleteContact,
+    getSuggestedUsers
   };
