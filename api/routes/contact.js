@@ -13,8 +13,8 @@ const { sendDatabaseErrorResponse } = require('../app');
 const router = express.Router();
 
 router.get(
-    '/getUser', async (req,res) => {
-        const userName = req.query.username;
+    '/getUser/:userName', async (req,res) => {
+        const {userName} = req.query;
         const user = await User.findOne({email: userName});
         if(user != null){
             const contacts = user.contact_list;
@@ -119,11 +119,11 @@ router.put('/blockUser',async (req,res) => {
 
 })
 
-router.get('/getSuggestedUsers', 
+router.get('/getSuggestedUsers/:userName', 
 // checkAuthenticated, 
 async (req, res) => {
 
-    const userName = req.query.username;
+    const {userName} = req.query;
     const suggestedUsers = new Set();
     const currUserContactsSet = new Set();
     const numSuggestions = 5;
@@ -193,10 +193,10 @@ response: contacts
 response: status,  200: UI refresh/add otherUsername; 5xx: alert error
 */
 
-router.get('/checkFriends',
+router.get('/checkFriends/:currUser/:mentionedUser',
     async (req,res) =>{
-        const currUser = req.query.currUser;
-        const mentionedUser = req.query.mentionedUser;
+        const {currUser,mentionedUser} = req.query;
+        // const mentionedUser = req.query.mentionedUser;
 
         const friendsOfCurrUser = await User.findOne({email:currUser}).contact_list;
 

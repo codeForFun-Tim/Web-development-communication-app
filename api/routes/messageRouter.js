@@ -23,11 +23,11 @@ const router = express.Router();
 
 // TODO: make sure what the response would be AND adding polling here 
 // no polling is fine
-router.get('/getMessageViaRoom',
+router.get('/getMessageViaRoom/:sender/:receiver',
   //  checkAuthenticated,
   async (req, res) => {
-    const sender = req.query.from;
-    const receiver = req.query.to;
+    const {sender,receiver} = req.query;
+    // const receiver = req.query.to;
     // console.log('req',req);
     // console.log('sender',sender);
     // console.log('receiver',receiver);
