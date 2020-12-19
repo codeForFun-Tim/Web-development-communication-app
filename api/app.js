@@ -168,12 +168,12 @@ passport.deserializeUser((id, done) => {
  */
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    console.log('if req in checkAuth',req);
+    //console.log('if req in checkAuth',req);
     //console.log('if res in checkAuth',res);
     //console.log('if next in checkAuth',next);
     return next();
   }
-  console.log('el req in checkAuth',req);
+  //console.log('el req in checkAuth',req);
   // console.log('el res in checkAuth',res);
   // console.log('el next in checkAuth',next);
   return res.status(401).json('[!] Not authorized');
