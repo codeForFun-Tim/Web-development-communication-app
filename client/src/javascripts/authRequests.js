@@ -31,14 +31,17 @@ async function logout() {
 
 async function changePassword(email, newPassword) {
   return axios.post(`${api.url}/changePassword`,
-  `email=${email}&&newPassword=${newPassword}`
-  );
+  `email=${email}&&newPassword=${newPassword}`,
+  {
+    withCredentials: true,
+  });
 }
 
 async function getUser(email) {
   return axios.get(`${api.url}/getUser`,
-  `email=${email}`
-  );
+  `email=${email}`, {
+    withCredentials: true,
+  });
 }
 
 async function checkAuth() {

@@ -164,6 +164,7 @@ router.post('/login',
 //   });
 
 router.post('/changePassword', 
+  checkAuthenticated,
    function(req, res) {
 
     User.findOne({ email: req.body.email }, async (err, user) => {

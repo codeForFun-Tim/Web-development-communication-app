@@ -7,13 +7,13 @@ const Message = require('../model/message');
 const Room = require('../model/room');
 // const { parser } = require('../app');
 // const multer = require('multer');
-// const { checkAuthenticated } = require('../app');
+const { checkAuthenticated } = require('../app');
 const { sendDatabaseErrorResponse } = require('../app');
 
 const router = express.Router();
 
 router.get(
-    '/getUser', async (req,res) => {
+    '/getUser', checkauthenticated, async (req,res) => {
         const userName = req.query.username;
         const user = await User.findOne({email: userName});
         if(user != null){
