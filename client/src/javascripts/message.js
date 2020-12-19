@@ -4,7 +4,7 @@ import axios from 'axios';
 async function sendMessageAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
     const apiUrl = `${api.url}/sendMessage`;
     const formData = new FormData();
-    formData.append('text_message_conten', msgContent);
+    formData.append('text_message_content', msgContent);
     formData.append('message_type', msgType);
     formData.append('media_message_content', null);
     formData.append('from', msgFrom);
@@ -54,25 +54,21 @@ async function sendMediaAPI(data) {
 }
 
 async function getMessageAPI(msgFrom, msgTo) {
-  const apiUrl = `${api.url}/getMessageViaRoom`;
-  // const formData = new FormData();
-  // formData.append('from', msgFrom);
-  // formData.append('to', msgTo);
-
-  //const data = {from: msgFrom, to: msgTo};
-  // return fetch(apiUrl,
-  //   {
-  //     method: 'GET',
-  //     body: formData,
-
-  //     credentials: 'include',
-  //     mode: 'cors',
-  // });
-    return axios.get(apiUrl, 
-      {params: {
-          from : msgFrom,
-          to : msgTo,
-      }});
+  const apiUrl = `${api.url}/getMessageViaRoom/${msgFrom}/${msgTo}`;
+  return fetch(apiUrl,
+    {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+  });
+    // return axios.get(apiUrl, 
+    //   {params: {
+    //       from : msgFrom,
+    //       to : msgTo,
+    //   }},
+    //   {
+    //     withCredentials: true
+    //   });
 } 
 
 

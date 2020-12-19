@@ -14,10 +14,9 @@ const { sendDatabaseErrorResponse } = require('../app');
 const router = express.Router();
 //'image/jpeg' || 'image/gif' 
 // text
-router.get('/getStatus/:logUser',async (req,res)=> {
+router.get('/getStatus',async (req,res)=> {
 
-    // console.log('req',req);
-    const {loggedUser} = req.query;
+    const loggedUser = req.query.logUser;
     // console.log('loggedUser',loggedUser);
     const result = [];
     const currUser = await User.findOne({email:loggedUser});

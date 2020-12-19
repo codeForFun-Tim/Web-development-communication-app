@@ -9,23 +9,8 @@ const Status = () => {
   const [type, setType] = useState('text');
   const [imageSrc, setImageSrc] = useState('text');
   const [textContent, setTextContent] = useState('');
-  const [senderList, setSenderList] = useState([]);
-    /**
-    const [feed, setFeed] = useState(null);
-    const [status, setStatus] = useState(null);
 
-    const generateFeed = async() => {
-        // const feed = getFeed();
-        const feed = ['A', 'B', 'C'];
-        feed.forEach((feed) => {
-            feedArray.push(
-                <div class="circle">{feed}</div>
-            ); 
-        });  
-    };   
-    */
-
-   function sortByTime(a, b){
+  function sortByTime(a, b){
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
     return new Date(b.creationTime) - new Date(a.creationTime);
@@ -54,6 +39,7 @@ const Status = () => {
     getFeed(loggedInUser)
     .then((res) => 
     {
+      console.log(res);
       let feedArray = [];
       //let senderArray = [];
       const data = res.data;

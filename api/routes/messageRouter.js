@@ -24,10 +24,9 @@ const router = express.Router();
 // TODO: make sure what the response would be AND adding polling here 
 // no polling is fine
 router.get('/getMessageViaRoom/:sender/:receiver',
-  //  checkAuthenticated,
+  checkAuthenticated,
   async (req, res) => {
-    const {sender,receiver} = req.query;
-    // const receiver = req.query.to;
+    const { sender, receiver } = req.params;
     // console.log('req',req);
     // console.log('sender',sender);
     // console.log('receiver',receiver);
@@ -44,7 +43,6 @@ router.get('/getMessageViaRoom/:sender/:receiver',
       const message = await Message.findOne({_id:messageID});
       if (!message) {
         console.log("not a valid message");
-
         //res.status(503).json(`not a valid message`);
         //return;
       }

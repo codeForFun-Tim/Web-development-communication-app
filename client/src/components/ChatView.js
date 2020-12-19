@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
-import { getUser, addContact, checkContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
+import { getUser, addContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [];
@@ -237,9 +237,9 @@ function ChatView() {
     setMessage('');
     let messageArray = [];
     getMessageAPI(msgFrom, currentname)
-    .then((res) => 
+    .then(async (res) => 
       {
-        const data = res.data;
+        const data = await res.json();
         for (var i = 0; i < data.length; i++) {
           messageArray.push(data[i]);
         }
@@ -636,7 +636,7 @@ function ChatView() {
           else {
             localStorage.setItem("curr_receiver", '');
           }
-        }).catch(() => {alert("error");});
+        }).catch((e) => {console.log(e)});
       }
       else{
         // set current receiver

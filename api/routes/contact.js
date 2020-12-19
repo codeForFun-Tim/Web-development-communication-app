@@ -12,10 +12,12 @@ const { sendDatabaseErrorResponse } = require('../app');
 
 const router = express.Router();
 
-router.get(
-    '/getUser/:userName', async (req,res) => {
-        const {userName} = req.query;
-        const user = await User.findOne({email: userName});
+router.get('/getUser', 
+  //checkAuthenticated,
+  async (req, res) => {
+      console.log(req.query);
+        const username = req.query.username;
+        const user = await User.findOne({email: username});
         if(user != null){
             const contacts = user.contact_list;
             const registrationDate = user.registration_date;
@@ -192,24 +194,5 @@ response: contacts
 2. /addContact: otherUsername
 response: status,  200: UI refresh/add otherUsername; 5xx: alert error
 */
-
-router.get('/checkFriends/:currUser/:mentionedUser',
-    async (req,res) =>{
-        const {currUser,mentionedUser} = req.query;
-        // const mentionedUser = req.query.mentionedUser;
-
-        const friendsOfCurrUser = await User.findOne({email:currUser}).contact_list;
-
-        if(!friendsOfCurrUser.includes(mentionedUser)){
-            console.log('Please @ your friend(s) in your contact list!');
-            res.sendStatus(401);
-        }
-        else{
-            console.log('@ success');
-            res.sendStatus(201);
-        }
-
-    }
-)
 
 module.exports = router;
