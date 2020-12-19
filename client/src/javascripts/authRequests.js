@@ -39,9 +39,7 @@ async function changePassword(email, newPassword) {
 
 async function getUser(email) {
   return axios.get(`${api.url}/getUser`,
-  `email=${email}`, {
-    withCredentials: true,
-  });
+  `email=${email}`);
 }
 
 async function checkAuth() {

@@ -3,29 +3,71 @@ import axios from 'axios';
 
 async function sendMessageAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
     const apiUrl = `${api.url}/sendMessage`;
-    try {
-        const response = await axios.post(apiUrl, {
-            text_message_content : msgContent,
-            message_type : msgType,
-            media_message_content: null,
-            from : msgFrom,
-            to : msgTo,
-            roomID : roomID,
-        });
-        return response;
-    } catch(error) {
-        throw new Error(error);
-    }
+    const formData = new FormData();
+    formData.append('text_message_conten', msgContent);
+    formData.append('message_type', msgType);
+    formData.append('media_message_content', null);
+    formData.append('from', msgFrom);
+    formData.append('to', msgTo);
+    formData.append('roomID', roomID);
+
+    return fetch(apiUrl,
+    {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+      mode: 'cors',
+    });
+
+    // try {
+    //     const response = await axios.post(apiUrl, {
+    //         text_message_content : msgContent,
+    //         message_type : msgType,
+    //         media_message_content: null,
+    //         from : msgFrom,
+    //         to : msgTo,
+    //         roomID : roomID,
+    //     },
+    //     {
+    //       withCredentials: true,
+    //     });
+    //     return response;
+    // } catch(error) {
+    //     throw new Error(error);
+    // }
 }
 
 async function sendMediaAPI(data) {
     const apiUrl = `${api.url}/sendMessage`;
     console.log(data.get('media_message_content'));
-    return axios.post(apiUrl, data); 
+    return fetch(apiUrl,
+      {
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+        mode: 'cors',
+      });
+    // return axios.post(apiUrl, data,  
+    // {
+    //   withCredentials: true,
+    // }); 
 }
 
 async function getMessageAPI(msgFrom, msgTo) {
   const apiUrl = `${api.url}/getMessageViaRoom`;
+  // const formData = new FormData();
+  // formData.append('from', msgFrom);
+  // formData.append('to', msgTo);
+
+  //const data = {from: msgFrom, to: msgTo};
+  // return fetch(apiUrl,
+  //   {
+  //     method: 'GET',
+  //     body: formData,
+
+  //     credentials: 'include',
+  //     mode: 'cors',
+  // });
     return axios.get(apiUrl, 
       {params: {
           from : msgFrom,

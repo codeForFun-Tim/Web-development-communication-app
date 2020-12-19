@@ -254,7 +254,7 @@ function ChatView() {
         }
       }
     )
-    .catch((e) => {});
+    .catch((e) => {console.log(e);});
   }
 
   function sortByTime(a, b){
@@ -336,7 +336,8 @@ function ChatView() {
       }
       console.log(latest_contacts);
       let msgCopy = "";
-      alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
+      let ifValid = true;
+      //alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
       const mentionArray = msg.trim().split(',');
       for (var mentioned in mentionArray) {
         let mentionedUser = mentionArray[mentioned].substring(1);
@@ -345,9 +346,16 @@ function ChatView() {
         if (latest_contacts.includes(mentionedUser)){
           msgCopy += `<a href="/otherProfile/${mentionedUser}" target="_blank">${mentionArray[mentioned]}</a>`; 
         }
+        else {
+          ifValid = false;
+        }
         console.log(msgCopy);
+        
       }
       msg = msgCopy;
+      if (!ifValid) {
+        alert("Some of mentioned users are not friends.");
+      }
     };
 
     setMessage(msg);

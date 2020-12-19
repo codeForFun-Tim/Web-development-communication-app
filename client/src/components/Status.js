@@ -38,7 +38,7 @@ const Status = () => {
   }
 
   function createGifDiv(message) {
-    let base64 = btoa(new Uint8Array(message.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
     const src = `data:image/gif;base64,${base64}`;
     return src;
   }
@@ -77,7 +77,7 @@ const Status = () => {
             viewedStatus(loggedInUser, feedArray[statusIndex]._id).catch(() => {});
           }
           else if(feedArray[statusIndex].type === "image/gif") {
-            let src = createImageDiv(feedArray[statusIndex]);
+            let src = createGifDiv(feedArray[statusIndex]);
             setImageSrc(src);
             viewedStatus(loggedInUser, feedArray[statusIndex]._id).catch(() => {});
           }
@@ -139,13 +139,15 @@ const Status = () => {
       if (selectedFile) {
         if (selectedFile.name.endsWith('.jpg') || selectedFile.name.endsWith('.gif')) {
           if (selectedFile.size/1024/1024 < 1) {
-            addMediaStatus(loggedInUser, selectedFile).catch(() => alert("Failed to send this Image/Gif."));;
+            addMediaStatus(loggedInUser, selectedFile).catch(() => alert("Failed to send this Image/Gif."));
+            closepopWindow();
           }
           else {
             alert("Image is too big, make sure it is less than 1 MB.");
           }
         }
       }
+
   }
 
   return (
