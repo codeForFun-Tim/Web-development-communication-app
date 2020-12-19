@@ -22,7 +22,7 @@ const { Strategy } = require('passport');
 const router = express.Router();
 
 router.post('/Register', 
-checkNotAuthenticated,
+  checkNotAuthenticated,
   checkAndSanitizeInput(),
   handleInputCheck,
   async (req, res) => {
@@ -103,6 +103,7 @@ checkNotAuthenticated,
       res.status(559).json(`[!] Could not register user: ${err}`);
     }
   });
+
 // TODO : return a cookie OR JSON webtoken (get from the frontend )
 router.post('/login',
   checkNotAuthenticated,
@@ -117,56 +118,9 @@ router.post('/login',
     res.json('[!] Invalid credentials');
   });
 
-// router.put('/changePassword',
-// //   checkNotAuthenticated,
-//   // passport.authenticate('local'),
-//   // async (req,res) => {
-//   //   console.log(0);
-//   //   const email = req.body.email;
-//   //   const newPassword  = req.body.newPassword;
-//   //   console.log(email, newPassword);
-//   //   const hashedPassword = await bcrypt.hash(newPassword, 10);
-//   //   User.findByUsername(email).then(function(sanitizedUser){
-//   //     if (sanitizedUser){
-//   //         sanitizedUser.setPassword(hashedPassword, function(){
-//   //             sanitizedUser.save();
-//   //             res.status(200).json({message: 'password reset successful'});
-//   //         });
-//   //     } else {
-//   //         res.status(500).json({message: 'This user does not exist'});
-//   //     }
-//   // },function(err){
-//   //     console.error(err);
-//   // })
-//   // }
-//   User.findOne({ _id: req.body._id },(err, user) => {
-//     // Check if error connecting
-//     if (err) {
-//       res.json({ success: false, message: err }); // Return error
-//     } else {
-//       // Check if user was found in database
-//       if (!user) {
-//         res.json({ success: false, message: 'User not found' }); // Return error, user was not found in db
-//       } else {
-//         user.changePassword(req.body.oldPassword, req.body.newPassword, function(err) {
-//            if(err) {
-//                     if(err.name === 'IncorrectPasswordError'){
-//                          res.json({ success: false, message: 'Incorrect password' }); // Return error
-//                     }else {
-//                         res.json({ success: false, message: 'Something went wrong!! Please try again after sometimes.' });
-//                     }
-//           } else {
-//             res.json({ success: true, message: 'Your password has been changed successfully' });
-//            }
-//          })
-//       }
-//     }
-//   });
-
 router.post('/changePassword', 
   checkAuthenticated,
    function(req, res) {
-
     User.findOne({ email: req.body.email }, async (err, user) => {
       console.log(user);
       // Check if error connecting
@@ -217,6 +171,7 @@ router.post('/changePassword',
       }
   });   
 });
+
 
 router.post('/logout', checkAuthenticated, (req, res) => {
   req.logout();
