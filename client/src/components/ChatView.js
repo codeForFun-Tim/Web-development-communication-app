@@ -474,7 +474,7 @@ function ChatView() {
   const onFileChange = (event) => {
     // Update the state
     const selectedFile = event.target.files[0];
-    if (selectedFile) {
+    if (selectedFile && selectedFile.size/1024/1024 < 1) {
       // finally we should use the data retrieved from mongoDB in setMessage
       const src = URL.createObjectURL(selectedFile);
       const data = new FormData();
@@ -499,7 +499,7 @@ function ChatView() {
           `<source src=${src} type="audio/mpeg">` +
           'Your browser does not support the audio element.' +
           '</audio>';
-        setMessage(audioDiv);
+          setMessage(audioDiv);
         }
         else {
           alert("Audio is too big, make sure it is less than 1 MB.");
@@ -520,8 +520,11 @@ function ChatView() {
         }
       }
       else {
-        alert("Invalid file type.");
+        alert("Invalid file type");
       }
+    }
+    else {
+      alert("Too big file.");
     }
   };
 
