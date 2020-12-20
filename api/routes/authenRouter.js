@@ -119,17 +119,16 @@ router.post('/login',
   });
 
 router.post('/changePassword', 
-  checkAuthenticated,
    function(req, res) {
     User.findOne({ email: req.body.email }, async (err, user) => {
-      console.log(user);
       // Check if error connecting
       if (err) {
         res.json({ success: false, message: err }); // Return error
       } else {
         // Check if user was found in database
         if (!user) {
-          res.json({ success: false, message: 'User not found' }); // Return error, user was not found in db
+          //res.json({ success: false, message: 'User not found' }); // Return error, user was not found in db
+          res.sendStatus(401);
         } else {
           // console.log('old pass: ', req.body.oldPassword);
           // console.log('new pass: ', req.body.newPassword);
