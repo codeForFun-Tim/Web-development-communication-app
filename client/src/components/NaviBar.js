@@ -5,8 +5,9 @@ import { logout } from '../javascripts/authRequests'
 const NaviBar = () => {
   const [username, setUsername] = useState('');
 
-  const logOut = () => {
-    logout().then(() => localStorage.clear()).catch(() => {});
+  const logOut = async () => {
+    await logout();
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const NaviBar = () => {
           <a href="/status">Status</a>
         </li>
         <li className="nav_li">
-          <a href="/#" onClick={logOut()}>Logout</a>
+          <a href="/#" onClick={logOut}>Logout</a>
         </li>
         <li className="nav_li">
           <a href="/main">{username}</a>
