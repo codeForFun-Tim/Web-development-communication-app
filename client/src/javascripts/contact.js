@@ -24,6 +24,29 @@ async function getUser(username) {
     }
 };
 
+async function getSortedUser(username) {
+    // return fetch(`${api.url}/getUser/${username}`,
+    // {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //     Accept: 'application/json; charset=UTF-8',
+    //   },
+    //   credentials: 'include',
+    //   mode: 'no-cors',
+    // });
+    const apiUrl = `${api.url}/getSortedUser`;
+    
+    try {
+        const response = await axios.get(apiUrl, {
+                params: {username: username}
+            });
+        return response;
+    } catch(error) {
+        throw new Error(error);
+    }
+};
+
 async function addContact(username, addUserName) {
     const apiUrl = `${api.url}/addContact`;
     return axios.post(apiUrl, {
@@ -74,5 +97,6 @@ export {
     addContact,
     checkContact,
     deleteContact,
-    getSuggestedUsers
+    getSuggestedUsers,
+    getSortedUser
   };

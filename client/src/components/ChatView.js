@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
-import { getUser, addContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
+import { getUser, addContact, deleteContact, getSuggestedUsers, getSortedUser} from '../javascripts/contact';
 import Room from './Room';
 
 let mycontacts = [];
@@ -619,6 +619,13 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
+  function sortByLatestTime(a, b){
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(b.latestTime) - new Date(a.latestTime);
+  };
+
+
   useEffect(() => {
     if(token === null) {
       if(mycontacts.length === 0 ) {
@@ -626,11 +633,20 @@ function ChatView() {
         // setcontact(mycontacts.length);
         // get all contacts from backend
         const current_user = localStorage.getItem("curr_user");
-        getUser(current_user)
-        .then((res) => {
-          for (var i = 0; i < res.data.contacts.length; i++) {
-            mycontacts.push(res.data.contacts[i]);
+        let tempContacts = [];
+        getSortedUser(current_user).then((res) => {
+          for (var i = 0; i < res.data.length; i++) {
+            tempContacts.push(res.data[i]);
           }
+          tempContacts.sort(sortByLatestTime);
+          for (var j = 0; j < tempContacts.length; j++) {
+            mycontacts.push(tempContacts[j].contact);
+          }
+        // getUser(current_user)
+        // .then((res) => {
+        //   for (var i = 0; i < res.data.contacts.length; i++) {
+        //     mycontacts.push(res.data.contacts[i]);
+        //   }
           // set current receiver
           if(mycontacts.length !== 0) {
             localStorage.setItem("curr_receiver", mycontacts[0]);

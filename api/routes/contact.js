@@ -31,6 +31,36 @@ router.get('/getUser',
     }
 );
 
+router.get('/getSortedUser', 
+  //checkAuthenticated,
+  async (req, res) => {
+      console.log(req.query);
+        const username = req.query.username;
+        const user = await User.findOne({email: username});
+        if(user != null){
+          const contacts = user.contact_list;
+          const contactsWithTime = [];
+          await Promise.all(contacts.map(async (contact) => {
+            // look for the room of this friend and user
+            const room = await Room.findOne({ $or: [{userList: [username, contact]}, {userList: [contact, username]}]});
+            if (room) {
+              const latestTimeMsgID = room.messageList[room.messageList.length-1];
+              const latestTimeMsg = await Message.find({_id:ObjectId(latestTimeMsgID)});
+              if (latestTimeMsg !== null) {
+                contactsWithTime.push({contact: contact, latestTime: latestTimeMsg[0].timeStamp});
+              }            
+            }
+          }));
+          console.log(contactsWithTime);
+          res.send(contactsWithTime);
+        }
+        else{ // 
+            console.log('not authorized!');
+            res.sendStatus(401);
+        }
+    }
+);
+
 router.post(
     '/addContact', async (req,res) => {
         const userToAdd = req.body.addUserName; //make sure the frontend has the 'addUserName'
