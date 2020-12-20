@@ -588,3 +588,8 @@ video {
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+.ifread {
+  text-align: center;
+  display: none;
+}

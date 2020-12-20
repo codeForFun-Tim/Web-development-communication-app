@@ -4,6 +4,26 @@ import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
 import { getUser, addContact, checkContact, deleteContact, getSuggestedUsers} from '../javascripts/contact';
 import Room from './Room';
+import Push from 'push.js';
+import beep from '../media/videoCalling.mp3';
+
+Push.Permission.request();
+
+function pushNotifi(msgFrom){
+  const clip = new Audio(beep);
+  clip.play();
+  Push.create('Calling from '+msgFrom, {
+    body: 'This is a notification.',
+    icon: 'icon.png',
+    timeout: 10000,                  // Timeout before notification closes automatically.
+    vibrate: [100, 100, 100],       // An array of vibration pulses for mobile devices.
+    onClick: function() {
+        // Callback for when the notification is clicked. 
+        clip.pause();
+        console.log(this);
+    }  
+});
+}
 
 let mycontacts = [];
 // let mycontacts = ["cat@gmail.com", "dog@gmail.com", "guangzhe@test.com"];
@@ -211,6 +231,15 @@ function ChatView() {
     }
   }, [title]);
 
+  const [readflag, setreadflag] = useState(false);
+  useEffect(() => {
+    if (readflag !== false) {
+      const ifreadElments = document.getElementsByClassName('ifread');
+      ifreadElments[ifreadElments.length - 1].style.display = 'inline';
+      setreadflag(false);
+    }
+  }, [readflag]);
+
   function event_handler(e) {
     const current_click_name = e.currentTarget.getAttribute('value');
     localStorage.setItem("curr_receiver", current_click_name);
@@ -244,14 +273,51 @@ function ChatView() {
           messageArray.push(data[i]);
         }
         messageArray.sort(sortByTime);
-        for (var index in messageArray) {
-          if (messageArray[index].sender === msgFrom) {
-            setRetrieveMessage(messageArray[index]);
+        const arraylength = messageArray.length;
+        for (var index = 0; index < arraylength; index++) {
+          // check if video call is accepted
+          if (messageArray[index].content.includes('<div class="callFlag">')) {
+            let callflag = true;
+            if (index+1<arraylength){
+              for (var x = index+1; x < arraylength; x++){
+                if (messageArray[x].content.includes('<div class="endcallFlag">')) {
+                  messageArray[index].content = 
+                  '<div class="callFlag">'+
+                  'Call Ended'+
+                  '</div>';
+                  callflag = false;
+                  break;
+                }
+              }
+            }
+            if (callflag === true) {
+              pushNotifi(msgFrom);
+            }
           }
-          else if (messageArray[index].sender === currentname) {              
-            setOtherMessage(messageArray[index]);
+          // from me
+          if (messageArray[index].sender === msgFrom) {
+            if(messageArray[index].content !== '<div class="msgreadFlag">Above message has been read by</div>'){
+              setRetrieveMessage(messageArray[index]);
+            }
+          }
+          // from you
+          else if (messageArray[index].sender === currentname) { 
+            if(messageArray[index].content === '<div class="msgreadFlag">Above message has been read by</div>'){
+              setreadmsg(messageArray[index]);
+            }       
+            else {
+              setOtherMessage(messageArray[index]);
+            }
           }
         }
+        // check the last message
+        if(messageArray[arraylength-1].content !== '<div class="msgreadFlag">Above message has been read by</div>' || messageArray[arraylength-1].sender !== msgFrom){
+          // sendVideoCall function just send a text msg to database
+          sendVideoCall('<div class="msgreadFlag">Above message has been read by</div>');
+          console.log('send');
+        }
+        // display only the last read msg
+        setreadflag(true);
       }
     )
     .catch((e) => {});
@@ -309,6 +375,8 @@ function ChatView() {
       myh2.innerHTML = 'me';
       const myspan = document.createElement('span');
       myspan.setAttribute('class', 'status blue');
+      const span2 = document.createElement('span');
+      span2.innerHTML='Delievered';
       const msg = document.createElement('div');
       msg.setAttribute('class', 'message');
       msg.innerHTML = message;
@@ -316,6 +384,7 @@ function ChatView() {
       mydiv.appendChild(myh3);
       mydiv.appendChild(myh2);
       mydiv.appendChild(myspan);
+      mydiv.appendChild(span2);
       myli.appendChild(mydiv);
       myli.appendChild(msg);
 
@@ -373,8 +442,6 @@ function ChatView() {
         myh3.innerHTML = otherMessage.time;
         const myh2 = document.createElement('H2');
         myh2.innerHTML = currentContactName;
-        const myspan = document.createElement('span');
-        myspan.setAttribute('class', 'status blue');
         const msg = document.createElement('div');
         msg.setAttribute('class', 'message');
         if (otherMessage.type === 'text') {
@@ -394,7 +461,6 @@ function ChatView() {
         }
         mydiv.appendChild(myh3);
         mydiv.appendChild(myh2);
-        mydiv.appendChild(myspan);
         myli.appendChild(mydiv);
         myli.appendChild(msg);
   
@@ -417,6 +483,8 @@ function ChatView() {
         myh2.innerHTML = 'me';
         const myspan = document.createElement('span');
         myspan.setAttribute('class', 'status blue');
+        const span2 = document.createElement('span');
+        span2.innerHTML='Delievered';
         const msg = document.createElement('div');
         msg.setAttribute('class', 'message');
         if (retrievemessage.type === 'text') {
@@ -437,6 +505,7 @@ function ChatView() {
         mydiv.appendChild(myh3);
         mydiv.appendChild(myh2);
         mydiv.appendChild(myspan);
+        mydiv.appendChild(span2);
         myli.appendChild(mydiv);
         myli.appendChild(msg);
   
@@ -445,6 +514,28 @@ function ChatView() {
         myul.scrollTop = myul.scrollHeight;
       }
     }, [retrievemessage]);
+
+    const [readmsg, setreadmsg] = useState(null);
+    useEffect(() => {
+      if (readmsg !== null) {
+        const myli = document.createElement('LI');
+        myli.setAttribute('class', 'ifread');
+        const mydiv = document.createElement('div');
+        mydiv.setAttribute('class', 'entete');
+        const myh3 = document.createElement('H3');
+        myh3.innerHTML = 'System Notification: ';
+        const myh2 = document.createElement('H2');
+        myh2.innerHTML = readmsg.content + readmsg.sender;
+        mydiv.appendChild(myh3);
+        mydiv.appendChild(myh2);
+        myli.appendChild(mydiv);
+        const myul = document.getElementById('chat');
+        myul.appendChild(myli);
+        myul.scrollTop = myul.scrollHeight;
+      }
+    }, [readmsg]);
+
+
   
   // -----------------upload image/audio/video------------------------
   // On file upload (click the upload button)
@@ -654,11 +745,17 @@ function ChatView() {
     const yes_decline = document.getElementById('yes_decline');
     closepop2.style.visibility = 'hidden';
     yes_decline.style.visibility = 'hidden';
-    document.getElementById('decline_call').style.visibility = 'hidden'; 
-    document.getElementById('accept_call').style.visibility = 'hidden';
-    document.getElementById('call_msg').innerHTML = 'Call Ended';
+    const elements = document.getElementsByClassName('callFlag');
+    elements[elements.length-1].innerHTML = 'Call Ended';
+    // document.getElementById('decline_call').style.visibility = 'hidden'; 
+    // document.getElementById('accept_call').style.visibility = 'hidden';
+    // document.getElementById('call_msg').innerHTML = 'Call Ended';
     const myUserName = localStorage.getItem("curr_user");
-    sendVideoCall(`${myUserName} Declined The Call`);
+    // const endcallFlag = 
+    // '<div class="endcallFlag">'+
+    // '</div>';
+    // sendVideoCall(endcallFlag);
+    sendVideoCall(`<div class="endcallFlag">${myUserName} Declined The Call </div>`);
   }
 
   function closepopWindow2() {
@@ -672,7 +769,8 @@ function ChatView() {
 
   function inviteVideoCall(){
     const videoCallDiv = 
-      '<div id="call_msg">'+
+      '<div class="callFlag">'+
+      '<div class="call_msg">'+
       'Calling...'+
       '</div>'+
       `<button id="decline_call" onclick="document.getElementById('popup2').style.visibility = 'visible'; 
@@ -682,7 +780,8 @@ function ChatView() {
       '</button>'+
       `<button id="accept_call" onclick="document.getElementById('video_call').click()">` +
       'Accept' +
-      '</button>';
+      '</button>'+
+      '</div>';
     sendVideoCall(videoCallDiv);
   }
 
@@ -713,7 +812,11 @@ function ChatView() {
     const minutesLabel = document.getElementById("minutes").innerHTML;
     const secondsLabel = document.getElementById("seconds").innerHTML;
     const username = localStorage.getItem("curr_user");
-    sendVideoCall(`${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room`);
+    // const endcallFlag = 
+    // '<div class="endcallFlag">'+
+    // '</div>';
+    // sendVideoCall(endcallFlag);
+    sendVideoCall(`<div class="endcallFlag">${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room </div>`);
     setToken(null);
   }, []);
 

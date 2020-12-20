@@ -13,7 +13,9 @@ const { sendDatabaseErrorResponse } = require('../app');
 const router = express.Router();
 
 router.get(
-    '/getUser', checkauthenticated, async (req,res) => {
+    '/getUser', 
+    // checkauthenticated, 
+    async (req,res) => {
         const userName = req.query.username;
         const user = await User.findOne({email: userName});
         if(user != null){
