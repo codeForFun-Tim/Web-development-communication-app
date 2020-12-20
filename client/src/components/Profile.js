@@ -29,8 +29,8 @@ const Profile = () => {
     let newPassword = document.getElementById('newPassword').value;
     if (validation(newPassword)) {
       changePassword(email, newPassword).then((res) => {
-        if (res.ok) {
-          console.log(res);
+        console.log(res);
+        if (res.status === 200) {
           localStorage.clear();
           history.push("/login");
         }

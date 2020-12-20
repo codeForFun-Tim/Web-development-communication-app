@@ -24,7 +24,7 @@ const ForgetPassword = () => {
     let newPassword = document.getElementById('newPassword').value;
     if (validation(newPassword)) {
       changePassword(email, newPassword).then((res) => {
-        if (res.ok) {
+        if (res.status === 200) {
           localStorage.clear();
           history.push("/login");
         }

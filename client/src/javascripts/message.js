@@ -54,21 +54,21 @@ async function sendMediaAPI(data) {
 }
 
 async function getMessageAPI(msgFrom, msgTo) {
-  const apiUrl = `${api.url}/getMessageViaRoom/${msgFrom}/${msgTo}`;
-  return fetch(apiUrl,
-    {
-      method: 'GET',
-      credentials: 'include',
-      mode: 'cors',
-  });
-    // return axios.get(apiUrl, 
-    //   {params: {
-    //       from : msgFrom,
-    //       to : msgTo,
-    //   }},
-    //   {
-    //     withCredentials: true
-    //   });
+  const apiUrl = `${api.url}/getMessageViaRoom`;
+  // return fetch(apiUrl,
+  //   {
+  //     method: 'GET',
+  //     credentials: 'include',
+  //     mode: 'cors',
+  // });
+    return axios.get(apiUrl, 
+      {params: {
+          from : msgFrom,
+          to : msgTo,
+      }},
+      {
+        withCredentials: true
+      });
 } 
 
 
