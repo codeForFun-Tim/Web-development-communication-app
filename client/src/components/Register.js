@@ -21,7 +21,7 @@ function Register(user) {
         return true;
     };
     const handleSubmit = (event) => {
-        //event.preventDefault();
+        event.preventDefault();
         const email = document.getElementById('email').value;
         const userName = document.getElementById('userName').value;
         const pwd = document.getElementById('password').value;
@@ -34,7 +34,12 @@ function Register(user) {
                     setTimeout(() => {history.push("/login")}, 2000);
                 }
                 else {
-                    setMessage('Failed');
+                    if (res.status === 422) {
+                        setMessage('Failed, please input a valid email');
+                    }
+                    else if (res.status === 409) {
+                        setMessage('Failed, existed user, change your email and username');
+                    }
                 }
             })
             .catch(() => {
