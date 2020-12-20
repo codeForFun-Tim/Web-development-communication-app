@@ -8,9 +8,10 @@ import Push from 'push.js';
 import beep from '../media/videoCalling.mp3';
 
 Push.Permission.request();
+let clip;
 
 function pushNotifi(msgFrom){
-  const clip = new Audio(beep);
+  clip = new Audio(beep);
   clip.play();
   Push.create('Calling from '+msgFrom, {
     body: 'This is a notification.',
@@ -235,9 +236,13 @@ function ChatView() {
   useEffect(() => {
     if (readflag !== false) {
       const ifreadElments = document.getElementsByClassName('ifread');
-      console.log(ifreadElments[ifreadElments.length - 1]);
-      ifreadElments[ifreadElments.length - 1].style.display = 'inline';
-      setreadflag(false);
+      if (ifreadElments) {
+        console.log(ifreadElments[ifreadElments.length - 1]);
+        if (ifreadElments[ifreadElments.length - 1]) {
+          ifreadElments[ifreadElments.length - 1].style.display = 'inline';
+          setreadflag(false);
+        }
+      }
     }
   }, [readflag]);
 
@@ -279,9 +284,6 @@ function ChatView() {
         for (var index = 0; index < arraylength; index++) {
           // check if video call is accepted
           if (typeof messageArray[index].content === 'string' && messageArray[index].content.includes('<div class="callFlag">')) {
-            console.log(messageArray[index].content);
-            console.log(messageArray[index+1].content);
-
             let callflag = true;
             if (index+1<arraylength){
               for (var x = index+1; x < arraylength; x++){
@@ -728,9 +730,11 @@ function ChatView() {
         const current_user = localStorage.getItem("curr_user");
         let tempContacts = [];
         getSortedUser(current_user).then((res) => {
+          console.log(res);
           for (var i = 0; i < res.data.length; i++) {
             tempContacts.push(res.data[i]);
           }
+          console.log(tempContacts);
           tempContacts.sort(sortByLatestTime);
           for (var j = 0; j < tempContacts.length; j++) {
             mycontacts.push(tempContacts[j].contact);
@@ -768,6 +772,7 @@ function ChatView() {
   }
 
   function declineCall() {
+    clip.pause();
     const popup = document.getElementById('popup2');
     popup.style.visibility = 'hidden';
     const closepop2 = document.getElementById('closepop2');

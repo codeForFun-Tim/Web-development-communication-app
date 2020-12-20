@@ -48,7 +48,15 @@ router.get('/getSortedUser',
               const latestTimeMsg = await Message.find({_id:ObjectId(latestTimeMsgID)});
               if (latestTimeMsg !== null) {
                 contactsWithTime.push({contact: contact, latestTime: latestTimeMsg[0].timeStamp});
-              }            
+              } 
+              else {
+                // an old date
+                contactsWithTime.push({contact: contact, latestTime: 'Jan 26 2017 11:00:00 GMT+1100'});
+              }       
+            }
+            else {
+              // an old date
+              contactsWithTime.push({contact: contact, latestTime: 'Jan 26 2017 11:00:00 GMT+1100'});
             }
           }));
           console.log(contactsWithTime);
@@ -151,11 +159,11 @@ router.put('/blockUser',async (req,res) => {
 
 })
 
-router.get('/getSuggestedUsers/:userName', 
+router.get('/getSuggestedUsers', 
 // checkAuthenticated, 
 async (req, res) => {
 
-    const {userName} = req.query;
+    const userName = req.query.username;
     const suggestedUsers = new Set();
     const currUserContactsSet = new Set();
     const numSuggestions = 5;
