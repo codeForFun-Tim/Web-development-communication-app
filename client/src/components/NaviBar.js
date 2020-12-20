@@ -31,7 +31,7 @@ const NaviBar = () => {
           <a href="/status">Status</a>
         </li>
         <li className="nav_li">
-          <a href="/status" onClick={logout}>Logout</a>
+          <a href="/" onClick={logout}>Logout</a>
         </li>
         <li className="nav_li">
           <a href="/main">{username}</a>

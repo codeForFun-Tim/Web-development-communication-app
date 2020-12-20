@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
 import { login } from '../javascripts/authRequests'
 import '../stylesheets/LoginRegister.css'
 
@@ -9,19 +9,24 @@ const Login = () => {
   //const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+  let history = useHistory();
+
   const handleLogin = () => {
     const name = document.getElementById('userName').value;
     const pwd = document.getElementById('password').value;
     setError(false);
     setLoading(true);
-    login(name, pwd).then(() => 
+    login(name, pwd).then((res) => 
       {
-        localStorage.setItem('curr_user', name); window.open("/main","_self")
-      }).catch((e) => 
+        console.log(res);
+        if (res.ok) {
+          localStorage.setItem('curr_user', name);
+          history.push("/main");
+        } else {
+          setError("Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.");
+        }
+      }).catch(() => 
         {
-          console.log(e.response.data);
-          console.log(e.response.statusText);
           setError("Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.");
         });
     setLoading(false);
@@ -31,7 +36,7 @@ const Login = () => {
     const loggedInUser = localStorage.getItem("curr_user");
     if (loggedInUser && loggedInUser !== "") {
       setUsername(loggedInUser);
-      window.open("/main","_self")
+      history.push("/main");
     }
   }, []);
 

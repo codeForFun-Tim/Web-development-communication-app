@@ -9,6 +9,7 @@ function Register(user) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [message, setMessage] = useState(false);
 
     const handleSubmit = () => {
         const email = document.getElementById('email').value;
@@ -17,8 +18,20 @@ function Register(user) {
         setIsSubmitting(true);
         // leave axios code here
         register(email, userName, pwd)
-        .then(() => {window.open("/login","_self")})
-        .catch((e) => {console.log(e)});
+        .then((res) => {
+            console.log(res);
+            if (res.ok) {
+                setMessage('Successful, please wait');
+                setTimeout(() => {history.push("/login")}, 2000);
+            }
+            else {
+                setMessage('Failed');
+            }
+        })
+        .catch((e) => {
+            setMessage('Failed');
+            console.log(e);
+        });
         setIsSubmitting(false);
     };
 
@@ -32,6 +45,7 @@ function Register(user) {
                     <input className="nickName" id="userName" type="text" align="center" placeholder="Username" />
                     <input className="pass" id="password" type="password" align="center" placeholder="Password" />
                     <input type="button" id="submitBtn" value={isSubmitting ? 'Submitting' : 'Register'} onClick={handleSubmit} className="registerBtn2" />
+                    {message && <><div id="error" style={{ color: 'red', fontSize: 12, textAlign: "center" }}>{message}</div><br /></>}<br />
                 </form>  
             </div>
         </div>
