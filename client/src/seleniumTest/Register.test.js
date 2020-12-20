@@ -1,125 +1,96 @@
-const rootUrl = 'http://localhost:3000';
-const { Builder, By, Key, until } = require('selenium-webdriver');
-require('chromedriver');
-require('selenium-webdriver/chrome');
-const fetch = require('node-fetch');
+/* eslint-disable no-global-assign */
+/* eslint-disable no-undef */
+// import selenium functions
+const {
+  Builder, By, until,
+} = require('selenium-webdriver');
 
+// declare the -web- driver
 let driver;
+
 beforeAll(async () => {
-  driver = await new Builder().forBrowser('chrome').build();
+  // initialize the driver before running the tests
+  try {
+    driver = await new Builder().forBrowser('firefox').build();
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
 });
+
 afterAll(async () => {
+  // close the driver after running the tests
   await driver.quit();
 });
 
-beforeEach(async () => {
-  driver.wait(until.urlIs('http://localhost:3000/Register'));
-  await driver.get('http://localhost:3000/Register');
-});
-
-it('Check url', async () => {
-  await driver.get('http://localhost:3000/register');
+// use the driver to mock user's actions
+async function mockUserAction() {
+  // open the URL
   driver.wait(until.urlIs('http://localhost:3000/register'));
+  await driver.get('http://localhost:3000/register');
+  // locate the textbox, provide a timeout
+  const textbox = await driver.wait(until.elementLocated(By.id('email')), 10000);
+  // enter text in the textbox
+  await textbox.sendKeys('newlion@gail.com');
+  // locate the textbox, provide a timeout
+  const textbox1 = await driver.wait(until.elementLocated(By.id('userName')), 10000);
+  // enter text in the textbox
+  await textbox1.sendKeys('newlion');
+  // locate the textbox, provide a timeout
+  const textbox2 = await driver.wait(until.elementLocated(By.id('password')), 10000);
+  // enter text in the textbox
+  await textbox2.sendKeys('321321321');
+
+  // click on 'Register' button
+  await driver.findElement(By.id('submitBtn')).click();
+  // return the element contining the value to test
+  return driver.wait(until.elementLocated(By.id('error')), 10000);
+}
+
+test('failed register, test webpage updated correctly', async () => {
+  // call the mock function
+  //fetch = jest.fn(() => Promise.resolve({ json: () => ({ message: 'success', data: [{ player: 'tester', point: 2, id: 1 }] }) }));
+  const element = await mockUserAction();
+  // retrieve the content of the element
+  const returnedText = await element.getText();
+  // test the values
+  expect(element).not.toBeNull();
+  expect(returnedText).toEqual('Failed, existed user, change your email and username');
   const url = await driver.getCurrentUrl();
   expect(url).toBe('http://localhost:3000/register');
 });
 
-// async function registerOK() {
-//   await fetch(`${rootUrl}/user/timqi`, { method: 'DELETE' })
-//     .then((res) => res.json())
-//     .then((json) => console.log(json))
-//     .then(async () => {
-//       await driver
-//         .findElement(By.className('userName'))
-//         .sendKeys('timqi@seas.upenn.edu');
-//       await driver
-//         .findElement(By.className('nickName'))
-//         .sendKeys('timqi');
-//       await driver
-//         .findElement(By.className('pass'))
-//         .sendKeys('12345');
-//       await driver.findElement(By.className('registerBtn2')).click();
-//     })
-//     .catch((err) => console.log(err));
-// }
+// use the driver to mock user's actions
+async function mockUserActionSuc() {
+  // open the URL
+  driver.wait(until.urlIs('http://localhost:3000/register'));
+  await driver.get('http://localhost:3000/register');
+  // locate the textbox, provide a timeout
+  const textbox = await driver.wait(until.elementLocated(By.id('email')), 10000);
+  // enter text in the textbox
+  var randomPart = Math.ceil((Math.random() * 46656))
+  await textbox.sendKeys(`${randomPart}newlion@gail.com`);
+  // locate the textbox, provide a timeout
+  const textbox1 = await driver.wait(until.elementLocated(By.id('userName')), 10000);
+  // enter text in the textbox
+  await textbox1.sendKeys(`${randomPart}newlion`);
+  // locate the textbox, provide a timeout
+  const textbox2 = await driver.wait(until.elementLocated(By.id('password')), 10000);
+  // enter text in the textbox
+  await textbox2.sendKeys('321321321');
 
-// async function registerNoEmail() {
-//   await driver
-//     .findElement(By.className('nickName'))
-//     .sendKeys('timqi');
-//   await driver
-//     .findElement(By.className('pass'))
-//     .sendKeys('abc', Key.RETURN);
-// }
+  // click on 'Register' button
+  await driver.findElement(By.id('submitBtn')).click();
+  // return the element contining the value to test
+  return driver.wait(until.elementLocated(By.id('error')), 10000);
+}
 
-// async function registerNoPass() {
-//   await driver
-//     .findElement(By.className('nickName'))
-//     .sendKeys('cis557');
-//   await driver
-//     .findElement(By.className('userName'))
-//     .sendKeys('def', Key.RETURN);
-// }
-
-// async function registerNoUser() {
-//   await driver.findElement(By.className('pass')).sendKeys('123');
-//   await driver
-//     .findElement(By.className('email'))
-//     .sendKeys('123@gmail.com', Key.RETURN);
-// }
-
-// it('register with no email', async () => {
-//   await registerNoEmail();
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000/Register');
-//   await driver
-//     .findElement(By.className('RegisterStatus'))
-//     .getText()
-//     .then((text) => {
-//       expect(text).not.toBe('');
-//     });
-// });
-
-// it('register with no pass', async () => {
-//   await registerNoPass();
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000/Register');
-//   await driver
-//     .findElement(By.className('RegisterStatus'))
-//     .getText()
-//     .then((text) => {
-//       expect(text).not.toBe('');
-//     });
-// });
-
-// it('register with no user', async () => {
-//   await registerNoUser();
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000/Register');
-//   await driver
-//     .findElement(By.className('RegisterStatus'))
-//     .getText()
-//     .then((text) => {
-//       expect(text).not.toBe('');
-//     });
-// });
-
-// it('register successfully', async () => {
-//   await driver.findElement(By.className('loginLink')).click();
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000/Login');
-// });
-
-// it('signup success', async () => {
-//   driver.wait(until.urlIs('http://localhost:3000'));
-//   await registerOK();
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000');
-// });
-
-// test('back to register page after register', async () => {
-//   driver.wait(until.urlIs('http://localhost:3000'));
-//   await driver.get('http://localhost:3000/Register').then(() => driver.sleep(10000));
-//   const url = await driver.getCurrentUrl();
-//   expect(url).toBe('http://localhost:3000');
-// });
+test('successful register, test webpage updated correctly', async () => {
+  // retrieve the content of the element
+  const element = await mockUserActionSuc();
+  // retrieve the content of the element
+  const returnedText = await element.getText();
+  // test the values
+  expect(element).not.toBeNull();
+  expect(returnedText).toEqual('Successful, please wait');
+});
