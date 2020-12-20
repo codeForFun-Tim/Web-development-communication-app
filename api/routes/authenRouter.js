@@ -128,7 +128,7 @@ router.post('/changePassword',
         // Check if user was found in database
         if (!user) {
           //res.json({ success: false, message: 'User not found' }); // Return error, user was not found in db
-          res.sendStatus(401);
+          res.sendStatus(422);
         } else {
           // console.log('old pass: ', req.body.oldPassword);
           // console.log('new pass: ', req.body.newPassword);
