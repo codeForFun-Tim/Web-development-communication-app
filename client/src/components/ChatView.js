@@ -41,6 +41,39 @@ function array_move(arr, old_index, new_index) {
   return arr;
 };
 
+function sortByTime(a, b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(a.time) - new Date(b.time);
+};
+
+function createImageDiv(message) {
+  let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  const src = `data:image/jpeg;base64,${base64}`;
+  //const src = `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+  return `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
+}
+
+function createAudioDiv(message) {
+  let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  const src = `data:audio/mpeg;base64,${base64}`;
+  //const src = `data:audio/mpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+  return  '<audio controls>' +
+          `<source src=${src} type="audio/mpeg">` +
+          'Your browser does not support the audio element.' +
+          '</audio>';;
+}
+
+function createVideoDiv(message) {
+  let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  const src = `data:video/mp4;base64,${base64}`;
+  //const src = `data:video/mp4;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
+  return  '<video width="320" height="240" controls>' +
+          `<source src=${src} type="video/mp4">` +
+          'Your browser does not support the video tag.' +
+          '</video>';
+}
+
 function ChatView() {
 
   // -----------------update contact list------------------------
@@ -65,28 +98,6 @@ function ChatView() {
       setcontact(-1);
     }
   }, [contactNum]);
-
-  // -----------------initialization when f------------------------
-  // useEffect(() => {
-  //   // get all contacts from backend
-  //   const current_user = localStorage.getItem("curr_user");
-  //   getUser(current_user)
-  //   .then((res) => {
-  //     for (var i = 0; i < res.data.contacts.length; i++) {
-  //       mycontacts.push(res.data.contacts[i]);
-  //     }
-  //     // set current receiver
-  //     if(mycontacts.length !== 0) {
-  //       localStorage.setItem("curr_receiver", mycontacts[0]);
-  //       setcontact(mycontacts.length); // refresh contact list
-  //     }
-  //     else {
-  //       localStorage.setItem("curr_receiver", '');
-  //     }
-  //   }).catch(() => {alert("error");});
-  //   //setcontact(mycontacts.length); // refresh contact list
-
-  // }, []);
 
   // -----------------update search result------------------------
   const [name, setName] = useState('');
@@ -327,39 +338,6 @@ function ChatView() {
       }
     )
     .catch((e) => {console.log(e);});
-  }
-
-  function sortByTime(a, b){
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    return new Date(a.time) - new Date(b.time);
-  };
-
-  function createImageDiv(message) {
-    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    const src = `data:image/jpeg;base64,${base64}`;
-    //const src = `data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
-    return `<img width="320" height="240" src=${src} alt="The picture is gone.">`;
-  }
-
-  function createAudioDiv(message) {
-    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    const src = `data:audio/mpeg;base64,${base64}`;
-    //const src = `data:audio/mpeg;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
-    return  '<audio controls>' +
-            `<source src=${src} type="audio/mpeg">` +
-            'Your browser does not support the audio element.' +
-            '</audio>';;
-  }
-
-  function createVideoDiv(message) {
-    let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    const src = `data:video/mp4;base64,${base64}`;
-    //const src = `data:video/mp4;base64,${btoa(String.fromCharCode.apply(null, message.content.data))}`;
-    return  '<video width="320" height="240" controls>' +
-            `<source src=${src} type="video/mp4">` +
-            'Your browser does not support the video tag.' +
-            '</video>';
   }
 
   // -----------------update chat message------------------------
