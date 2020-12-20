@@ -12,9 +12,9 @@ function Register(user) {
     const [message, setMessage] = useState(false);
 
     const validation = (password) => {
-        let pattern = new RegExp(/^[0-9a-zA-Z]+$/);
+        let pattern = new RegExp(/^[0-9a-zA-Z]{8,}$/);
         if (!pattern.test(password)) {
-            const msg = "Alphanumeric characters only for password";
+            const msg = "At least 8 alphanumeric characters for password";
             setMessage(msg); 
             return false;
           }
