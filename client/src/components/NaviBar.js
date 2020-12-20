@@ -1,11 +1,12 @@
 import '../stylesheets/NaviBar.css';
 import React, { useState, useEffect } from 'react'
+import { logout } from '../javascripts/authRequests'
 
 const NaviBar = () => {
   const [username, setUsername] = useState('');
 
-  const logout = () => {
-    localStorage.clear();  
+  const logOut = () => {
+    logout().then(() => localStorage.clear()).catch(() => {});
   };
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const NaviBar = () => {
           <a href="/status">Status</a>
         </li>
         <li className="nav_li">
-          <a href="/" onClick={logout}>Logout</a>
+          <a href="/#" onClick={logOut()}>Logout</a>
         </li>
         <li className="nav_li">
           <a href="/main">{username}</a>

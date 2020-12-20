@@ -42,16 +42,20 @@ async function login(email, password) {
 }
 
 async function logout() {
-  return fetch(`${api.url}/logout`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Accept: 'application/json; charset=UTF-8',
-      },
-      credentials: 'include',
-      mode: 'cors',
-    });
+  // return fetch(`${api.url}/logout`,
+  //   {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-type': 'application/json; charset=UTF-8',
+  //       Accept: 'application/json; charset=UTF-8',
+  //     },
+  //     credentials: 'include',
+  //     mode: 'cors',
+  //   });
+  return axios.post(`${api.url}/logout`,
+  {
+    withCredentials: true,
+  });
 }
 
 async function changePassword(email, newPassword) {

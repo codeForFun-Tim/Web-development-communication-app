@@ -172,7 +172,9 @@ router.post('/changePassword',
 });
 
 
-router.post('/logout', checkAuthenticated, (req, res) => {
+router.post('/logout', 
+  //checkAuthenticated, 
+  (req, res) => {
   req.logout();
   res.sendStatus(200);
 });
