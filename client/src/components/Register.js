@@ -11,28 +11,37 @@ function Register(user) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState(false);
 
-    const handleSubmit = () => {
+    const validation = (password) => {
+        let pattern = new RegExp(/^[0-9a-zA-Z]+$/);
+        if (!pattern.test(password)) {
+            const msg = "Alphanumeric characters only for password";
+            setMessage(msg); 
+            return false;
+          }
+        return true;
+    };
+    const handleSubmit = (event) => {
+        //event.preventDefault();
         const email = document.getElementById('email').value;
         const userName = document.getElementById('userName').value;
         const pwd = document.getElementById('password').value;
-        setIsSubmitting(true);
-        // leave axios code here
-        register(email, userName, pwd)
-        .then((res) => {
-            console.log(res);
-            if (res.ok) {
-                setMessage('Successful, please wait');
-                setTimeout(() => {history.push("/login")}, 2000);
-            }
-            else {
+        if (validation(pwd)) {
+            setIsSubmitting(true);
+            register(email, userName, pwd)
+            .then((res) => {
+                if (res.ok) {
+                    setMessage('Successful, please wait');
+                    setTimeout(() => {history.push("/login")}, 2000);
+                }
+                else {
+                    setMessage('Failed');
+                }
+            })
+            .catch(() => {
                 setMessage('Failed');
-            }
-        })
-        .catch((e) => {
-            setMessage('Failed');
-            console.log(e);
-        });
-        setIsSubmitting(false);
+            });
+            setIsSubmitting(false);
+        }
     };
 
     return  (

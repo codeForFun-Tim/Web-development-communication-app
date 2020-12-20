@@ -11,7 +11,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
     const name = document.getElementById('userName').value;
     const pwd = document.getElementById('password').value;
     setError(false);
