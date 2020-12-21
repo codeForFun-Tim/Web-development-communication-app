@@ -19,6 +19,23 @@ script:
   - npm ls jest
   # - jest --updateSnapshot
   - yarn test src/unitTest --updateSnapshot --coverage
+
+  - cd..
+  - cd..
+  - rm -rf node_modules
+  - cd api
+  - rm package-lock.json
+  - nvm install node
+  - node -v
+  - npm install yarn 
+  - yarn
+  - npm install jest@26.6.0
+  - npm ls jest
+  - cd backend_tests
+  - jest --coveage
+
+
+
 # safelist
 branches:
   only:
