@@ -33,6 +33,25 @@ exports[`Test snapshot Test Profile 1`] = `
           Status
         </a>
       </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Logout
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/main"
+        >
+          
+        </a>
+      </li>
     </ul>
   </div>
   <h1
@@ -54,34 +73,17 @@ exports[`Test snapshot Test Profile 1`] = `
     <div
       className="outer"
       id="outer"
-    >
-      <div
-        className="circle"
-      >
-        <button
-          className="statusLink"
-          id="btn0"
-          onClick={[Function]}
-        >
-          A
-        </button>
-      </div>
-      <div
-        className="circle"
-      >
-        <button
-          className="statusLink"
-          id="1"
-          onClick={[Function]}
-        >
-          B
-        </button>
-      </div>
-    </div>
+    />
     <div
       id="status"
     >
+      <p
+        className="textStatus"
+      >
+         
         
+         
+      </p>
     </div>
     <div
       className="overlay"
@@ -116,7 +118,7 @@ exports[`Test snapshot Test Profile 1`] = `
               Image
             </label>
             <input
-              accept="image/png, image/jpg"
+              accept="image/jpeg, image/gif"
               id="image-upload"
               onChange={[Function]}
               type="file"

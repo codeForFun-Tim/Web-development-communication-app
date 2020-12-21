@@ -6,22 +6,19 @@ import '../stylesheets/Profile.css';
 import Avatar from '../images/AvatarCat.png';
 import NaviBar from './NaviBar';
 
+const validation = (password) => {
+  let pattern = new RegExp(/^[0-9a-zA-Z]{8,}$/);
+  if (!pattern.test(password)) {
+      return false;
+    }
+  return true;
+};
+
 const Profile = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState({name:'', registration:''});
   const [error, setError] = useState(false);
   let history = useHistory();
-
-  
-  const validation = (password) => {
-    let pattern = new RegExp(/^[0-9a-zA-Z]{8,}$/);
-    if (!pattern.test(password)) {
-        const msg = "At least 8 alphanumeric characters for password";
-        setError(msg); 
-        return false;
-      }
-    return true;
-  };
 
   const handleChangePassword = (event) => {
     event.preventDefault();
@@ -41,6 +38,10 @@ const Profile = () => {
         setError("Failed to change password");
         console.log(e);
       });
+    }
+    else {
+      const msg = "At least 8 alphanumeric characters for password";
+      setError(msg); 
     }
 
   }
@@ -93,4 +94,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export {Profile, validation};

@@ -32,6 +32,25 @@ exports[`Test snapshot Test Profile 1`] = `
         Status
       </a>
     </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Logout
+      </a>
+    </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/main"
+      >
+        
+      </a>
+    </li>
   </ul>
 </div>
 `;

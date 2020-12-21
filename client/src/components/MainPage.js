@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import NaviBar from './NaviBar';
-import ChatView from './ChatView';
+import {ChatView} from './ChatView';
 
 function MainPage() {
   useEffect(() => {

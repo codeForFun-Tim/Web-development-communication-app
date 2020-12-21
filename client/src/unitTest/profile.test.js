@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import Profile from '../components/Profile.js';
+import {Profile, validation} from '../components/Profile.js';
 
 const renderer = require('react-test-renderer');
 
+describe('Independent function tests', () => {
+    test('validation function true', () => {
+        expect(validation('123456789')).toBe(true);
+    });
+
+    test('validation function false', () => {
+        expect(validation('1')).toBe(false);
+    });
+});
+
 // snapshot testings
 describe('Test snapshot', () => {
-  test('Test Profile', () => {
+  test('snapshot', () => {
     const component = renderer.create(<Profile />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -27,7 +37,7 @@ describe('Test functonal component functions', () => {
     container = null;
   });
 
-  test('Test function inside Login component', () => {
+  test('Test function inside profile component', () => {
     act(() => {
       ReactDOM.render(<Profile />, container);
     });
