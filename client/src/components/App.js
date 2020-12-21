@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import MainPage from './MainPage';
-import Profile from './Profile';
+import {Profile} from './Profile';
 import Status from './Status';
-import ForgetPassword from './ForgetPassword';
+import {ForgetPassword} from './ForgetPassword';
 import OtherProfile from './OtherProfile';
 
 class App extends Component {

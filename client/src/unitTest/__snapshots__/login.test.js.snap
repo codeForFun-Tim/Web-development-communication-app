@@ -23,7 +23,7 @@ exports[`Test snapshot Test Login 1`] = `
         align="center"
         className="userName"
         id="userName"
-        placeholder="Username: cat@gmail.com"
+        placeholder="Email: cat@gmail.com"
         type="text"
       />
       <input
@@ -33,15 +33,17 @@ exports[`Test snapshot Test Login 1`] = `
         placeholder="Password"
         type="password"
       />
-      <p
-        align="center"
-        className="forgotPwd"
+      <a
+        href="/changePassword"
+        onClick={[Function]}
       >
-        <a
-          href="#"
-        />
-        Forgot Password?
-      </p>
+        <p
+          align="center"
+          className="forgotPwd"
+        >
+          Forgot Password?
+        </p>
+      </a>
       <input
         className="loginBtn"
         disabled={false}

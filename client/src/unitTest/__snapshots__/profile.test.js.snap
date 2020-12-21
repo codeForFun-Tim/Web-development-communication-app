@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test snapshot Test Profile 1`] = `
+exports[`Test snapshot snapshot 1`] = `
 <div>
   <div>
     <ul
@@ -33,6 +33,25 @@ exports[`Test snapshot Test Profile 1`] = `
           Status
         </a>
       </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Logout
+        </a>
+      </li>
+      <li
+        className="nav_li"
+      >
+        <a
+          href="/main"
+        >
+          
+        </a>
+      </li>
     </ul>
   </div>
   <h1
@@ -53,18 +72,14 @@ exports[`Test snapshot Test Profile 1`] = `
       className="data"
       id="userName"
     >
-       
-      data.name
-       
+      
     </p>
     <p
       align="center"
       className="data"
       id="registrationDate"
     >
-       
-      data.registrationDate
-       
+      
     </p>
     <form
       className="formLogin"
@@ -80,6 +95,7 @@ exports[`Test snapshot Test Profile 1`] = `
         align="center"
         className="resetBtn"
         id="resetBtn"
+        onClick={[Function]}
       >
         <b>
           Change Password
@@ -95,6 +111,7 @@ exports[`Test snapshot Test Profile 1`] = `
       </button>
     </form>
     ​
+    <br />
   </div>
 </div>
 `;

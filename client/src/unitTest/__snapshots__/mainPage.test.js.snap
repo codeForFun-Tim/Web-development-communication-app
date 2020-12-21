@@ -38,6 +38,25 @@ exports[`Test snapshot Test Profile 1`] = `
             Status
           </a>
         </li>
+        <li
+          className="nav_li"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            Logout
+          </a>
+        </li>
+        <li
+          className="nav_li"
+        >
+          <a
+            href="/main"
+          >
+            
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -79,66 +98,28 @@ exports[`Test snapshot Test Profile 1`] = `
           <div>
             <h2
               id="chat_title"
-            >
-              Vincent Porter
-            </h2>
+            />
           </div>
         </header>
         <ul
           id="chat"
-        >
-          <li
-            className="you"
-          >
-            <div
-              className="entete"
-            >
-              <span
-                className="status green"
-              />
-              <h2>
-                Vincent
-              </h2>
-              <h3>
-                10:12AM, Today
-              </h3>
-            </div>
-            <div
-              className="message"
-            >
-              Hi, this is the first message
-            </div>
-          </li>
-          <li
-            className="you"
-          >
-            <div
-              className="entete"
-            >
-              <span
-                className="status green"
-              />
-              <h2>
-                Vincent
-              </h2>
-              <h3>
-                10:12AM, Today
-              </h3>
-            </div>
-            <div
-              className="message"
-            >
-              Hello
-            </div>
-          </li>
-        </ul>
+        />
         <div
           id="btu_div"
         >
           <button
             className="func_btu"
+            id="video_call"
+            onClick={[Function]}
           >
             Video Call
+          </button>
+          <button
+            className="func_btu"
+            id="invite_video"
+            onClick={[Function]}
+          >
+            invite
           </button>
           <button
             className="func_btu"
@@ -153,7 +134,7 @@ exports[`Test snapshot Test Profile 1`] = `
                Send Image
             </label>
             <input
-              accept="image/png, image/jpg"
+              accept="image/jpeg"
               id="image-upload"
               onChange={[Function]}
               type="file"
@@ -213,7 +194,11 @@ exports[`Test snapshot Test Profile 1`] = `
           <a
             href="#"
             id="submitbtu"
-            onClick={[Function]}
+            style={
+              Object {
+                "color": "gray",
+              }
+            }
           >
             Send
           </a>
@@ -259,6 +244,108 @@ exports[`Test snapshot Test Profile 1`] = `
               <audio
                 id="recordedAudio"
               />
+            </p>
+          </div>
+        </div>
+        <div
+          className="overlay"
+          id="popup2"
+        >
+          <div
+            className="popup"
+          >
+            <h3>
+              Are you sure to decline the call?
+            </h3>
+            <a
+              className="close"
+              id="closepop2"
+              onClick={[Function]}
+            >
+              ×
+            </a>
+            <p>
+              <button
+                id="yes_decline"
+                onClick={[Function]}
+              >
+                YES
+              </button>
+            </p>
+          </div>
+        </div>
+        <div
+          className="overlay"
+          id="popup3"
+        >
+          <div
+            className="popup"
+          >
+            <h2>
+              Add New Contact
+            </h2>
+            <a
+              className="close"
+              id="closepop3"
+              onClick={[Function]}
+            >
+              ×
+            </a>
+            <div>
+              <input
+                id="add_contact_input"
+                placeholder="Input Contact Name"
+                type="text"
+              />
+              <div
+                className="dropdown"
+              >
+                <button
+                  className="dropbtn"
+                  id="addsuggest"
+                  onClick={[Function]}
+                >
+                  +
+                </button>
+                <div
+                  className="dropdown-content"
+                  id="myDropdown"
+                >
+                  <a
+                    className="suggestuser"
+                  >
+                    1
+                  </a>
+                  <a
+                    className="suggestuser"
+                  >
+                    2
+                  </a>
+                  <a
+                    className="suggestuser"
+                  >
+                    3
+                  </a>
+                  <a
+                    className="suggestuser"
+                  >
+                    4
+                  </a>
+                  <a
+                    className="suggestuser"
+                  >
+                    5
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p>
+              <button
+                id="add_contact_submit"
+                onClick={[Function]}
+              >
+                Submit
+              </button>
             </p>
           </div>
         </div>

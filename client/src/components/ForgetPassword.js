@@ -3,21 +3,17 @@ import { useHistory } from 'react-router-dom';
 import { changePassword } from '../javascripts/authRequests'
 import '../stylesheets/Profile.css';
 
-const ForgetPassword = () => {
+const validation = (password) => {
+  let pattern = new RegExp(/^[0-9a-zA-Z]{8,}$/);
+  if (!pattern.test(password)) {
+      return false;
+    }
+  return true;
+};
 
+const ForgetPassword = () => {
   const [error, setError] = useState(false);
   let history = useHistory();
-  
-  const validation = (password) => {
-    let pattern = new RegExp(/^[0-9a-zA-Z]{8,}$/);
-    if (!pattern.test(password)) {
-        const msg = "At least 8 alphanumeric characters for password";
-        setError(msg); 
-        return false;
-      }
-    return true;
-  };
-
   const handleChangePassword = (event) => {
     event.preventDefault();
     let email = document.getElementById('userName').value;
@@ -34,6 +30,10 @@ const ForgetPassword = () => {
       }).catch(() => {
         setError("Failed to change password, non-existed user");
       });
+    }
+    else{
+      const msg = "At least 8 alphanumeric characters for password";
+      setError(msg);
     }
   }
 
@@ -66,4 +66,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export {ForgetPassword, validation};

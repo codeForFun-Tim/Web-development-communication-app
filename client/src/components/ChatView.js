@@ -74,6 +74,18 @@ function createVideoDiv(message) {
           '</video>';
 }
 
+// Generate local room ID
+function generateRoomID(sender, receiver) {
+  let roomid = '';
+  if(sender>receiver){
+    roomid = sender.concat(receiver);
+  }
+  else{
+    roomid = receiver.concat(sender);
+  }
+  return roomid;
+}
+
 function ChatView() {
 
   // -----------------update contact list------------------------
@@ -638,12 +650,10 @@ function ChatView() {
       .then(function (stream) {
         let chunks = [];
         mediaRecorder = new MediaRecorder(stream);
-
         mediaRecorder.ondataavailable = function (e) {
           // Store data stream chunks for future playback
           chunks.push(e.data);
         };
-
         mediaRecorder.onstop = function (e) {
           // Playback recording
           const blob = new Blob(chunks, {
@@ -653,11 +663,9 @@ function ChatView() {
           recordedAudio.src = window.URL.createObjectURL(blob);
           recordedAudio.controls = true;
           recordedAudio.autoplay = true;
-
           // Clear recording
           chunks = [];
         };
-
         // Start recording!
         mediaRecorder.start();
       });
@@ -702,26 +710,17 @@ function ChatView() {
   useEffect(() => {
     if(token === null) {
       if(mycontacts.length === 0 ) {
-        // mycontacts= [];
-        // setcontact(mycontacts.length);
         // get all contacts from backend
         const current_user = localStorage.getItem("curr_user");
         let tempContacts = [];
         getSortedUser(current_user).then((res) => {
-          console.log(res);
           for (var i = 0; i < res.data.length; i++) {
             tempContacts.push(res.data[i]);
           }
-          console.log(tempContacts);
           tempContacts.sort(sortByLatestTime);
           for (var j = 0; j < tempContacts.length; j++) {
             mycontacts.push(tempContacts[j].contact);
           }
-        // getUser(current_user)
-        // .then((res) => {
-        //   for (var i = 0; i < res.data.contacts.length; i++) {
-        //     mycontacts.push(res.data.contacts[i]);
-        //   }
           // set current receiver
           if(mycontacts.length !== 0) {
             localStorage.setItem("curr_receiver", mycontacts[0]);
@@ -735,7 +734,6 @@ function ChatView() {
       else{
         // set current receiver
         localStorage.setItem("curr_receiver", mycontacts[0]);
-        // let contacts = [];
         setTitle('loading...');
         setcontact(0);
       }
@@ -750,7 +748,9 @@ function ChatView() {
   }
 
   function declineCall() {
-    clip.pause();
+    if(clip){
+      clip.pause();
+    }
     const popup = document.getElementById('popup2');
     popup.style.visibility = 'hidden';
     const closepop2 = document.getElementById('closepop2');
@@ -795,26 +795,14 @@ function ChatView() {
       'Accept' +
       '</button>'+
       '</div>';
+    setMessage(videoCallDiv);
     sendVideoCall(videoCallDiv);
-  }
-
-// Generate local room ID
-  function generateRoomID() {
-    const sender = localStorage.getItem("curr_user");
-    const receiver = localStorage.getItem("curr_receiver");
-    let roomid = '';
-    if(sender>receiver){
-      roomid = sender.concat(receiver);
-    }
-    else{
-      roomid = receiver.concat(sender);
-    }
-    return roomid;
   }
 
   async function startVideoCall(){
     const username = localStorage.getItem("curr_user");
-    const roomName = generateRoomID();
+    const receiver = localStorage.getItem("curr_receiver");
+    const roomName = generateRoomID(username, receiver);
     setRoomName(roomName);
     inviteVideoCall();
     const data = await videoCallAPI(username, roomName);
@@ -825,10 +813,6 @@ function ChatView() {
     const minutesLabel = document.getElementById("minutes").innerHTML;
     const secondsLabel = document.getElementById("seconds").innerHTML;
     const username = localStorage.getItem("curr_user");
-    // const endcallFlag = 
-    // '<div class="endcallFlag">'+
-    // '</div>';
-    // sendVideoCall(endcallFlag);
     sendVideoCall(`<div class="endcallFlag">${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room </div>`);
     setToken(null);
   }, []);
@@ -872,7 +856,7 @@ function ChatView() {
         </ul>
         <div id="btu_div">
           <button className="func_btu" id="video_call" onClick={() => startVideoCall()}>Video Call</button>
-          <button className="func_btu" onClick={() => inviteVideoCall()}>invite</button>
+          <button className="func_btu" id="invite_video" onClick={() => inviteVideoCall()}>invite</button>
           <button className="func_btu">
             <label htmlFor="image-upload" className="custom-file-upload">
               <i className="fa fa-cloud-upload"></i> Send Image
@@ -967,7 +951,7 @@ function ChatView() {
                 placeholder="Input Contact Name"
               />
               <div className="dropdown">
-                <button onClick={() => showDropDown()} className="dropbtn">+</button>
+                <button id="addsuggest" onClick={() => showDropDown()} className="dropbtn">+</button>
                 <div id="myDropdown" className="dropdown-content">
                   <a className="suggestuser">1</a>
                   <a className="suggestuser">2</a>
@@ -991,4 +975,12 @@ function ChatView() {
   return render;
 };
 
-export default ChatView;
+export {
+  ChatView, 
+  array_move, 
+  sortByTime, 
+  createImageDiv, 
+  createAudioDiv, 
+  createVideoDiv,
+  generateRoomID
+};
