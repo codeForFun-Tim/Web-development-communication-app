@@ -1,11 +1,11 @@
 const request = require('supertest');
 // const router = require('../routes/authenRouter')
+require('dotenv').config({ path: '../.env' });
 const http = require('http');
 const async = require('async');
 const app = require('../app');
 const { ObjectId } = require('mongoose').Types;
 const User = require('../model/user');
-
 const testUsername1 = 'testUsername1';
 const testUsername2 = 'testUsername2';
 const testEmail1 = 'testEmail1@test.com';

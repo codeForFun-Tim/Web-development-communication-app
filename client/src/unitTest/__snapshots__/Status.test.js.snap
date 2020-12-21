@@ -37,7 +37,7 @@ exports[`Test snapshot Test Profile 1`] = `
         className="nav_li"
       >
         <a
-          href="/"
+          href="/login"
           onClick={[Function]}
         >
           Logout
