@@ -396,6 +396,11 @@ function ChatView() {
           sendVideoCall('<div class="msgreadFlag">Above message has been read by</div>');
           //console.log('send');
         }
+        if(typeof messageArray[arraylength-1].content === 'string' && messageArray[arraylength-1].content.includes('<div class="endcallFlag">')){
+          if(typeof messageArray[arraylength-2].content === 'string' && messageArray[arraylength-2].content.includes('<div class="callFlag">')){
+            window.alert("The user you called may not be online!");
+          }
+        }
         // display only the last read msg
         setreadflag(true);
       }
@@ -860,12 +865,17 @@ function ChatView() {
     setToken(data.token);
   }
 
+  function refresh(){
+    setToken(null);
+  }
+
   const handleLogout = useCallback(event => {
     const minutesLabel = document.getElementById("minutes").innerHTML;
     const secondsLabel = document.getElementById("seconds").innerHTML;
     const username = localStorage.getItem("curr_user");
     sendVideoCall(`<div class="endcallFlag">${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room </div>`);
-    setToken(null);
+    setTimeout(refresh, 1000);
+    // setToken(null);
   }, []);
 
   // -----------------render html------------------------
