@@ -140,31 +140,31 @@ describe('Test All ChatView Functions', () => {
     //     expect(list[0].style.display).toBe("none");
     // });
 
-    // test('click contacts name', () => {
-    //     const ul = document.getElementById('myul');
-    //     const li = ul.getElementsByTagName('li');
-    //     console.log(li);
-    //     act(() => {
-    //         // Simulate.click(li[0]);
-    //         li[0].click()
-    //     });
-    //     const title = document.getElementById('chat_title').innerHTML;
-    //     expect(title).not.toBe(null);
+    test('click contacts name', () => {
+        const ul = document.getElementById('myul');
+        const li = ul.getElementsByTagName('li');
+        console.log(li);
+        act(() => {
+            // Simulate.click(li[0]);
+            li[0].click()
+        });
+        const title = document.getElementById('chat_title').innerHTML;
+        expect(title).not.toBe(null);
 
-    //     act(() => {
-    //         // Simulate.click(li[1]);
-    //         li[1].click()
-    //     });
-    //     const title2 = document.getElementById('chat_title').innerHTML;
-    //     expect(title2).toBe('dog@gmail.com');
+        act(() => {
+            // Simulate.click(li[1]);
+            li[1].click()
+        });
+        const title2 = document.getElementById('chat_title').innerHTML;
+        expect(title2).toBe('dog@gmail.com');
 
-    //     act(() => {
-    //         // Simulate.click(li[2]);
-    //         li[2].click()
-    //     });
-    //     const title3 = document.getElementById('chat_title').innerHTML;
-    //     expect(title3).toBe('guangzhe@test.com');
-    // });
+        act(() => {
+            // Simulate.click(li[2]);
+            li[2].click()
+        });
+        const title3 = document.getElementById('chat_title').innerHTML;
+        expect(title3).toBe('guangzhe@test.com');
+    });
 
     test('send message',() => {
         const textarea = document.getElementById('textarea');
@@ -178,25 +178,25 @@ describe('Test All ChatView Functions', () => {
         expect(mymessage).not.toBe(null);
     });
 
-    test('click Record Audio',() => {
-        const btu = document.getElementById('recordAudio');
-        const popup = document.getElementById('popup1')
-        const stopRecord = document.getElementById('stopRecord');
-        act(() => {
-            Simulate.click(btu);
-        });
-        expect(popup.style.visibility).toBe('visible');
-        expect(stopRecord.style.visibility).toBe('hidden');
-    });
+    // test('click Record Audio',() => {
+    //     const btu = document.getElementById('recordAudio');
+    //     const popup = document.getElementById('popup1')
+    //     const stopRecord = document.getElementById('stopRecord');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     expect(popup.style.visibility).toBe('visible');
+    //     expect(stopRecord.style.visibility).toBe('hidden');
+    // });
 
-    test('click Record Audio - start',() => {
-        const startbtu = document.getElementById('startRecord');
-        act(() => {
-            Simulate.click(startbtu);
-        });
-        const stopbtu = document.getElementById('stopRecord');
-        expect(stopbtu.style.visibility).toBe('visible');
-    });
+    // test('click Record Audio - start',() => {
+    //     const startbtu = document.getElementById('startRecord');
+    //     act(() => {
+    //         Simulate.click(startbtu);
+    //     });
+    //     const stopbtu = document.getElementById('stopRecord');
+    //     expect(stopbtu.style.visibility).toBe('visible');
+    // });
 
     // test('click Record Audio - stop',() => {
     //     const stopbtu = document.getElementById('stopRecord');
