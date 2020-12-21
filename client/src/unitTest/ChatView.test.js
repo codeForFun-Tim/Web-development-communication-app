@@ -110,14 +110,14 @@ describe('Test All ChatView Functions', () => {
     //     expect(list.length).toBe(0);
     // });
 
-    // test('close add contact window', () => {
-    //     const closebtu = document.getElementById('closepop3');
-    //     act(() => {
-    //         closebtu.click();
-    //     });
-    //     const popup3 = document.getElementById('popup3');
-    //     expect(popup3.style.visibility).toBe("hidden");
-    // });
+    test('close add contact window', () => {
+        const closebtu = document.getElementById('closepop3');
+        act(() => {
+            closebtu.click();
+        });
+        const popup3 = document.getElementById('popup3');
+        expect(popup3.style.visibility).toBe("hidden");
+    });
     
 
     test('search contacts name', () => {
@@ -151,19 +151,19 @@ describe('Test All ChatView Functions', () => {
         const title = document.getElementById('chat_title').innerHTML;
         expect(title).not.toBe(null);
 
-        act(() => {
-            // Simulate.click(li[1]);
-            li[1].click()
-        });
-        const title2 = document.getElementById('chat_title').innerHTML;
-        expect(title2).toBe('dog@gmail.com');
+        // act(() => {
+        //     // Simulate.click(li[1]);
+        //     li[1].click()
+        // });
+        // const title2 = document.getElementById('chat_title').innerHTML;
+        // expect(title2).toBe('dog@gmail.com');
 
-        act(() => {
-            // Simulate.click(li[2]);
-            li[2].click()
-        });
-        const title3 = document.getElementById('chat_title').innerHTML;
-        expect(title3).toBe('guangzhe@test.com');
+        // act(() => {
+        //     // Simulate.click(li[2]);
+        //     li[2].click()
+        // });
+        // const title3 = document.getElementById('chat_title').innerHTML;
+        // expect(title3).toBe('guangzhe@test.com');
     });
 
     test('send message',() => {
@@ -211,16 +211,16 @@ describe('Test All ChatView Functions', () => {
     //     expect(recordaudio).not.toBe(null);
     // });
 
-    // test('close popup window',() => {
-    //     const btu = document.getElementById('closepop');
-    //     const popup = document.getElementById('popup1')
-    //     const recordedAudio = document.getElementById('recordedAudio');
-    //     act(() => {
-    //         Simulate.click(btu);
-    //     });
-    //     expect(popup.style.visibility).toBe('hidden');
-    //     expect(recordedAudio.src).toBe('http://localhost/');
-    // });
+    test('close popup window',() => {
+        const btu = document.getElementById('closepop');
+        const popup = document.getElementById('popup1')
+        const recordedAudio = document.getElementById('recordedAudio');
+        act(() => {
+            Simulate.click(btu);
+        });
+        expect(popup.style.visibility).toBe('hidden');
+        expect(recordedAudio.src).toBe('http://localhost/');
+    });
 
     test('delete user from contact list', () => {
         const btu = document.getElementById('deleteUser');
