@@ -5,30 +5,30 @@ import { addTextStatus, addMediaStatus, getFeed, viewedStatus } from '../javascr
 import '../stylesheets/Status.css';
 import Avatar from '../images/AvatarCat.png';
 
+function sortByTime(a, b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(b.creationTime) - new Date(a.creationTime);
+};
+
+function createImageDiv(message) {
+  let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  const src = `data:image/jpeg;base64,${base64}`;
+  return src;
+}
+
+function createGifDiv(message) {
+  let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  const src = `data:image/gif;base64,${base64}`;
+  return src;
+}
+
 const Status = () => {
   const [username, setUsername] = useState('');
   const [type, setType] = useState('text');
   const [imageSrc, setImageSrc] = useState('text');
   const [textContent, setTextContent] = useState('');
   let history = useHistory();
-
-  function sortByTime(a, b){
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    return new Date(b.creationTime) - new Date(a.creationTime);
-  };
-
-  function createImageDiv(message) {
-    let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    const src = `data:image/jpeg;base64,${base64}`;
-    return src;
-  }
-
-  function createGifDiv(message) {
-    let base64 = btoa(new Uint8Array(message.mediaStatus.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    const src = `data:image/gif;base64,${base64}`;
-    return src;
-  }
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("curr_user");
@@ -88,53 +88,54 @@ const Status = () => {
     });
   }, []);
 
-  function sendStatus() {
-      const loggedInUser = localStorage.getItem("curr_user");
-      const text = document.getElementById('textarea').value;
-      addTextStatus(loggedInUser, text).catch(() => alert("Failed to send this status."));
-      closepopWindow();
-  }
-
-  function popupWindow() {
-      const popup = document.getElementById('popup1');
-      popup.style.visibility = 'visible';
-      const sendStatus = document.getElementById('sendStatus');
-      sendStatus.style.visibility = 'hidden';
-    }
   
-  function closepopWindow() {
-      const popup = document.getElementById('popup1');
-      popup.style.visibility = 'hidden';
-      const sendStatus = document.getElementById('sendStatus');
-      sendStatus.style.visibility = 'hidden';
-      const textarea = document.getElementById('textarea');
-      textarea.value = '';
-      textarea.style.visibility = 'hidden';
-  }
+function sendStatus() {
+  const loggedInUser = localStorage.getItem("curr_user");
+  const text = document.getElementById('textarea').value;
+  addTextStatus(loggedInUser, text).catch(() => alert("Failed to send this status."));
+  closepopWindow();
+}
 
-  function displayTextArea() {
-      const textarea = document.getElementById('textarea');
-      textarea.style.visibility = 'visible';
-      const sendBtn = document.getElementById('sendStatus');
-      sendBtn.style.visibility = 'visible';
-  }
+function popupWindow() {
+  const popup = document.getElementById('popup1');
+  popup.style.visibility = 'visible';
+  const sendStatus = document.getElementById('sendStatus');
+  sendStatus.style.visibility = 'hidden';
+}
 
-  function selectImage(event) {
-    const loggedInUser = localStorage.getItem("curr_user");
-      const selectedFile = event.target.files[0];
-      if (selectedFile) {
-        if (selectedFile.name.endsWith('.jpg') || selectedFile.name.endsWith('.gif')) {
-          if (selectedFile.size/1024/1024 < 1) {
-            addMediaStatus(loggedInUser, selectedFile).catch(() => alert("Failed to send this Image/Gif."));
-            closepopWindow();
-          }
-          else {
-            alert("Image is too big, make sure it is less than 1 MB.");
-          }
-        }
+function closepopWindow() {
+  const popup = document.getElementById('popup1');
+  popup.style.visibility = 'hidden';
+  const sendStatus = document.getElementById('sendStatus');
+  sendStatus.style.visibility = 'hidden';
+  const textarea = document.getElementById('textarea');
+  textarea.value = '';
+  textarea.style.visibility = 'hidden';
+}
+
+function displayTextArea() {
+  const textarea = document.getElementById('textarea');
+  textarea.style.visibility = 'visible';
+  const sendBtn = document.getElementById('sendStatus');
+  sendBtn.style.visibility = 'visible';
+}
+
+function selectImage(event) {
+const loggedInUser = localStorage.getItem("curr_user");
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    if (selectedFile.name.endsWith('.jpg') || selectedFile.name.endsWith('.gif')) {
+      if (selectedFile.size/1024/1024 < 1) {
+        addMediaStatus(loggedInUser, selectedFile).catch(() => alert("Failed to send this Image/Gif."));
+        closepopWindow();
       }
-
+      else {
+        alert("Image is too big, make sure it is less than 1 MB.");
+      }
+    }
   }
+
+}
 
   return (
     <div>
@@ -176,4 +177,6 @@ const Status = () => {
 };
 
 
-export default Status;
+export {
+  sortByTime, createImageDiv, createGifDiv, Status 
+}

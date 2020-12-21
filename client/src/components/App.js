@@ -4,7 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import MainPage from './MainPage';
 import {Profile} from './Profile';
-import Status from './Status';
+import { Status } from './Status';
 import {ForgetPassword} from './ForgetPassword';
 import OtherProfile from './OtherProfile';
 

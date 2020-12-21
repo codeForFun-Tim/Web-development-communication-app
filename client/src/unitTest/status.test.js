@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Status from '../components/Status.js';
+import {  sortByTime, createImageDiv, createGifDiv, Status } from '../components/Status.js';
 import { act } from 'react-dom/test-utils';
 const mockHistoryPush = jest.fn();
 
@@ -15,10 +15,26 @@ const renderer = require('react-test-renderer');
 
 // snapshot testings
 describe('Test snapshot', () => {
-  test('Test Profile', () => {
+  test('Test Status', () => {
     const component = renderer.create(<Status />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('Independent function tests', () => {
+  test('sortByTime function', () => {
+      expect(sortByTime({creationTime: 2}, {creationTime: 1})).toBe(-1);
+  });
+
+  test('createImageDiv function', () => {
+      const message = {mediaStatus: {data: [1,2,3]}};
+      expect(createImageDiv(message)).toBe("data:image/jpeg;base64,AQID");
+  });
+
+  test('createGifDiv function', () => {
+    const message = {mediaStatus: {data: [1,2,3]}};
+      expect(createGifDiv(message)).toBe("data:image/gif;base64,AQID");
   });
 });
 
@@ -36,11 +52,9 @@ describe('Test functonal component functions', () => {
     });
   
     test('Test function inside Status component', () => {
-      localStorage.setItem('curr_user', 'newlion@gmail.com');
       act(() => {
             ReactDOM.render(<Status />, container);
       });
-      localStorage.clear();
     });
 
   });

@@ -3,11 +3,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { act, Simulate } from 'react-dom/test-utils';
+import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 
 import {ChatView, array_move, sortByTime, createImageDiv, createAudioDiv, createVideoDiv, generateRoomID} from '../components/ChatView';
+const renderer = require('react-test-renderer');
 
 jest.mock('axios');
+
+// snapshot testings
+describe('Test snapshot', () => {
+    test('Test Login', () => {
+      const component = renderer.create(<Router><ChatView /></Router>);
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
 
 
 describe('Independent function tests', () => {
@@ -129,7 +140,7 @@ describe('Test All ChatView Functions', () => {
     test('click contacts name', () => {
         const ul = document.getElementById('myul');
         const li = ul.getElementsByTagName('li');
-
+        console.log(li);
         act(() => {
             // Simulate.click(li[0]);
             li[0].click()

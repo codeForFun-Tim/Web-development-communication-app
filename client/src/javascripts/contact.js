@@ -33,16 +33,6 @@ async function addContact(username, addUserName) {
     });
 };
 
-async function checkContact(currUser, mentionedUser) {
-    const apiUrl = `${api.url}/checkFriends`;
-    return axios.get(apiUrl, {
-        params: {
-            currUser : currUser,
-            mentionedUser : mentionedUser
-        }
-    });
-};
-
 async function deleteContact(username, delUserName) {
     const apiUrl = `${api.url}/blockUser`;
     try {
@@ -73,7 +63,6 @@ async function getSuggestedUsers(username){ //username is an email
 export {
     getUser,
     addContact,
-    checkContact,
     deleteContact,
     getSuggestedUsers,
     getSortedUser
