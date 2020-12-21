@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/ChatView.css';
 import { sendMessageAPI, sendMediaAPI, getMessageAPI, videoCallAPI } from '../javascripts/message';
 import { getUser, addContact, deleteContact, getSuggestedUsers, getSortedUser} from '../javascripts/contact';
-import Room from './Room';
+import {Room} from './Room';
 import Push from 'push.js';
 import beep from '../media/videoCalling.mp3';
 
@@ -47,6 +47,12 @@ function sortByTime(a, b){
   return new Date(a.time) - new Date(b.time);
 };
 
+function sortByLatestTime(a, b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  return new Date(b.latestTime) - new Date(a.latestTime);
+};
+
 function createImageDiv(message) {
   let base64 = btoa(new Uint8Array(message.content.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
   const src = `data:image/jpeg;base64,${base64}`;
@@ -84,6 +90,51 @@ function generateRoomID(sender, receiver) {
     roomid = receiver.concat(sender);
   }
   return roomid;
+}
+
+function putHistoryMsg(from, name, mesg){
+  const myli = document.createElement('LI');
+  myli.setAttribute('class', from);
+  const mydiv = document.createElement('div');
+  mydiv.setAttribute('class', 'entete');
+  const myh3 = document.createElement('H3');
+  myh3.innerHTML = mesg.time;
+  const myh2 = document.createElement('H2');
+  myh2.innerHTML = name;
+  const msg = document.createElement('div');
+  msg.setAttribute('class', 'message');
+  if (mesg.type === 'text') {
+    msg.innerHTML = mesg.content;
+  }
+  else if (mesg.type === 'image/jpeg') {
+    msg.innerHTML = createImageDiv(mesg);
+  }
+  else if (mesg.type === 'video/mp4') {
+    msg.innerHTML = createVideoDiv(mesg);
+  }
+  else if (mesg.type === 'audio/mpeg'){
+    msg.innerHTML = createAudioDiv(mesg);
+  } 
+  else {
+    msg.innerHTML = 'Invalid Type';
+  }
+  mydiv.appendChild(myh3);
+  mydiv.appendChild(myh2);
+  if(from === 'me') {
+    const myspan = document.createElement('span');
+    myspan.setAttribute('class', 'status blue');
+    const span2 = document.createElement('span');
+    span2.setAttribute('class', 'delieverednotice');
+    span2.innerHTML='Delievered';
+    mydiv.appendChild(myspan);
+    mydiv.appendChild(span2);
+  }
+  myli.appendChild(mydiv);
+  myli.appendChild(msg);
+
+  const myul = document.getElementById('chat');
+  myul.appendChild(myli);
+  myul.scrollTop = myul.scrollHeight;
 }
 
 function ChatView() {
@@ -345,6 +396,11 @@ function ChatView() {
           sendVideoCall('<div class="msgreadFlag">Above message has been read by</div>');
           //console.log('send');
         }
+        if(typeof messageArray[arraylength-1].content === 'string' && messageArray[arraylength-1].content.includes('<div class="endcallFlag">')){
+          if(typeof messageArray[arraylength-2].content === 'string' && messageArray[arraylength-2].content.includes('<div class="callFlag">')){
+            window.alert("The user you called may not be online!");
+          }
+        }
         // display only the last read msg
         setreadflag(true);
       }
@@ -438,86 +494,89 @@ function ChatView() {
     // -----------------update chat message------------------------
     const [otherMessage, setOtherMessage] = useState(null); // here message is an object
     const currentContactName = localStorage.getItem("curr_receiver");
+
     useEffect(() => {
       if (otherMessage !== null) {
-        const myli = document.createElement('LI');
-        myli.setAttribute('class', 'you');
-        const mydiv = document.createElement('div');
-        mydiv.setAttribute('class', 'entete');
-        const myh3 = document.createElement('H3');
-        myh3.innerHTML = otherMessage.time;
-        const myh2 = document.createElement('H2');
-        myh2.innerHTML = currentContactName;
-        const msg = document.createElement('div');
-        msg.setAttribute('class', 'message');
-        if (otherMessage.type === 'text') {
-          msg.innerHTML = otherMessage.content;
-        }
-        else if (otherMessage.type === 'image/jpeg') {
-          msg.innerHTML = createImageDiv(otherMessage);
-        }
-        else if (otherMessage.type === 'video/mp4') {
-          msg.innerHTML = createVideoDiv(otherMessage);
-        }
-        else if (otherMessage.type === 'audio/mpeg'){
-          msg.innerHTML = createAudioDiv(otherMessage);
-        } 
-        else {
-          msg.innerHTML = 'Invalid Yype';
-        }
-        mydiv.appendChild(myh3);
-        mydiv.appendChild(myh2);
-        myli.appendChild(mydiv);
-        myli.appendChild(msg);
+        putHistoryMsg('you', currentContactName, otherMessage);
+        // const myli = document.createElement('LI');
+        // myli.setAttribute('class', 'you');
+        // const mydiv = document.createElement('div');
+        // mydiv.setAttribute('class', 'entete');
+        // const myh3 = document.createElement('H3');
+        // myh3.innerHTML = otherMessage.time;
+        // const myh2 = document.createElement('H2');
+        // myh2.innerHTML = currentContactName;
+        // const msg = document.createElement('div');
+        // msg.setAttribute('class', 'message');
+        // if (otherMessage.type === 'text') {
+        //   msg.innerHTML = otherMessage.content;
+        // }
+        // else if (otherMessage.type === 'image/jpeg') {
+        //   msg.innerHTML = createImageDiv(otherMessage);
+        // }
+        // else if (otherMessage.type === 'video/mp4') {
+        //   msg.innerHTML = createVideoDiv(otherMessage);
+        // }
+        // else if (otherMessage.type === 'audio/mpeg'){
+        //   msg.innerHTML = createAudioDiv(otherMessage);
+        // } 
+        // else {
+        //   msg.innerHTML = 'Invalid Yype';
+        // }
+        // mydiv.appendChild(myh3);
+        // mydiv.appendChild(myh2);
+        // myli.appendChild(mydiv);
+        // myli.appendChild(msg);
   
-        const myul = document.getElementById('chat');
-        myul.appendChild(myli);
-        myul.scrollTop = myul.scrollHeight;
+        // const myul = document.getElementById('chat');
+        // myul.appendChild(myli);
+        // myul.scrollTop = myul.scrollHeight;
       }
     }, [otherMessage]);
 
     const [retrievemessage, setRetrieveMessage] = useState(null);
     useEffect(() => {
       if (retrievemessage !== null) {
-        const myli = document.createElement('LI');
-        myli.setAttribute('class', 'me');
-        const mydiv = document.createElement('div');
-        mydiv.setAttribute('class', 'entete');
-        const myh3 = document.createElement('H3');
-        myh3.innerHTML = retrievemessage.time;
-        const myh2 = document.createElement('H2');
-        myh2.innerHTML = 'me';
-        const myspan = document.createElement('span');
-        myspan.setAttribute('class', 'status blue');
-        const span2 = document.createElement('span');
-        span2.innerHTML='Delievered';
-        const msg = document.createElement('div');
-        msg.setAttribute('class', 'message');
-        if (retrievemessage.type === 'text') {
-          msg.innerHTML = retrievemessage.content;
-        }
-        else if (retrievemessage.type === 'image/jpeg') {
-          msg.innerHTML = createImageDiv(retrievemessage);
-        }
-        else if (retrievemessage.type === 'video/mp4') {
-          msg.innerHTML = createVideoDiv(retrievemessage);
-        }
-        else if (retrievemessage.type === 'audio/mpeg'){
-          msg.innerHTML = createAudioDiv(retrievemessage);
-        } 
-        else {
-          msg.innerHTML = 'Invalid Yype';
-        }
-        mydiv.appendChild(myh3);
-        mydiv.appendChild(myh2);
-        mydiv.appendChild(myspan);
-        mydiv.appendChild(span2);
-        myli.appendChild(mydiv);
-        myli.appendChild(msg);
+        putHistoryMsg('me', 'me', retrievemessage);
+        // const myli = document.createElement('LI');
+        // myli.setAttribute('class', 'me');
+        // const mydiv = document.createElement('div');
+        // mydiv.setAttribute('class', 'entete');
+        // const myh3 = document.createElement('H3');
+        // myh3.innerHTML = retrievemessage.time;
+        // const myh2 = document.createElement('H2');
+        // myh2.innerHTML = 'me';
+        // const myspan = document.createElement('span');
+        // myspan.setAttribute('class', 'status blue');
+        // const span2 = document.createElement('span');
+        // span2.innerHTML='Delievered';
+        // const msg = document.createElement('div');
+        // msg.setAttribute('class', 'message');
+        // if (retrievemessage.type === 'text') {
+        //   msg.innerHTML = retrievemessage.content;
+        // }
+        // else if (retrievemessage.type === 'image/jpeg') {
+        //   msg.innerHTML = createImageDiv(retrievemessage);
+        // }
+        // else if (retrievemessage.type === 'video/mp4') {
+        //   msg.innerHTML = createVideoDiv(retrievemessage);
+        // }
+        // else if (retrievemessage.type === 'audio/mpeg'){
+        //   msg.innerHTML = createAudioDiv(retrievemessage);
+        // } 
+        // else {
+        //   msg.innerHTML = 'Invalid Yype';
+        // }
+        // mydiv.appendChild(myh3);
+        // mydiv.appendChild(myh2);
+        // mydiv.appendChild(myspan);
+        // mydiv.appendChild(span2);
+        // myli.appendChild(mydiv);
+        // myli.appendChild(msg);
   
-        const myul = document.getElementById('chat');
-        myul.appendChild(myli);
-        myul.scrollTop = myul.scrollHeight;
+        // const myul = document.getElementById('chat');
+        // myul.appendChild(myli);
+        // myul.scrollTop = myul.scrollHeight;
       }
     }, [retrievemessage]);
   
@@ -702,13 +761,6 @@ function ChatView() {
   const [roomName, setRoomName] = useState('');
   const [token, setToken] = useState(null);
 
-  function sortByLatestTime(a, b){
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    return new Date(b.latestTime) - new Date(a.latestTime);
-  };
-
-
   useEffect(() => {
     if(token === null) {
       if(mycontacts.length === 0 ) {
@@ -813,12 +865,17 @@ function ChatView() {
     setToken(data.token);
   }
 
+  function refresh(){
+    setToken(null);
+  }
+
   const handleLogout = useCallback(event => {
     const minutesLabel = document.getElementById("minutes").innerHTML;
     const secondsLabel = document.getElementById("seconds").innerHTML;
     const username = localStorage.getItem("curr_user");
     sendVideoCall(`<div class="endcallFlag">${username} Spent ${minutesLabel}:${secondsLabel} in Video Chat Room </div>`);
-    setToken(null);
+    setTimeout(refresh, 1000);
+    // setToken(null);
   }, []);
 
   // -----------------render html------------------------
@@ -983,8 +1040,10 @@ export {
   ChatView, 
   array_move, 
   sortByTime, 
+  sortByLatestTime,
   createImageDiv, 
   createAudioDiv, 
   createVideoDiv,
-  generateRoomID
+  generateRoomID,
+  putHistoryMsg
 };

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
     "chromedriver": "^86.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "node-fetch": "^2.6.1",
     "push.js": "^1.0.12",
     "react": "^17.0.1",

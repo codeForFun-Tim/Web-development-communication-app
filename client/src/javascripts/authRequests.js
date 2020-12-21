@@ -27,31 +27,9 @@ async function login(email, password) {
       body: formData,
       mode: 'cors',
     });
-
-    // return axios.post(`${api.url}/login`,
-    // `email=${email}&&password=${password}`,
-    // {
-    //   withCredentials: true,
-    // });
-
-  // return axios.post(`${api.url}/login`,
-  //   {
-  //     email: email,
-  //     password: password
-  //   });
 }
 
 async function logout() {
-  // return fetch(`${api.url}/logout`,
-  //   {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-type': 'application/json; charset=UTF-8',
-  //       Accept: 'application/json; charset=UTF-8',
-  //     },
-  //     credentials: 'include',
-  //     mode: 'cors',
-  //   });
   return axios.post(`${api.url}/logout`,
   {
     withCredentials: true,
@@ -59,16 +37,6 @@ async function logout() {
 }
 
 async function changePassword(email, newPassword) {
-  // const formData = new FormData();
-  // formData.append('email', email);
-  // formData.append('newPassword', newPassword);
-  // return fetch(`${api.url}/Register`,
-  //   {
-  //     method: 'POST',
-  //     body: formData,
-  //     credentials: 'include',
-  //     mode: 'cors',
-  //   });
   return axios.post(`${api.url}/changePassword`,
   `email=${email}&&newPassword=${newPassword}`,
   {
