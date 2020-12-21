@@ -97,48 +97,48 @@ describe('Test All ChatView Functions', () => {
     //     expect(mydropdown.className).toBe('dropdown-content');
     // });
 
-    // test('add a contact', () => {
-    //     const input = document.getElementById('add_contact_input');
-    //     input.value = 'test1@gmail.com';
-    //     const submitbtu = document.getElementById('add_contact_submit');
-    //     act(() => {
-    //         Simulate.change(input);
-    //         submitbtu.click();
-    //     });
-    //     const ul = document.getElementById('myul');
-    //     const list = ul.getElementsByTagName('li');
-    //     expect(list.length).toBe(0);
-    // });
+    test('add a contact', () => {
+        const input = document.getElementById('add_contact_input');
+        input.value = 'test1@gmail.com';
+        const submitbtu = document.getElementById('add_contact_submit');
+        act(() => {
+            Simulate.change(input);
+            submitbtu.click();
+        });
+        const ul = document.getElementById('myul');
+        const list = ul.getElementsByTagName('li');
+        expect(list.length).toBe(0);
+    });
 
-    // test('close add contact window', () => {
-    //     const closebtu = document.getElementById('closepop3');
-    //     act(() => {
-    //         closebtu.click();
-    //     });
-    //     const popup3 = document.getElementById('popup3');
-    //     expect(popup3.style.visibility).toBe("hidden");
-    // });
+    test('close add contact window', () => {
+        const closebtu = document.getElementById('closepop3');
+        act(() => {
+            closebtu.click();
+        });
+        const popup3 = document.getElementById('popup3');
+        expect(popup3.style.visibility).toBe("hidden");
+    });
     
 
-    // test('search contacts name', () => {
-    //     const ul = document.getElementById('myul');
-    //     const li = document.createElement('li');
-    //     const h2 = document.createElement('h2');
-    //     li.value = "test@gmail.com";
-    //     li.id = "test@gmail.com";
-    //     //li.onclick = function(e) {event_handler(e, 'value')};
-    //     h2.innerHTML = "test@gmail.com";
-    //     li.appendChild(h2);
-    //     ul.appendChild(li);
-    //     const input = document.getElementById('myInput');
-    //     input.value = 'x';
-    //     act(() => {
-    //         Simulate.change(input);
-    //         Simulate.keyUp(input, {keyCode: 67});
-    //     });
-    //     const list = ul.getElementsByTagName('li');
-    //     expect(list[0].style.display).toBe("none");
-    // });
+    test('search contacts name', () => {
+        const ul = document.getElementById('myul');
+        const li = document.createElement('li');
+        const h2 = document.createElement('h2');
+        li.value = "test@gmail.com";
+        li.id = "test@gmail.com";
+        //li.onclick = function(e) {event_handler(e, 'value')};
+        h2.innerHTML = "test@gmail.com";
+        li.appendChild(h2);
+        ul.appendChild(li);
+        const input = document.getElementById('myInput');
+        input.value = 'x';
+        act(() => {
+            Simulate.change(input);
+            Simulate.keyUp(input, {keyCode: 67});
+        });
+        const list = ul.getElementsByTagName('li');
+        expect(list[0].style.display).toBe("none");
+    });
 
     test('click contacts name', () => {
         const ul = document.getElementById('myul');
