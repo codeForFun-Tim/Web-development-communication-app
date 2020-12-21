@@ -1,4 +1,15 @@
-import {validation} from '../components/ForgetPassword.js'
+import { validation, ForgetPassword } from '../components/ForgetPassword.js'
+import { BrowserRouter as Router } from 'react-router-dom';
+const renderer = require('react-test-renderer');
+
+// snapshot testings
+describe('Test snapshot', () => {
+    test('Test Login', () => {
+      const component = renderer.create(<Router><ForgetPassword /></Router>);
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
 
 describe('Independent function tests', () => {
     test('validation function true', () => {
