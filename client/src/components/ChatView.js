@@ -111,28 +111,6 @@ function ChatView() {
     }
   }, [contactNum]);
 
-  // -----------------initialization when f------------------------
-  // useEffect(() => {
-  //   // get all contacts from backend
-  //   const current_user = localStorage.getItem("curr_user");
-  //   getUser(current_user)
-  //   .then((res) => {
-  //     for (var i = 0; i < res.data.contacts.length; i++) {
-  //       mycontacts.push(res.data.contacts[i]);
-  //     }
-  //     // set current receiver
-  //     if(mycontacts.length !== 0) {
-  //       localStorage.setItem("curr_receiver", mycontacts[0]);
-  //       setcontact(mycontacts.length); // refresh contact list
-  //     }
-  //     else {
-  //       localStorage.setItem("curr_receiver", '');
-  //     }
-  //   }).catch(() => {alert("error");});
-  //   //setcontact(mycontacts.length); // refresh contact list
-
-  // }, []);
-
   // -----------------update search result------------------------
   const [name, setName] = useState('');
 

@@ -24,11 +24,11 @@ const Login = () => {
           localStorage.setItem('curr_user', name);
           history.push("/main");
         } else {
-          setError("Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.");
+          setError("Incorrect Username/Password (Account will be locked by 3 incorrect trials)");
         }
       }).catch(() => 
         {
-          setError("Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.");
+          setError("Incorrect Username/Password (Account will be locked by 3 incorrect trials)");
         });
     setLoading(false);
   }
