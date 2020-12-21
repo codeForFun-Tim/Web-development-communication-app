@@ -166,37 +166,37 @@ describe('Test All ChatView Functions', () => {
     //     expect(title3).toBe('guangzhe@test.com');
     // });
 
-    // test('send message',() => {
-    //     const textarea = document.getElementById('textarea');
-    //     textarea.value = 'test';
-    //     const btu = document.getElementById('submitbtu')
-    //     const mymessage = document.getElementsByClassName('me')
-    //     act(() => {
-    //         Simulate.change(textarea);
-    //         Simulate.click(btu);
-    //     });
-    //     expect(mymessage).not.toBe(null);
-    // });
+    test('send message',() => {
+        const textarea = document.getElementById('textarea');
+        textarea.value = 'test';
+        const btu = document.getElementById('submitbtu')
+        const mymessage = document.getElementsByClassName('me')
+        act(() => {
+            Simulate.change(textarea);
+            Simulate.click(btu);
+        });
+        expect(mymessage).not.toBe(null);
+    });
 
-    // test('click Record Audio',() => {
-    //     const btu = document.getElementById('recordAudio');
-    //     const popup = document.getElementById('popup1')
-    //     const stopRecord = document.getElementById('stopRecord');
-    //     act(() => {
-    //         Simulate.click(btu);
-    //     });
-    //     expect(popup.style.visibility).toBe('visible');
-    //     expect(stopRecord.style.visibility).toBe('hidden');
-    // });
+    test('click Record Audio',() => {
+        const btu = document.getElementById('recordAudio');
+        const popup = document.getElementById('popup1')
+        const stopRecord = document.getElementById('stopRecord');
+        act(() => {
+            Simulate.click(btu);
+        });
+        expect(popup.style.visibility).toBe('visible');
+        expect(stopRecord.style.visibility).toBe('hidden');
+    });
 
-    // test('click Record Audio - start',() => {
-    //     const startbtu = document.getElementById('startRecord');
-    //     act(() => {
-    //         Simulate.click(startbtu);
-    //     });
-    //     const stopbtu = document.getElementById('stopRecord');
-    //     expect(stopbtu.style.visibility).toBe('visible');
-    // });
+    test('click Record Audio - start',() => {
+        const startbtu = document.getElementById('startRecord');
+        act(() => {
+            Simulate.click(startbtu);
+        });
+        const stopbtu = document.getElementById('stopRecord');
+        expect(stopbtu.style.visibility).toBe('visible');
+    });
 
     // test('click Record Audio - stop',() => {
     //     const stopbtu = document.getElementById('stopRecord');
@@ -222,15 +222,15 @@ describe('Test All ChatView Functions', () => {
     //     expect(recordedAudio.src).toBe('http://localhost/');
     // });
 
-    // test('delete user from contact list', () => {
-    //     const btu = document.getElementById('deleteUser');
-    //     // const currentTitle = li.value;
-    //     act(() => {
-    //         btu.click()
-    //     });
-    //     const title = document.getElementById('chat_title').innerHTML;
-    //     expect(title).toBe("No Contacts");
-    // });
+    test('delete user from contact list', () => {
+        const btu = document.getElementById('deleteUser');
+        // const currentTitle = li.value;
+        act(() => {
+            btu.click()
+        });
+        const title = document.getElementById('chat_title').innerHTML;
+        expect(title).toBe("No Contacts");
+    });
 
     test('click Video Call',() => {
         const btu = document.getElementById('invite_video');
