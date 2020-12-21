@@ -29,14 +29,14 @@ describe('Test functonal component functions', () => {
     container = null;
   });
 
-  test('Test function inside Login component', () => {
+  test('Test function inside Login component', async() => {
     act(() => {
       ReactDOM.render(<Router><Login /></Router>, container);
     });
     const loginBtn = container.querySelector('#loginBtn');
-    act(() => {
+    await act(async () => {
       fetch = jest.fn(() => Promise.resolve({ json: () => ({ message: 'success', data: [{ username: 'tester', password: 'tester' }] }) }));
-      //loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     const userName = container.querySelector('#userName');
     const password = container.querySelector('#password');
