@@ -25,10 +25,16 @@ describe('Independent function tests', () => {
   });
     describe('Test functonal component functions', () => {
 
+      let emit;
       let container;
+      beforeAll(() => {
+        ({ emit } = window._virtualConsole);
+      });
+
       beforeEach(() => {
         container = document.createElement('div');
         document.body.appendChild(container);
+        window._virtualConsole.emit = jest.fn();
       });
     
       afterEach(() => {
@@ -43,7 +49,7 @@ describe('Independent function tests', () => {
         const loginBtn = container.querySelector('#resetBtn');
         await act(async () => {
           fetch = jest.fn(() => Promise.resolve({ json: () => ({ message: 'success', data: [{ username: 'tester', password: 'tester' }] }) }));
-          await loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         });
         const userName = container.querySelector('#userName');
         expect(userName.value).toBe("");

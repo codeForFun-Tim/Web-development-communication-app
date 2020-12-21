@@ -141,7 +141,7 @@ const loggedInUser = localStorage.getItem("curr_user");
     <div>
       <NaviBar />
       <h1 align="center">Status</h1>
-      <p align="center" onClick={() => popupWindow()}><button>Send New Status</button></p>
+      <p id = 'openBtn' align="center" onClick={() => popupWindow()}><button>Send New Status</button></p>
       <div className="mainProfile">
         <div className="outer" id='outer'>
           {}

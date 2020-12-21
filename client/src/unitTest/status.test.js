@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {  sortByTime, createImageDiv, createGifDiv, Status } from '../components/Status.js';
 import { act } from 'react-dom/test-utils';
+import { BrowserRouter as Router } from 'react-router-dom';
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -40,20 +41,39 @@ describe('Independent function tests', () => {
 
 // functonal component functions tests
 describe('Test functonal component functions', () => {
-    let container;
-    beforeEach(() => {
-      container = document.createElement('div');
-      document.body.appendChild(container);
-    });
+  let container;
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+  });
   
-    afterEach(() => {
-      document.body.removeChild(container);
-      container = null;
-    });
-  
-    test('Test function inside Status component', () => {
+    test('Test function inside Status component', async () => {
       act(() => {
-            ReactDOM.render(<Status />, container);
+            ReactDOM.render(<Router><Status /></Router>, container);
+      });
+      const openBtn = container.querySelector('#openBtn');
+      //expect(loginBtn).toBe(null);
+
+      act(() => {
+        openBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      const textBtn = container.querySelector('#textOption');
+      act(() => {
+        textBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      const sendBtn = container.querySelector('#sendStatus');
+      act(() => {
+        sendBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      const imageBtn = container.querySelector('#image-upload');
+      await act(async () => {
+        window.alert = jest.fn();
+        await imageBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       });
     });
 
