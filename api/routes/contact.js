@@ -170,10 +170,10 @@ async (req, res) => {
   
     const user = await User.findOne({email: userName});
   
-    if (!user) {
+    if (user === null) {
       res.status(550).json(`[!] Could not find user: ${userName}`);
     }
-  
+   else{
     // Keep track of who the user already follows,
     // to make sure they don't get suggested to the user.
     // currUserContactsSet.add(userName);
@@ -223,7 +223,8 @@ async (req, res) => {
     // Send the list of suggestions.
     res.status(200);
     res.send(Array.from(suggestedUsers));
-  });
+  }
+});
 
 /*
 1. /getUser: usernane
