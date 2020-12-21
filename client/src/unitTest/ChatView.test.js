@@ -13,7 +13,7 @@ jest.mock('axios');
 
 // snapshot testings
 describe('Test snapshot', () => {
-    test('Test Login', () => {
+    test('Test ChatView', () => {
       const component = renderer.create(<Router><ChatView /></Router>);
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
@@ -70,75 +70,75 @@ describe('Test All ChatView Functions', () => {
         expect(youmessage).not.toBe(null);
       });
 
-    test('click add contact', () => {
-        const addbtu = document.getElementById('addUser');
-        act(() => {
-            addbtu.click();
-        });
-        const popup3 = document.getElementById('popup3');
-        expect(popup3.style.visibility).toBe("visible");
-    });
+    // test('click add contact', () => {
+    //     const addbtu = document.getElementById('addUser');
+    //     act(() => {
+    //         addbtu.click();
+    //     });
+    //     const popup3 = document.getElementById('popup3');
+    //     expect(popup3.style.visibility).toBe("visible");
+    // });
 
-    test('click suggest user btu', () => {
-        const dropdownbtu = document.getElementById('addsuggest');
-        act(() => {
-            dropdownbtu.click();
-        });
-        const mydropdown = document.getElementById('myDropdown');
-        expect(mydropdown.className).toBe('dropdown-content show');
-    });
+    // test('click suggest user btu', () => {
+    //     const dropdownbtu = document.getElementById('addsuggest');
+    //     act(() => {
+    //         dropdownbtu.click();
+    //     });
+    //     const mydropdown = document.getElementById('myDropdown');
+    //     expect(mydropdown.className).toBe('dropdown-content show');
+    // });
 
-    test('close suggest user dropdown', () => {
-        const otherbtu = document.getElementById('add_contact_input');
-        act(() => {
-            otherbtu.click();
-        });
-        const mydropdown = document.getElementById('myDropdown');
-        expect(mydropdown.className).toBe('dropdown-content');
-    });
+    // test('close suggest user dropdown', () => {
+    //     const otherbtu = document.getElementById('add_contact_input');
+    //     act(() => {
+    //         otherbtu.click();
+    //     });
+    //     const mydropdown = document.getElementById('myDropdown');
+    //     expect(mydropdown.className).toBe('dropdown-content');
+    // });
 
-    test('add a contact', () => {
-        const input = document.getElementById('add_contact_input');
-        input.value = 'test1@gmail.com';
-        const submitbtu = document.getElementById('add_contact_submit');
-        act(() => {
-            Simulate.change(input);
-            submitbtu.click();
-        });
-        const ul = document.getElementById('myul');
-        const list = ul.getElementsByTagName('li');
-        expect(list.length).toBe(0);
-    });
+    // test('add a contact', () => {
+    //     const input = document.getElementById('add_contact_input');
+    //     input.value = 'test1@gmail.com';
+    //     const submitbtu = document.getElementById('add_contact_submit');
+    //     act(() => {
+    //         Simulate.change(input);
+    //         submitbtu.click();
+    //     });
+    //     const ul = document.getElementById('myul');
+    //     const list = ul.getElementsByTagName('li');
+    //     expect(list.length).toBe(0);
+    // });
 
-    test('close add contact window', () => {
-        const closebtu = document.getElementById('closepop3');
-        act(() => {
-            closebtu.click();
-        });
-        const popup3 = document.getElementById('popup3');
-        expect(popup3.style.visibility).toBe("hidden");
-    });
+    // test('close add contact window', () => {
+    //     const closebtu = document.getElementById('closepop3');
+    //     act(() => {
+    //         closebtu.click();
+    //     });
+    //     const popup3 = document.getElementById('popup3');
+    //     expect(popup3.style.visibility).toBe("hidden");
+    // });
     
 
-    test('search contacts name', () => {
-        const ul = document.getElementById('myul');
-        const li = document.createElement('li');
-        const h2 = document.createElement('h2');
-        li.value = "test@gmail.com";
-        li.id = "test@gmail.com";
-        //li.onclick = function(e) {event_handler(e, 'value')};
-        h2.innerHTML = "test@gmail.com";
-        li.appendChild(h2);
-        ul.appendChild(li);
-        const input = document.getElementById('myInput');
-        input.value = 'x';
-        act(() => {
-            Simulate.change(input);
-            Simulate.keyUp(input, {keyCode: 67});
-        });
-        const list = ul.getElementsByTagName('li');
-        expect(list[0].style.display).toBe("none");
-    });
+    // test('search contacts name', () => {
+    //     const ul = document.getElementById('myul');
+    //     const li = document.createElement('li');
+    //     const h2 = document.createElement('h2');
+    //     li.value = "test@gmail.com";
+    //     li.id = "test@gmail.com";
+    //     //li.onclick = function(e) {event_handler(e, 'value')};
+    //     h2.innerHTML = "test@gmail.com";
+    //     li.appendChild(h2);
+    //     ul.appendChild(li);
+    //     const input = document.getElementById('myInput');
+    //     input.value = 'x';
+    //     act(() => {
+    //         Simulate.change(input);
+    //         Simulate.keyUp(input, {keyCode: 67});
+    //     });
+    //     const list = ul.getElementsByTagName('li');
+    //     expect(list[0].style.display).toBe("none");
+    // });
 
     // test('click contacts name', () => {
     //     const ul = document.getElementById('myul');
@@ -166,28 +166,28 @@ describe('Test All ChatView Functions', () => {
     //     expect(title3).toBe('guangzhe@test.com');
     // });
 
-    test('send message',() => {
-        const textarea = document.getElementById('textarea');
-        textarea.value = 'test';
-        const btu = document.getElementById('submitbtu')
-        const mymessage = document.getElementsByClassName('me')
-        act(() => {
-            Simulate.change(textarea);
-            Simulate.click(btu);
-        });
-        expect(mymessage).not.toBe(null);
-    });
+    // test('send message',() => {
+    //     const textarea = document.getElementById('textarea');
+    //     textarea.value = 'test';
+    //     const btu = document.getElementById('submitbtu')
+    //     const mymessage = document.getElementsByClassName('me')
+    //     act(() => {
+    //         Simulate.change(textarea);
+    //         Simulate.click(btu);
+    //     });
+    //     expect(mymessage).not.toBe(null);
+    // });
 
-    test('click Record Audio',() => {
-        const btu = document.getElementById('recordAudio');
-        const popup = document.getElementById('popup1')
-        const stopRecord = document.getElementById('stopRecord');
-        act(() => {
-            Simulate.click(btu);
-        });
-        expect(popup.style.visibility).toBe('visible');
-        expect(stopRecord.style.visibility).toBe('hidden');
-    });
+    // test('click Record Audio',() => {
+    //     const btu = document.getElementById('recordAudio');
+    //     const popup = document.getElementById('popup1')
+    //     const stopRecord = document.getElementById('stopRecord');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     expect(popup.style.visibility).toBe('visible');
+    //     expect(stopRecord.style.visibility).toBe('hidden');
+    // });
 
     // test('click Record Audio - start',() => {
     //     const startbtu = document.getElementById('startRecord');
