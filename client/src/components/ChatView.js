@@ -21,7 +21,7 @@ function pushNotifi(msgFrom){
     onClick: function() {
         // Callback for when the notification is clicked. 
         clip.pause();
-        console.log(this);
+        //console.log(this);
     }  
 });
 }
@@ -167,7 +167,7 @@ function ChatView() {
           setcontact(mycontacts.length);
         }
       }).catch((e) => {
-        console.log(e.response);
+        //console.log(e.response);
         if (e.response.status === 406) {
           alert("Already in your contact list.");
         }
@@ -227,7 +227,7 @@ function ChatView() {
           }
         }
       }).catch((e) => {
-        console.log(e.response);
+        //console.log(e.response);
       });
     document.getElementById("myDropdown").classList.toggle("show");
   }
@@ -260,7 +260,7 @@ function ChatView() {
     if (readflag !== false) {
       const ifreadElments = document.getElementsByClassName('ifread');
       if (ifreadElments) {
-        console.log(ifreadElments[ifreadElments.length - 1]);
+        //console.log(ifreadElments[ifreadElments.length - 1]);
         if (ifreadElments[ifreadElments.length - 1]) {
           ifreadElments[ifreadElments.length - 1].style.display = 'inline';
           setreadflag(false);
@@ -343,13 +343,15 @@ function ChatView() {
         if(messageArray[arraylength-1].content !== '<div class="msgreadFlag">Above message has been read by</div>' || messageArray[arraylength-1].sender !== msgFrom){
           // sendVideoCall function just send a text msg to database
           sendVideoCall('<div class="msgreadFlag">Above message has been read by</div>');
-          console.log('send');
+          //console.log('send');
         }
         // display only the last read msg
         setreadflag(true);
       }
     )
-    .catch((e) => {console.log(e);});
+    .catch((e) => {
+      //console.log(e);
+    });
   }
 
   // -----------------update chat message------------------------
@@ -399,22 +401,22 @@ function ChatView() {
       for (var i = 0; i < res.data.contacts.length; i++) {
           latest_contacts.push(res.data.contacts[i]);
       }
-      console.log(latest_contacts);
+      //console.log(latest_contacts);
       let msgCopy = "";
       let ifValid = true;
       //alert("Muitlple mentioned users should be splitted by comma without white space, e.g. @user1,@user2");
       const mentionArray = msg.trim().split(',');
       for (var mentioned in mentionArray) {
         let mentionedUser = mentionArray[mentioned].substring(1);
-        console.log(mentionedUser);
-        console.log(latest_contacts.includes(mentionedUser));
+        //console.log(mentionedUser);
+        //console.log(latest_contacts.includes(mentionedUser));
         if (latest_contacts.includes(mentionedUser)){
           msgCopy += `<a href="/otherProfile/${mentionedUser}" target="_blank">${mentionArray[mentioned]}</a>`; 
         }
         else {
           ifValid = false;
         }
-        console.log(msgCopy);
+        //console.log(msgCopy);
         
       }
       msg = msgCopy;
@@ -729,7 +731,9 @@ function ChatView() {
           else {
             localStorage.setItem("curr_receiver", '');
           }
-        }).catch((e) => {console.log(e)});
+        }).catch((e) => {
+          //console.log(e)
+        });
       }
       else{
         // set current receiver

@@ -2,18 +2,7 @@ import { api } from '../api';
 import axios from 'axios';
 
 async function getUser(username) {
-    // return fetch(`${api.url}/getUser/${username}`,
-    // {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //     Accept: 'application/json; charset=UTF-8',
-    //   },
-    //   credentials: 'include',
-    //   mode: 'no-cors',
-    // });
     const apiUrl = `${api.url}/getUser`;
-    
     try {
         const response = await axios.get(apiUrl, {
                 params: {username: username}
@@ -25,18 +14,7 @@ async function getUser(username) {
 };
 
 async function getSortedUser(username) {
-    // return fetch(`${api.url}/getUser/${username}`,
-    // {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //     Accept: 'application/json; charset=UTF-8',
-    //   },
-    //   credentials: 'include',
-    //   mode: 'no-cors',
-    // });
     const apiUrl = `${api.url}/getSortedUser`;
-    
     try {
         const response = await axios.get(apiUrl, {
                 params: {username: username}

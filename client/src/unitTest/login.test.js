@@ -36,7 +36,7 @@ describe('Test functonal component functions', () => {
     const loginBtn = container.querySelector('#loginBtn');
     act(() => {
       fetch = jest.fn(() => Promise.resolve({ json: () => ({ message: 'success', data: [{ username: 'tester', password: 'tester' }] }) }));
-      loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      //loginBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     const userName = container.querySelector('#userName');
     const password = container.querySelector('#password');
