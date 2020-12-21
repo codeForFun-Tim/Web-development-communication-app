@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import NaviBar from './NaviBar';
 import { addTextStatus, addMediaStatus, getFeed, viewedStatus } from '../javascripts/status';
 import '../stylesheets/Status.css';
@@ -9,6 +10,7 @@ const Status = () => {
   const [type, setType] = useState('text');
   const [imageSrc, setImageSrc] = useState('text');
   const [textContent, setTextContent] = useState('');
+  let history = useHistory();
 
   function sortByTime(a, b){
     // Turn your strings into dates, and then subtract them
@@ -34,12 +36,11 @@ const Status = () => {
       setUsername(loggedInUser);
     }
     else {
-      window.open("/login","_self");
+      history.push("/login");
     }
     getFeed(loggedInUser)
     .then((res) => 
     {
-      console.log(res);
       let feedArray = [];
       //let senderArray = [];
       const data = res.data;
@@ -83,7 +84,6 @@ const Status = () => {
     })
     .catch((e) => 
     {
-      console.log(e);
       alert("No contacts!");
     });
   }, []);

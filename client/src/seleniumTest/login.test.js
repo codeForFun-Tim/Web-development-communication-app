@@ -51,7 +51,7 @@ test('failed login, test webpage updated correctly', async () => {
   const returnedText = await element.getText();
   // test the values
   expect(element).not.toBeNull();
-  expect(returnedText).toEqual('Incorrect Username or Password/Account Locked Out. Please try again in 5 mins.');
+  expect(returnedText).toEqual('Incorrect Username/Password (Account will be locked by 3 incorrect trials)');
 });
 
 // use the driver to mock user's actions
@@ -66,7 +66,7 @@ async function mockUserActionSuc() {
   // locate the textbox, provide a timeout
   const textbox1 = await driver.wait(until.elementLocated(By.id('password')), 10000);
   // enter text in the textbox
-  await textbox1.sendKeys('321321321');
+  await textbox1.sendKeys('123123123');
 
   // click on 'Sign In' button
   await driver.findElement(By.id('loginBtn')).click();

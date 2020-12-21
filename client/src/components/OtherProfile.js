@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { getUser, checkContact } from '../javascripts/contact';
 import '../stylesheets/Profile.css';
 import Avatar from '../images/AvatarCat.png';
@@ -8,6 +9,7 @@ const OtherProfile = ( { match } ) => {
   const [userData, setUserData] = useState({name:'', registration:''});
   const [error, setError] = useState(false);
   let params = match.params;
+  let history = useHistory();
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("curr_user");
@@ -21,7 +23,7 @@ const OtherProfile = ( { match } ) => {
       .catch(() => {setError(true)});
     }
     else {
-      window.open("/login","_self");
+      history.push("/login");
     }
   }, []);
 

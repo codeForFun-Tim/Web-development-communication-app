@@ -10,16 +10,6 @@ const NaviBar = () => {
     localStorage.clear();
   };
 
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("curr_user");
-    if (loggedInUser && loggedInUser !== "") {
-      setUsername(loggedInUser);
-    }
-    else {
-      window.open("/login","_self");
-    }
-  }, []);
-
   return (
     <div>
       <ul id="nav_ul">

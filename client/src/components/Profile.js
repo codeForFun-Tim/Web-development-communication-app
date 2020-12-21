@@ -26,7 +26,6 @@ const Profile = () => {
     let newPassword = document.getElementById('newPassword').value;
     if (validation(newPassword)) {
       changePassword(email, newPassword).then((res) => {
-        console.log(res);
         if (res.status === 200) {
           localStorage.clear();
           history.push("/login");
@@ -36,7 +35,6 @@ const Profile = () => {
         }
       }).catch((e) => {
         setError("Failed to change password");
-        console.log(e);
       });
     }
     else {

@@ -19,7 +19,6 @@ const Login = () => {
     setLoading(true);
     login(name, pwd).then((res) => 
       {
-        console.log(res);
         if (res.ok) {
           localStorage.setItem('curr_user', name);
           history.push("/main");

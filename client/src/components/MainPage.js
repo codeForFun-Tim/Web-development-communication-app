@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import NaviBar from './NaviBar';
 import {ChatView} from './ChatView';
 
 function MainPage() {
+  let history = useHistory();
+
   useEffect(() => {
     const loggedInUser = localStorage.getItem("curr_user");
     if (!loggedInUser || loggedInUser === "") {
-      window.open("/login","_self");
+      history.push("/login");
     }
   }, []);
   return (

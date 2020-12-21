@@ -2,6 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Status from '../components/Status.js';
 import { act } from 'react-dom/test-utils';
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 const renderer = require('react-test-renderer');
 
@@ -28,16 +36,11 @@ describe('Test functonal component functions', () => {
     });
   
     test('Test function inside Status component', () => {
+      localStorage.setItem('curr_user', 'newlion@gmail.com');
       act(() => {
             ReactDOM.render(<Status />, container);
       });
-      const submitBtn = container.querySelector('#btn0');
-      act(() => {
-        fetch = jest.fn(() => Promise.resolve({ json: () => ({ message: 'success', data: [{ username: 'tester', password: 'tester' }] }) }));
-        submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-      });
-
-
+      localStorage.clear();
     });
 
   });

@@ -3,6 +3,15 @@ import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import {Profile, validation} from '../components/Profile.js';
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
 const renderer = require('react-test-renderer');
 
 describe('Independent function tests', () => {
