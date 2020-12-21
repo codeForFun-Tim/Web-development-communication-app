@@ -267,35 +267,35 @@ describe('Test All ChatView Functions', () => {
     //     expect(msg_accp_btu).not.toBe(null);
     // });
 
-    // test('click decline yes button',() => {
-    //     const btu1 = document.getElementById('decline_call');
-    //     const btu2 = document.getElementById('yes_decline');
-    //     act(() => {
-    //         Simulate.click(btu1);
-    //         Simulate.click(btu2);
-    //     });
-    //     const popup = document.getElementById('popup2')
-    //     const yes_decline_btu = document.getElementById('yes_decline');
-    //     const msg_decl_btu = document.getElementById('decline_call');
-    //     const msg_accp_btu = document.getElementById('accept_call');
-    //     const callflag = document.getElementsByClassName('callFlag');
-    //     expect(popup.style.visibility).toBe('hidden');
-    //     expect(yes_decline_btu.style.visibility).toBe('hidden');
-    //     expect(callflag[callflag.length-1].innerHTML).toBe('Call Ended');
-    //     expect(msg_decl_btu).toBe(null);
-    //     expect(msg_accp_btu).toBe(null);
-    // });
+    test('click decline yes button',() => {
+        const btu1 = document.getElementById('decline_call');
+        const btu2 = document.getElementById('yes_decline');
+        act(() => {
+            Simulate.click(btu1);
+            Simulate.click(btu2);
+        });
+        const popup = document.getElementById('popup2')
+        const yes_decline_btu = document.getElementById('yes_decline');
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        const callflag = document.getElementsByClassName('callFlag');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(callflag[callflag.length-1].innerHTML).toBe('Call Ended');
+        expect(msg_decl_btu).toBe(null);
+        expect(msg_accp_btu).toBe(null);
+    });
 
-    // test('putHistoryMsg function from test', () => {
-    //     putHistoryMsg('test', 'test', {time:'1', type:'text', content:'teststring'});
-    //     const msgelements = document.getElementsByClassName('test');
-    //     expect(msgelements.length).toBe(1);
-    // });
+    test('putHistoryMsg function from test', () => {
+        putHistoryMsg('test', 'test', {time:'1', type:'text', content:'teststring'});
+        const msgelements = document.getElementsByClassName('test');
+        expect(msgelements.length).toBe(1);
+    });
 
-    // test('putHistoryMsg function from me', () => {
-    //     putHistoryMsg('me', 'me', {time:'1', type:'text', content:'teststring'});
-    //     const spanlements = document.getElementsByClassName('delieverednotice');
-    //     expect(spanlements[0].innerHTML).toBe('Delievered');
-    // });
+    test('putHistoryMsg function from me', () => {
+        putHistoryMsg('me', 'me', {time:'1', type:'text', content:'teststring'});
+        const spanlements = document.getElementsByClassName('delieverednotice');
+        expect(spanlements[0].innerHTML).toBe('Delievered');
+    });
     
   });
