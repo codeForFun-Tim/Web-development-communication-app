@@ -211,61 +211,61 @@ describe('Test All ChatView Functions', () => {
     //     expect(recordaudio).not.toBe(null);
     // });
 
-    test('close popup window',() => {
-        const btu = document.getElementById('closepop');
-        const popup = document.getElementById('popup1')
-        const recordedAudio = document.getElementById('recordedAudio');
-        act(() => {
-            Simulate.click(btu);
-        });
-        expect(popup.style.visibility).toBe('hidden');
-        expect(recordedAudio.src).toBe('http://localhost/');
-    });
+    // test('close popup window',() => {
+    //     const btu = document.getElementById('closepop');
+    //     const popup = document.getElementById('popup1')
+    //     const recordedAudio = document.getElementById('recordedAudio');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     expect(popup.style.visibility).toBe('hidden');
+    //     expect(recordedAudio.src).toBe('http://localhost/');
+    // });
 
-    test('delete user from contact list', () => {
-        const btu = document.getElementById('deleteUser');
-        // const currentTitle = li.value;
-        act(() => {
-            btu.click()
-        });
-        const title = document.getElementById('chat_title').innerHTML;
-        expect(title).toBe("No Contacts");
-    });
+    // test('delete user from contact list', () => {
+    //     const btu = document.getElementById('deleteUser');
+    //     // const currentTitle = li.value;
+    //     act(() => {
+    //         btu.click()
+    //     });
+    //     const title = document.getElementById('chat_title').innerHTML;
+    //     expect(title).toBe("No Contacts");
+    // });
 
-    test('click Video Call',() => {
-        const btu = document.getElementById('invite_video');
-        act(() => {
-            Simulate.click(btu);
-        });
-        const msg_decl_btu = document.getElementById('decline_call');
-        const msg_accp_btu = document.getElementById('accept_call');
-        expect(msg_decl_btu).not.toBe(null);
-        expect(msg_accp_btu).not.toBe(null);
-    });
+    // test('click Video Call',() => {
+    //     const btu = document.getElementById('invite_video');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     const msg_decl_btu = document.getElementById('decline_call');
+    //     const msg_accp_btu = document.getElementById('accept_call');
+    //     expect(msg_decl_btu).not.toBe(null);
+    //     expect(msg_accp_btu).not.toBe(null);
+    // });
 
-    test('click Decline Button',() => {
-        const btu = document.getElementById('decline_call');
-        act(() => {
-            Simulate.click(btu);
-        });
-        const popup = document.getElementById('popup2')
-        expect(popup.style.visibility).toBe('');
-    });
+    // test('click Decline Button',() => {
+    //     const btu = document.getElementById('decline_call');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     const popup = document.getElementById('popup2')
+    //     expect(popup.style.visibility).toBe('');
+    // });
 
-    test('close popup window 2',() => {
-        const btu = document.getElementById('closepop2');
-        act(() => {
-            Simulate.click(btu);
-        });
-        const popup = document.getElementById('popup2')
-        const yes_decline_btu = document.getElementById('yes_decline');
-        const msg_decl_btu = document.getElementById('decline_call');
-        const msg_accp_btu = document.getElementById('accept_call');
-        expect(popup.style.visibility).toBe('hidden');
-        expect(yes_decline_btu.style.visibility).toBe('hidden');
-        expect(msg_decl_btu).not.toBe(null);
-        expect(msg_accp_btu).not.toBe(null);
-    });
+    // test('close popup window 2',() => {
+    //     const btu = document.getElementById('closepop2');
+    //     act(() => {
+    //         Simulate.click(btu);
+    //     });
+    //     const popup = document.getElementById('popup2')
+    //     const yes_decline_btu = document.getElementById('yes_decline');
+    //     const msg_decl_btu = document.getElementById('decline_call');
+    //     const msg_accp_btu = document.getElementById('accept_call');
+    //     expect(popup.style.visibility).toBe('hidden');
+    //     expect(yes_decline_btu.style.visibility).toBe('hidden');
+    //     expect(msg_decl_btu).not.toBe(null);
+    //     expect(msg_accp_btu).not.toBe(null);
+    // });
 
     // test('click decline yes button',() => {
     //     const btu1 = document.getElementById('decline_call');
