@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from './Participant';
 
+function pad(val)
+{
+    var valString = val + "";
+    if(valString.length < 2)
+    {
+        return "0" + valString;
+    }
+    else
+    {
+        return valString;
+    }
+}
+
 const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -13,28 +26,15 @@ const Room = ({ roomName, token, handleLogout }) => {
     let totalSeconds = 0;
     setInterval(setTime, 1000);
 
-    function setTime()
-    {
-        ++totalSeconds;
-        secondsLabel.innerHTML = pad(totalSeconds%60);
-        minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
-    }
-
-    function pad(val)
-    {
-        var valString = val + "";
-        if(valString.length < 2)
-        {
-            return "0" + valString;
-        }
-        else
-        {
-            return valString;
-        }
-    }
+  function setTime()
+  {
+      ++totalSeconds;
+      secondsLabel.innerHTML = pad(totalSeconds%60);
+      minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+  }
 
     const timeoutPromise = () => new Promise(resolve => {
-      setTimeout(() => resolve(false), 5000);
+      setTimeout(() => resolve(false), 30000);
     });
     
     const participantConnectedPromise = room => new Promise(resolve => {
@@ -131,4 +131,4 @@ const Room = ({ roomName, token, handleLogout }) => {
   );
 };
 
-export default Room;
+export {Room, pad};

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test snapshot Test Profile 1`] = `
+exports[`Test snapshot Test Status 1`] = `
 <div>
   <div>
     <ul
@@ -61,6 +61,7 @@ exports[`Test snapshot Test Profile 1`] = `
   </h1>
   <p
     align="center"
+    id="openBtn"
     onClick={[Function]}
   >
     <button>

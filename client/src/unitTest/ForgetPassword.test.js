@@ -23,6 +23,7 @@ describe('Independent function tests', () => {
         expect(validation('1')).toBe(false);
     });
   });
+  
     describe('Test functonal component functions', () => {
 
       let emit;

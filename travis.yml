@@ -22,4 +22,4 @@ script:
 # safelist
 branches:
   only:
-  - Week_4
+  - Week6
