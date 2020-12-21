@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test snapshot Test Profile 1`] = `
+<div>
+  <ul
+    id="nav_ul"
+  >
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/profile"
+      >
+        Profile
+      </a>
+    </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/main"
+      >
+        Messaging
+      </a>
+    </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/status"
+      >
+        Status
+      </a>
+    </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/login"
+        onClick={[Function]}
+      >
+        Logout
+      </a>
+    </li>
+    <li
+      className="nav_li"
+    >
+      <a
+        href="/main"
+      >
+        
+      </a>
+    </li>
+  </ul>
+</div>
+`;

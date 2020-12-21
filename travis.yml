@@ -20,22 +20,18 @@ script:
   # - jest --updateSnapshot
   - yarn test src/unitTest --updateSnapshot --coverage
 
-  - cd..
-  - cd..
   - cd ..
-  - rm -rf node_modules
+  # - rm -rf node_modules
   - cd api
-  - rm package-lock.json
-  - nvm install node
-  - node -v
-  - npm install yarn 
-  - yarn
-  - npm install jest@26.6.0
-  - npm ls jest
+  # - rm package-lock.json
+  # - nvm install node
+  # - node -v
+  # - npm install yarn 
+  # - yarn
+  # - npm install jest@26.6.0
+  # - npm ls jest
   - cd backend_tests
-  - jest --coveage
-
-
+  - jest test --coverage --detectOpenHandles
 
 # safelist
 branches:

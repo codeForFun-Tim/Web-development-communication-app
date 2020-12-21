@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1608588331771" clover="3.2.0">
-  <project timestamp="1608588331771" name="All files">
-    <metrics statements="538" coveredstatements="277" conditionals="129" coveredconditionals="36" methods="81" coveredmethods="26" elements="748" coveredelements="339" complexity="0" loc="538" ncloc="538" packages="3" files="12" classes="12"/>
+<coverage generated="1608595034318" clover="3.2.0">
+  <project timestamp="1608595034318" name="All files">
+    <metrics statements="538" coveredstatements="278" conditionals="129" coveredconditionals="36" methods="81" coveredmethods="27" elements="748" coveredelements="341" complexity="0" loc="538" ncloc="538" packages="3" files="12" classes="12"/>
     <package name="api">
-      <metrics statements="121" coveredstatements="104" conditionals="28" coveredconditionals="22" methods="19" coveredmethods="13"/>
-      <file name="app.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/app.js">
-        <metrics statements="121" coveredstatements="104" conditionals="28" coveredconditionals="22" methods="19" coveredmethods="13"/>
+      <metrics statements="121" coveredstatements="105" conditionals="28" coveredconditionals="22" methods="19" coveredmethods="14"/>
+      <file name="app.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/app.js">
+        <metrics statements="121" coveredstatements="105" conditionals="28" coveredconditionals="22" methods="19" coveredmethods="14"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -101,7 +101,7 @@
         <line num="237" count="1" type="stmt"/>
         <line num="239" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="242" count="1" type="stmt"/>
-        <line num="243" count="0" type="stmt"/>
+        <line num="243" count="1" type="stmt"/>
         <line num="273" count="1" type="stmt"/>
         <line num="274" count="1" type="stmt"/>
         <line num="275" count="1" type="stmt"/>
@@ -131,28 +131,28 @@
     </package>
     <package name="api.model">
       <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="message.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/message.js">
+      <file name="message.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/message.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="45" count="1" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
       </file>
-      <file name="room.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/room.js">
+      <file name="room.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/room.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="9" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
       </file>
-      <file name="status.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/status.js">
+      <file name="status.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/status.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
       </file>
-      <file name="user.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/user.js">
+      <file name="user.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/model/user.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
@@ -165,7 +165,7 @@
     </package>
     <package name="api.routes">
       <metrics statements="398" coveredstatements="154" conditionals="101" coveredconditionals="14" methods="62" coveredmethods="13"/>
-      <file name="authenRouter.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/authenRouter.js">
+      <file name="authenRouter.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/authenRouter.js">
         <metrics statements="61" coveredstatements="43" conditionals="10" coveredconditionals="5" methods="13" coveredmethods="7"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -229,11 +229,11 @@
         <line num="186" count="1" type="stmt"/>
         <line num="190" count="1" type="stmt"/>
       </file>
-      <file name="config.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/config.js">
+      <file name="config.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/config.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
       </file>
-      <file name="contact.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/contact.js">
+      <file name="contact.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/contact.js">
         <metrics statements="113" coveredstatements="42" conditionals="36" coveredconditionals="4" methods="10" coveredmethods="4"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -349,7 +349,7 @@
         <line num="225" count="0" type="stmt"/>
         <line num="237" count="1" type="stmt"/>
       </file>
-      <file name="messageRouter.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/messageRouter.js">
+      <file name="messageRouter.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/messageRouter.js">
         <metrics statements="110" coveredstatements="36" conditionals="35" coveredconditionals="5" methods="23" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -462,7 +462,7 @@
         <line num="284" count="1" type="stmt"/>
         <line num="289" count="1" type="stmt"/>
       </file>
-      <file name="status.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/status.js">
+      <file name="status.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/status.js">
         <metrics statements="72" coveredstatements="12" conditionals="16" coveredconditionals="0" methods="10" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -537,7 +537,7 @@
         <line num="145" count="0" type="stmt"/>
         <line num="150" count="1" type="stmt"/>
       </file>
-      <file name="tokens.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/tokens.js">
+      <file name="tokens.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/tokens.js">
         <metrics statements="14" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -554,7 +554,7 @@
         <line num="23" count="0" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="videoCallRouter.js" path="/Users/timgo001/Documents/GitHub/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/videoCallRouter.js">
+      <file name="videoCallRouter.js" path="/Users/weichuwang/Desktop/project-video-and-messaging-web-app-guozhe-weichu-yuguang/api/routes/videoCallRouter.js">
         <metrics statements="27" coveredstatements="14" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

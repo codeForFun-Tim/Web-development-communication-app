@@ -20,7 +20,7 @@ FN:229,sendDatabaseErrorResponse
 FN:242,(anonymous_17)
 FN:294,(anonymous_18)
 FNF:19
-FNH:13
+FNH:14
 FNDA:1,(anonymous_0)
 FNDA:0,(anonymous_1)
 FNDA:0,(anonymous_2)
@@ -38,7 +38,7 @@ FNDA:14,checkNotAuthenticated
 FNDA:1,checkAndSanitizeInput
 FNDA:5,handleInputCheck
 FNDA:0,sendDatabaseErrorResponse
-FNDA:0,(anonymous_17)
+FNDA:1,(anonymous_17)
 FNDA:22,(anonymous_18)
 DA:2,1
 DA:3,1
@@ -135,7 +135,7 @@ DA:236,1
 DA:237,1
 DA:239,1
 DA:242,1
-DA:243,0
+DA:243,1
 DA:273,1
 DA:274,1
 DA:275,1
@@ -162,7 +162,7 @@ DA:317,1
 DA:318,1
 DA:319,1
 LF:121
-LH:104
+LH:105
 BRDA:32,0,0,0
 BRDA:32,0,1,1
 BRDA:77,1,0,0
