@@ -31,7 +31,7 @@ script:
   # - npm install jest@26.6.0
   # - npm ls jest
   - cd backend_tests
-  - jest test --coverage --detectOpenHandles
+  - jest test --coverage --detectOpenHandle
 
 # safelist
 branches:
