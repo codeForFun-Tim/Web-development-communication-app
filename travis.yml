@@ -26,12 +26,12 @@ script:
   # - rm package-lock.json
   # - nvm install node
   # - node -v
-  # - npm install yarn 
-  # - yarn
-  # - npm install jest@26.6.0
-  # - npm ls jest
+  - npm install yarn 
+  - yarn
+  - npm install jest@26.6.0
+  - npm ls jest
   - cd backend_tests
-  - jest test --coverage
+  - node_modules/.bin/jest --coverage
 
 # safelist
 branches:
