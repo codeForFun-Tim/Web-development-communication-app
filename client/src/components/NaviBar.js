@@ -6,8 +6,8 @@ const NaviBar = () => {
   const [username, setUsername] = useState('');
 
   const logOut = async () => {
-    await logout();
     localStorage.clear();
+    await logout();
   };
 
   return (
