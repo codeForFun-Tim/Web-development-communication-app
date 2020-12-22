@@ -8,7 +8,7 @@ install:
   - npm i jest-fetch-mock
   - yarn add isomorphic-fetch
 script:
-  - rm -rf node_modules
+  #- rm -rf node_modules
   - cd client
   - rm package-lock.json
   - nvm install node
