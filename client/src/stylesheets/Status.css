@@ -1,0 +1,49 @@
+.outer {
+    align-items: center;
+    height: 80px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    flex-wrap: wrap;
+}
+
+.circle {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 60%;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    background: #000;
+    margin-left: 10px;
+    margin-top: 3px;
+  }
+
+  .statusLink {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    font-size: 20px;
+    /*input has OS specific font-family*/
+    color: #069;
+    cursor: pointer;
+  }
+
+  
+.imageStatus {
+    width: 300px;
+    height: 300px;
+    margin: 25px 150px;
+    border-radius: 1.5em;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.textStatus {
+    margin-top: 100px;
+    text-align: center;
+    font-family: arial, sans-serif;
+    font-size: 30px;
+}

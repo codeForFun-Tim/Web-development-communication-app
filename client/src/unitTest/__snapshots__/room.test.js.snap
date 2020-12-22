@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test snapshot Test Room 1`] = `
+<div
+  className="room"
+>
+  <h2>
+    Room: 
+  </h2>
+  <div
+    id="timercontainer"
+  >
+    <label
+      className="timer"
+      id="minutes"
+    >
+      00
+    </label>
+    <label
+      className="timer"
+      id="colon"
+    >
+      :
+    </label>
+    <label
+      className="timer"
+      id="seconds"
+    >
+      00
+    </label>
+  </div>
+  <button
+    id="endcall"
+  >
+    End Call
+  </button>
+  <div
+    className="video-participant"
+  >
+    <div
+      className="local-participant"
+    >
+      
+    </div>
+    <div
+      className="remote-participants"
+    />
+  </div>
+</div>
+`;
