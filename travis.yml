@@ -31,7 +31,8 @@ script:
   - npm install jest@26.6.0
   - npm ls jest
   - cd backend_tests
-  - node_modules/.bin/jest --coverage
+  #- node_modules/.bin/jest --coverage
+  - jest test --coverage
 
 # safelist
 branches:
