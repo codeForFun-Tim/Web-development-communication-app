@@ -30,6 +30,7 @@ script:
   - yarn
   - npm install jest@26.6.0
   - npm ls jest
+  - ls
   - cd backend_tests
   #- node_modules/.bin/jest --coverage
   - jest test --coverage
