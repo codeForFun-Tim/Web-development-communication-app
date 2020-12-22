@@ -73,9 +73,7 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
   User.findOne({ email })
     // eslint-disable-next-line consistent-return
     .then((user) => {
-      // console.log("email: ",email);
       if (!user) {
-        // console.log("inside the user");
         success = false;
         message = 'No user with that email';
         return done(null, false, { message });
@@ -106,12 +104,10 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
         bcrypt.compare(password, user.password, (bcryptErr, same) => {
           if (same) {
             // The user provided the correct password.
-            // console.log("same if");
             success = true;
             message = 'success';
             return done(null, user, {message});
           } else {
-            // console.log("same else");
             if (lastFailedDatetime > 0 && lastFailedDatetime + msToLockout > Date.now()) {
               // The user's last login failure happened recently.
               attempts += 1;
@@ -124,9 +120,7 @@ const strategy = new LocalStrategy({ usernameField: 'email' }, (email, password,
 
             success = false;
 
-            // success = false;
-            // message = 'Recheck your password';
-            // return done(null,false, {message});
+
           }
            // Update the user's lockout status.
            User.findOneAndUpdate(
@@ -162,20 +156,12 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-/**
- * Functions used to protect routes based on authentication status.
- * TODO: add cookies 
- */
+
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    //console.log('if req in checkAuth',req);
-    //console.log('if res in checkAuth',res);
-    //console.log('if next in checkAuth',next);
     return next();
   }
-  //console.log('el req in checkAuth',req);
-  // console.log('el res in checkAuth',res);
-  // console.log('el next in checkAuth',next);
+ 
   return res.status(401).json('[!] Not authorized');
 }
 
@@ -244,31 +230,6 @@ expressApp.listen(port, () => {
 });
 
 
-// expressApp.enable('trust proxy');
-// expressApp.use(bodyParser.json());
-// expressApp.use(bodyParser.urlencoded({ extended: true }));
-// expressApp.use(express.urlencoded({ extended: false }));
-// expressApp.use(logger('dev'));
-// expressApp.use(flash());
-// expressApp.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   store: new MongoStore({ mongooseConnection: mongoose.connection }),
-//   resave: false,
-//   saveUninitialized: false,
-// }));
-// expressApp.use(express.json());
-// expressApp.use(express.static(path.join(__dirname, 'public')));
-// expressApp.use(passport.initialize());
-// expressApp.use(passport.session());
-// expressApp.use(methodOverride('_method'));
-// expressApp.use((req, res, next) => {
-//   // res.header('Access-Control-Allow-Origin', 'https://photogram-front.herokuapp.com');
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
-
 
 expressApp.use(fileUpload()); 
 expressApp.enable('trust proxy');
@@ -293,7 +254,6 @@ expressApp.use(passport.session());
 expressApp.use(methodOverride('_method'));
 expressApp.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  //res.header('Access-Control-Allow-Origin', 'https://excellent-web-app.herokuapp.com');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();

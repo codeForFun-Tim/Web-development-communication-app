@@ -36,7 +36,6 @@ async function viewedStatus(viewer, statusId) {
     const formData = new FormData();
     formData.append('viewer', viewer);
     formData.append('statusId', statusId);
-    //console.log(viewer, statusId);
     return axios.post(apiUrl, formData); 
 }
 

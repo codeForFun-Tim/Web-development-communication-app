@@ -26,25 +26,11 @@ router.post('/Register',
   checkAndSanitizeInput(),
   handleInputCheck,
   async (req, res) => {
-    // console.log(1);
-    //console.log("req body: ",req.body);
     const  email  = req.body.email;
     const  username  = req.body.username;
     const password  = req.body.password;
     const registrationDate = Date.now();
-    /**
-    if (file && !checkFileSize(file)) {
-      res.status(413);
-      res.json(`[!] Profile picture is too large (max = ${maxFileKb}KB)`);
-      return;
-    }
-
-    if (file && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
-      res.status(422);
-      res.json('[!] Invalid file type (only PNG or JPEG allowed)');
-      return;
-    }
-    */
+   
 
     try {
       // console.log(2);
@@ -61,27 +47,8 @@ router.post('/Register',
                 if (userFoundByUsername) {
                   res.status(409);
                   res.json(`[!] Username is already in use: ${username}`);
-                } else {
-                  /**
-                  if (file) {
-                    let bytes;
-
-                    try {
-                      const img = fs.readFileSync(file.path);
-                      bytes = img.toString('base64');
-                      fs.unlinkSync(file.path);
-                    } catch (err) {
-                      res.status(551);
-                      res.json(`[!] Could not read profile picture: ${err}`);
-                      return;
-                    }
-
-                    if (bytes) {
-                      image = Buffer.from(bytes, 'base64');
-                    }
-                  }
-                  */
-                  // console.log(3);
+                } 
+                else {                 
                   const newUser = new User({
                     email,
                     username,
@@ -104,7 +71,7 @@ router.post('/Register',
     }
   });
 
-// TODO : return a cookie OR JSON webtoken (get from the frontend )
+
 router.post('/login',
   checkNotAuthenticated,
   passport.authenticate('local'),
@@ -130,13 +97,8 @@ router.post('/changePassword',
           //res.json({ success: false, message: 'User not found' }); // Return error, user was not found in db
           res.sendStatus(422);
         } else {
-          // console.log('old pass: ', req.body.oldPassword);
-          // console.log('new pass: ', req.body.newPassword);
-          // const hashOldPass = await bcrypt.hash(req.body.oldPassword, 10);
           const hashNewPass = await bcrypt.hash(req.body.newPassword, 10);
-          // console.log('hasn old pass: ', hashOldPass);
-          // console.log('hash new pass: ', hashNewPass);
-
+         
           // don't try to hash password here; instead, just read the password from the frontend (hashed old password)
           user.password = hashNewPass;
           user.save()
@@ -150,22 +112,6 @@ router.post('/changePassword',
               console.log(e);
               res.json({ success: false, message: 'failed' });
             });
-
-          // user.setPassword(req.body.newPassword, function(err, user){
-          //   console.log('change password', req.body.newPassword);
-          // // const match = await bcrypt.compare(req.body.oldPassword, hashed password from database);
-          //   if(err) {
-          //     console.log('err message: ',err);
-          //             if(err.name === 'IncorrectPasswordError'){
-          //                 res.json({ success: false, message: 'Incorrect password' }); // Return error
-          //             }else {
-          //                 res.json({ success: false, message: 'Something went wrong!! Please try again after sometimes.' });
-          //             }
-          //   } else {
-          //     console.log('password changed!');
-          //     res.json({ success: true, message: 'Your password has been changed successfully' });
-          //   }
-          // })
         }
       }
   });   
@@ -173,7 +119,6 @@ router.post('/changePassword',
 
 
 router.post('/logout', 
-  //checkAuthenticated, 
   (req, res) => {
   req.logout();
   res.sendStatus(200);

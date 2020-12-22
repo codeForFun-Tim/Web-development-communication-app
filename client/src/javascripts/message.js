@@ -18,23 +18,6 @@ async function sendMessageAPI(msgContent, msgType, msgFrom, msgTo, roomID) {
       credentials: 'include',
       mode: 'cors',
     });
-
-    // try {
-    //     const response = await axios.post(apiUrl, {
-    //         text_message_content : msgContent,
-    //         message_type : msgType,
-    //         media_message_content: null,
-    //         from : msgFrom,
-    //         to : msgTo,
-    //         roomID : roomID,
-    //     },
-    //     {
-    //       withCredentials: true,
-    //     });
-    //     return response;
-    // } catch(error) {
-    //     throw new Error(error);
-    // }
 }
 
 async function sendMediaAPI(data) {
@@ -47,20 +30,10 @@ async function sendMediaAPI(data) {
         credentials: 'include',
         mode: 'cors',
       });
-    // return axios.post(apiUrl, data,  
-    // {
-    //   withCredentials: true,
-    // }); 
 }
 
 async function getMessageAPI(msgFrom, msgTo) {
   const apiUrl = `${api.url}/getMessageViaRoom`;
-  // return fetch(apiUrl,
-  //   {
-  //     method: 'GET',
-  //     credentials: 'include',
-  //     mode: 'cors',
-  // });
     return axios.get(apiUrl, 
       {params: {
           from : msgFrom,

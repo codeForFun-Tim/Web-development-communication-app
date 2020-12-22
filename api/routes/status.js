@@ -3,11 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const { ObjectId } = require('mongoose').Types;
 const User = require('../model/user');
-// const Message = require('../model/message');
-// const Room = require('../model/room');
 const Status = require('../model/status');
-// const { parser } = require('../app');
-// const multer = require('multer');
 const { checkAuthenticated } = require('../app');
 const { sendDatabaseErrorResponse } = require('../app');
 
@@ -17,25 +13,21 @@ const router = express.Router();
 router.get('/getStatus',async (req,res)=> {
 
     const loggedUser = req.query.logUser;
-    // console.log('loggedUser',loggedUser);
     const result = [];
     const currUser = await User.findOne({email:loggedUser});
-    // console.log('currUser',currUser);
     const contacts = currUser.contact_list;
-    // console.log('contacts',contacts);
+
     
     if(contacts === null){
         console.log('You need at least one contact to use status functionality! ');
         res.sendStatus(400);
     }
     else{ 
-        const curStaList = currUser.status_list;
-            // const status_ids = contact.status_list; //status id    
+        const curStaList = currUser.status_list;  
             if(curStaList != null){
                 await Promise.all(curStaList.map(async statusID => {
                     try{
                         const status = await Status.findOne({_id:statusID}); // get each status schema 
-                        // returnedMessage.push({content: textMessage, type: message.message_type, time:message.timeStamp, sender: message.from});
                         if(!status.viewedPeople.includes(loggedUser)){
                             result.push(status);
                         }
@@ -104,15 +96,12 @@ router.post('/sendStatus',async (req,res)=>{
                 type : statusType,
                 creationTime : timeCreated,
             });
-            // console.log(newTextStatus);
             newTextStatus.save().then(async (status) => {
                 const statusID = status._id;
-                // console.log(statusID);
                 await Promise.all(currUserContacts.map(async (currUserContact) => {  // currUserContact is email
                     const statusReceiver = await User.findOne({email: currUserContact});
                     statusReceiver.status_list.push(statusID);
                     statusReceiver.save();
-                    // console.log(statusReceiver);
                 }));
 
 
@@ -128,12 +117,10 @@ router.post('/sendStatus',async (req,res)=>{
             });
             newMediaStatus.save().then(async (status) => {
                 const statusID = status._id;
-                // console.log(statusID);
                 await Promise.all(currUserContacts.map(async (currUserContact) => {  // currUserContact is email
                     const statusReceiver = await User.findOne({email: currUserContact});
                     statusReceiver.status_list.push(statusID);
                     statusReceiver.save();
-                    // console.log(statusReceiver);
                 }));
 
 

@@ -30,7 +30,7 @@ const regData = Date.now();
 
 let server;
 let agent;
-// jest.setTimeout(30000);
+
 
 beforeAll((done) => {
     server = http.createServer(app.expressApp);
@@ -117,7 +117,6 @@ describe('When a user is not logged in', () => {
         $or: [
           { email: testEmail1 },
           { email: testEmail2 },
-          // { email: testEmail3 },
         ],
       }
     ).then(done);
@@ -237,40 +236,7 @@ describe('When a user is not logged in', () => {
       })
       .expect(401)
       .then(() => { done(); });
-  });
-
-  // test('They cannot block a user if not logged in', async (done)=>{
-  //   await (
-  //     agent
-  //     .put('/blockUser')
-  //     .field('curUser',testEmail1)
-  //     .field('userToBlock',testEmail2)
-  //   )
-  //     .expect(400)
-  //     .then(() => {done();});
-  // });
-
-  // test('They cannot get other\'s status if not logged in',async (done)=>{
-  //   await(
-  //     agent
-  //     .get('/getStatus')
-  //     .field('logUser',testEmail1)
-  //   )
-  //     .expect(400)
-  //     .then(() => { done(); });
-  // });
-
-  // test('They cannot send status if not logged in',(done)=>{
-  //   agent
-  //     .post('/sendStatus')
-  //     .field('currentUser',testStatusType1)
-  //     .field('testSt',testStatusTextContent)
-  //     .expect(401)
-  //     .then(() => { done(); });
-  // });
-
-
-  
+  });  
 });
 
 
