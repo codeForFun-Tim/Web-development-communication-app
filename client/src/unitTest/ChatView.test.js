@@ -267,6 +267,30 @@ describe('Test All ChatView Functions', () => {
         expect(msg_accp_btu).not.toBe(null);
     });
 
+    test('click Video Call accept',() => {
+        const btu2 = document.getElementById('accept_call');
+        act(() => {
+            Simulate.click(btu2);
+        });
+        const popup = document.getElementById('popup2_accept')
+        expect(popup.style.visibility).toBe('');
+    });
+
+    test('close popup window_accpet',() => {
+        const btu = document.getElementById('closepop2_accept');
+        act(() => {
+            Simulate.click(btu);
+        });
+        const popup = document.getElementById('popup2_accept')
+        const yes_decline_btu = document.getElementById('yes_accept');
+        const msg_decl_btu = document.getElementById('decline_call');
+        const msg_accp_btu = document.getElementById('accept_call');
+        expect(popup.style.visibility).toBe('hidden');
+        expect(yes_decline_btu.style.visibility).toBe('hidden');
+        expect(msg_decl_btu).not.toBe(null);
+        expect(msg_accp_btu).not.toBe(null);
+    });
+    
     test('click decline yes button',() => {
         const btu1 = document.getElementById('decline_call');
         const btu2 = document.getElementById('yes_decline');

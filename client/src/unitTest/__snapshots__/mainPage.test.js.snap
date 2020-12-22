@@ -276,6 +276,33 @@ exports[`Test snapshot Test Profile 1`] = `
         </div>
         <div
           className="overlay"
+          id="popup2_accept"
+        >
+          <div
+            className="popup"
+          >
+            <h3>
+              Ready to accpet the video call?
+            </h3>
+            <a
+              className="close"
+              id="closepop2_accept"
+              onClick={[Function]}
+            >
+              ×
+            </a>
+            <p>
+              <button
+                id="yes_accept"
+                onClick={[Function]}
+              >
+                YES
+              </button>
+            </p>
+          </div>
+        </div>
+        <div
+          className="overlay"
           id="popup3"
         >
           <div

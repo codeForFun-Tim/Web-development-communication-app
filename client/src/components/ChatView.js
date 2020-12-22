@@ -397,7 +397,7 @@ function ChatView() {
           //console.log('send');
         }
         if(typeof messageArray[arraylength-1].content === 'string' && messageArray[arraylength-1].content.includes('<div class="endcallFlag">')){
-          if(typeof messageArray[arraylength-2].content === 'string' && messageArray[arraylength-2].content.includes('<div class="callFlag">')){
+          if(typeof messageArray[arraylength-2].content === 'string' && messageArray[arraylength-2].sender === msgFrom && messageArray[arraylength-2].content.includes('<div class="callFlag">')){
             window.alert("The user you called may not be online!");
           }
         }
@@ -836,6 +836,15 @@ function ChatView() {
     yes_decline.style.visibility = 'hidden';
   }
 
+  function closepopWindow2_accept() {
+    const popup = document.getElementById('popup2_accept');
+    popup.style.visibility = 'hidden';
+    const closepop2 = document.getElementById('closepop2_accept');
+    const yes_decline = document.getElementById('yes_accept');
+    closepop2.style.visibility = 'hidden';
+    yes_decline.style.visibility = 'hidden';
+  }
+
   function inviteVideoCall(){
     const videoCallDiv = 
       '<div class="callFlag">'+
@@ -847,15 +856,16 @@ function ChatView() {
       document.getElementById('yes_decline').style.visibility = 'visible'">`+
       'Decline'+
       '</button>'+
-      `<button id="accept_call" onclick="document.getElementById('video_call').click()">` +
+      `<button id="accept_call" onclick="document.getElementById('popup2_accept').style.visibility = 'visible';
+      document.getElementById('closepop2_accept').style.visibility = 'visible';
+      document.getElementById('yes_accept').style.visibility = 'visible'">` +
       'Accept' +
       '</button>'+
       '</div>';
     setMessage(videoCallDiv);
     sendVideoCall(videoCallDiv);
   }
-
-  async function startVideoCall(){
+  async function joinVideoCall(){
     if(clip){
       clip.pause();
     }
@@ -863,9 +873,23 @@ function ChatView() {
     const receiver = localStorage.getItem("curr_receiver");
     const roomName = generateRoomID(username, receiver);
     setRoomName(roomName);
-    inviteVideoCall();
     const data = await videoCallAPI(username, roomName);
     setToken(data.token);
+  }
+
+  async function startVideoCall(){
+    inviteVideoCall();
+    joinVideoCall();
+    // if(clip){
+    //   clip.pause();
+    // }
+    // const username = localStorage.getItem("curr_user");
+    // const receiver = localStorage.getItem("curr_receiver");
+    // const roomName = generateRoomID(username, receiver);
+    // setRoomName(roomName);
+    // inviteVideoCall();
+    // const data = await videoCallAPI(username, roomName);
+    // setToken(data.token);
   }
 
   function refresh(){
@@ -1001,7 +1025,20 @@ function ChatView() {
               </button>
             </p>
           </div>
-        </div>        
+        </div>
+        <div id="popup2_accept" className="overlay">
+          <div className="popup">
+            <h3>Ready to accpet the video call?</h3>
+            <a id="closepop2_accept" className="close" onClick={() => closepopWindow2_accept()}>
+              &times;
+            </a>
+            <p>
+              <button id="yes_accept" onClick={() => joinVideoCall()}>
+                YES
+              </button>
+            </p>
+          </div>
+        </div>         
         <div id="popup3" className="overlay">
           <div className="popup">
             <h2>Add New Contact</h2>

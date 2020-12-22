@@ -530,6 +530,24 @@ video {
   cursor: pointer;
 }
 
+#yes_accept{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-color: #86fa6f;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #86fa6f;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  cursor: pointer;
+}
+
 #add_contact_input {
   height: 50px;
   width: 300px;
