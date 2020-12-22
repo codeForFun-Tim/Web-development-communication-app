@@ -75,13 +75,16 @@ const Room = ({ roomName, token, handleLogout }) => {
       return Promise.race([
         participantConnectedPromise(room),
         timeoutPromise(),
-        endCallPromise()
+        endCallPromise(),
       ]);
     }).then(didParticipantConnect => {
       if (!didParticipantConnect) {
         console.log('call ended, disconnecting...');
         activeRoom.disconnect();
         handleLogout();
+      }
+      else{
+        document.getElementById('endcall').onclick = handleLogout;
       }
     });
 

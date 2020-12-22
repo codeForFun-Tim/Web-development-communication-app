@@ -856,6 +856,9 @@ function ChatView() {
   }
 
   async function startVideoCall(){
+    if(clip){
+      clip.pause();
+    }
     const username = localStorage.getItem("curr_user");
     const receiver = localStorage.getItem("curr_receiver");
     const roomName = generateRoomID(username, receiver);

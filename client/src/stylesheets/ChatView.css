@@ -423,7 +423,7 @@ input[type='file'] {
 .room {
   position: relative;
 }
-.room button {
+#endcall {
   position: absolute;
   top: 0;
   right: 20px;
