@@ -844,6 +844,10 @@ function ChatView() {
     closepop2.style.visibility = 'hidden';
     yes_decline.style.visibility = 'hidden';
   }
+  function inviteButton(){
+    const videoCallDiv = inviteVideoCall();
+    setMessage(videoCallDiv);
+  }
 
   function inviteVideoCall(){
     const videoCallDiv = 
@@ -862,8 +866,9 @@ function ChatView() {
       'Accept' +
       '</button>'+
       '</div>';
-    setMessage(videoCallDiv);
+    // setMessage(videoCallDiv);
     sendVideoCall(videoCallDiv);
+    return(videoCallDiv);
   }
   async function joinVideoCall(){
     if(clip){
@@ -944,7 +949,7 @@ function ChatView() {
         </ul>
         <div id="btu_div">
           <button className="func_btu" id="video_call" onClick={() => startVideoCall()}>Video Call</button>
-          <button className="func_btu" id="invite_video" onClick={() => inviteVideoCall()}>invite</button>
+          <button className="func_btu" id="invite_video" onClick={() => inviteButton()}>invite</button>
           <button className="func_btu">
             <label htmlFor="image-upload" className="custom-file-upload">
               <i className="fa fa-cloud-upload"></i> Send Image
