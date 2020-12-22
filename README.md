@@ -11,9 +11,8 @@ project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Clas
 
 ## Instructions
 To run the app locally, follow these steps:
-
-Open a command prompt in the `api` folder
-Run the command `npm install` and `node app.js`
-Open a command prompt in the "client" folder
-Run the command `npm install` and `yarn start` or `npm start`
-A browser will open with the app
+* Open a command prompt in the `api` folder
+* Run the command `npm install` and `node app.js`
+* Open a command prompt in the "client" folder
+* Run the command `npm install` and `yarn start` or `npm start`
+* A browser will open with the app
