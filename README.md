@@ -1,4 +1,4 @@
-# project-video-and-messaging-web-app-guozhe-weichu-yuguang
+# project-video-and-messaging-web-app-guangzhe-weichu-yuguang
 project-video-and-messaging-web-app-guozhe-weichu-yuguang created by GitHub Classroom
 
 ## Deployment:
